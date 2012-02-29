@@ -18,7 +18,7 @@ configuration taking place in `~/.extra` is not accidentally committed.
 ```bash
 git clone git://github.com/necolas/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-bash boostrap.sh
+bash bootstrap.sh
 ```
 
 N.B. This will overwrite any existing dotfiles in your HOME and .vim 
@@ -31,7 +31,7 @@ from the remote repo.
 
 ```bash
 cd ~/.dotfiles
-bash boostrap.sh
+bash bootstrap.sh
 ```
 
 
