@@ -35,6 +35,16 @@ bash bootstrap.sh
 ```
 
 
+## Custom OS X defaults
+
+When setting up a new Mac, you may want to customise your OS X defaults after 
+installing the dotfiles.
+
+```bash
+bash .osx
+```
+
+
 ## Adding custom commands
 
 You can use a `~/.extra` file to add custom commands without the need to fork 
@@ -62,14 +72,13 @@ git config --global user.email "$GIT_AUTHOR_EMAIL"
 ```
 
 
-## Custom OS X defaults
+## Custom bash prompt
 
-When setting up a new Mac, you may want to customise your OS X defaults after 
-installing the dotfiles.
+I use a custom bash prompt based on the Solarized color palette and influenced by @gf3's and @cowboy's custom prompts. Details are in the bash_prompt file.
 
-```bash
-bash .osx
-```
+Screenshot:
+
+![](http://i.imgur.com/DSJ1G.png)
 
 
 ## Adding new git submodules
