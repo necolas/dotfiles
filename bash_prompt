@@ -2,8 +2,13 @@
 
 # Based on @gf3’s Sexy Bash Prompt: https://github.com/gf3/dotfiles
 # iTerm2 prefs: import Solarized theme (disable bright colors for bold text)
-# Screenshot: http://i.imgur.com/1e2cE.png
 # Color ref: http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
+# More tips: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
+# Screenshot: http://i.imgur.com/1e2cE.png
+
+# Example:
+# nicolas@host: ~/.dotfiles on master[!?]
+# $
 
 # Check that terminfo exists before changing TERM var to xterm-256color
 # Prevents prompt flashing in Mac OS X 10.6 Terminal.app
@@ -13,8 +18,11 @@ fi
 
 tput sgr 0 0
 
+# Base styles and color palette
 # Solarized colors
 # https://github.com/altercation/solarized/tree/master/iterm2-colors-solarized
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
 SOLAR_YELLOW=$(tput setaf 136)
 SOLAR_ORANGE=$(tput setaf 166)
 SOLAR_RED=$(tput setaf 124)
@@ -25,16 +33,51 @@ SOLAR_CYAN=$(tput setaf 37)
 SOLAR_GREEN=$(tput setaf 64)
 SOLAR_WHITE=$(tput setaf 254)
 
-BOLD=$(tput bold)
-RESET=$(tput sgr0)
+style_user="$RESET$SOLAR_ORANGE"
+style_host="$RESET$SOLAR_YELLOW"
+style_path="$RESET$SOLAR_GREEN"
+style_branch="$RESET$SOLAR_CYAN"
+style_chars="$RESET$SOLAR_WHITE"
 
-function parse_git_dirty() {
-    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+if [[ "$SSH_TTY" ]]; then
+    # connected via ssh
+    style_host="$BOLD$SOLAR_RED"
+elif [[ "$USER" == "root" ]]; then
+    # logged in as root
+    style_user="$BOLD$SOLAR_RED"
+fi
+
+
+# Git status.
+# Adapted from: https://github.com/cowboy/dotfiles/
+function prompt_git() {
+    local status output flags
+    status="$(git status 2>/dev/null)"
+    [[ $? != 0 ]] && return;
+    output="$(echo "$status" | awk '/# Initial commit/ {print "(init)"}')"
+    [[ "$output" ]] || output="$(echo "$status" | awk '/# On branch/ {print $4}')"
+    [[ "$output" ]] || output="$(git branch | perl -ne '/^\* (.*)/ && print $1')"
+    flags="$(
+    echo "$status" | awk 'BEGIN {r=""} \
+        /^# Changes to be committed:$/        {r=r "+"}\
+        /^# Changes not staged for commit:$/  {r=r "!"}\
+        /^# Untracked files:$/                {r=r "?"}\
+        END {print r}'
+    )"
+    if [[ "$flags" ]]; then
+        output="$output[$flags]"
+    fi
+    echo "$style_chars on $style_branch$output"
 }
 
-function parse_git_branch() {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
-}
 
-# More tips: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
-PS1="\n\[${BOLD}${SOLAR_ORANGE}\]\u\[$SOLAR_WHITE\]@\[$SOLAR_YELLOW\]\h\[$SOLAR_WHITE\]: \[$SOLAR_GREEN\]\w\[$SOLAR_WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$SOLAR_CYAN\]\$(parse_git_branch)\[$SOLAR_WHITE\]\n\$ \[$RESET\]"
+# Build the prompt
+PS1="\n" # Newline
+PS1+="$style_user\u" # Username
+PS1+="$style_chars@" # @
+PS1+="$style_host\h" # Host
+PS1+="$style_chars: " # :
+PS1+="$style_path\w" # Working directory
+PS1+="\$(prompt_git)" # Git details
+PS1+="\n" # Newline
+PS1+="$style_chars\$ $RESET" # $ (and reset color)
