@@ -1,0 +1,32 @@
+[alias]
+    # https://git.wiki.kernel.org/articles/a/l/i/Aliases.html
+    # Diff what is staged for the next commit
+    diffc = diff --cached
+    # Diff overview
+    diffst = diff --stat
+    # tut: http://gitimmersion.com/lab_10.html
+    # ref: http://linux.die.net/man/1/git-log
+    # Custom graph log
+    graph = log --pretty=format:'%C(yellow)%h%C(reset) %ar | %s%C(green)%d%C(reset) [%an]' --all --graph --date-order
+    # Custom pretty log
+    logp = log --pretty=format:'%C(yellow)%h%C(reset) %ar | %s%C(green)%d%C(reset) [%an]' --all --date-order
+    # Diffstat log
+    logst = log --stat
+    # Short format diffstat log
+    logsf = log --stat --format=oneline --abbrev-commit
+
+[color]
+    # color opts: normal, black, red, green, yellow, blue, magenta, cyan, or white
+    ui = auto
+    interactive = auto
+
+[core]
+    # Use custom `.gitignore` and `.gitattributes`
+    excludesfile = ~/.gitignore
+    attributesfile = ~/.gitattributes
+
+[diff]
+    tool = mvimdiff
+
+[difftool]
+    prompt = false

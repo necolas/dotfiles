@@ -1,0 +1,20 @@
+# Exports
+
+# Make vim the default editor
+export EDITOR="vim"
+# Don't clear the screen after quitting a manual page
+export MANPAGER="less -X"
+# Larger bash history (allow 32³ entries; default is 500)
+export HISTSIZE=32768
+export HISTFILESIZE=$HISTSIZE
+export HISTCONTROL=ignoredups
+# Make some commands not show up in history
+export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
+
+# if these bins exist, then add them to the PATH
+[ -d "/usr/bin" ] && PATH="$PATH:/usr/bin";
+[ -d "/usr/local/bin" ] && PATH="$PATH:/usr/local/bin";
+# if the current user has a ~/bin, then add it to the PATH
+[ -d "$HOME/bin" ] && PATH="$PATH:$HOME/bin";
+
+export PATH

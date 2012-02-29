@@ -1,0 +1,91 @@
+# .osx
+
+# Menu bar: show remaining battery time; hide percentage
+defaults write com.apple.menuextra.battery ShowPercent -string "NO"
+defaults write com.apple.menuextra.battery ShowTime -string "YES"
+# Menu bar: disable transparency
+# defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false
+
+# Desktop: enable snap-to-grid for desktop icons
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+# Desktop: enable Dashboard dev mode (allows keeping widgets on the desktop)
+# defaults write com.apple.dashboard devmode -bool true
+
+# Dock: enable 2D
+defaults write com.apple.dock no-glass -bool true
+# Dock: position on the left
+defaults write com.apple.dock orientation left
+# Dock: use the scale effect for window minimizing
+defaults write com.apple.dock mineffect scale
+# Dock: make icons of hidden applications translucent
+defaults write com.apple.dock showhidden -bool true
+# Dock: show indicator lights for open applications
+defaults write com.apple.dock show-process-indicators -bool true
+# Dock: don’t animate opening applications
+defaults write com.apple.dock launchanim -bool false
+
+# Finder: show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+# Finder: disable the warning when changing a file extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+# Finder: empty Trash securely by default
+defaults write com.apple.finder EmptyTrashSecurely -bool true
+# Finder: disable window and Get Info animations
+defaults write com.apple.finder DisableAllAnimations -bool true
+# Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
+# defaults write com.apple.finder QuitMenuItem -bool true
+# Finder: show the ~/Library folder (in OS X Lion)
+# chflags nohidden ~/Library
+
+# Panels: expand save panel by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+# Panels: expand print panel by default
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+# Panels: disable the “Are you sure you want to open this application?” dialog
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+# Panels: enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# Disks: avoid creating .DS_Store files on network volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+# Disks: disable TimeMachine prompts
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+# Disks: disable local Time Machine backups
+hash tmutil &> /dev/null && sudo tmutil disablelocal
+# Disks: disable disk image verification
+# defaults write com.apple.frameworks.diskimages skip-verify -bool true
+# defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
+# defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
+
+# ...if you really insist on using iTunes
+# iTunes: make ⌘ + F focus the search input
+defaults write com.apple.iTunes NSUserKeyEquivalents -dict-add "Target Search Field" "@F"
+# iTunes: disable the Ping sidebar in iTunes
+defaults write com.apple.iTunes disablePingSidebar -bool true
+# iTunes: disable all the other Ping stuff
+defaults write com.apple.iTunes disablePing -bool true
+
+# Security: require password immediately after sleep or screen saver begins
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+# Misc: enable subpixel font rendering on non-Apple LCDs
+defaults write NSGlobalDomain AppleFontSmoothing -int 2
+# Misc: disable shadow in screenshots
+defaults write com.apple.screencapture disable-shadow -bool true
+# Misc: disable Resume system-wide
+defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
+# Misc: only use UTF-8 in Terminal.app
+defaults write com.apple.terminal StringEncodings -array 4
+# Misc: disable Dictionary results
+defaults write com.apple.spotlight DictionaryLookupEnabled -bool false
+# Misc: disable auto-correct
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+# Misc: disable press-and-hold for keys in favor of key repeat
+# defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+# Misc: Set a blazingly fast keyboard repeat rate
+# defaults write NSGlobalDomain KeyRepeat -int 0
+
+# Map bottom right Trackpad corner to right-click
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true

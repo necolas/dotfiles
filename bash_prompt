@@ -1,0 +1,40 @@
+# bash_prompt
+
+# Based on @gf3’s Sexy Bash Prompt: https://github.com/gf3/dotfiles
+# iTerm2 prefs: import Solarized theme (disable bright colors for bold text)
+# Screenshot: http://i.imgur.com/1e2cE.png
+# Color ref: http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
+
+# Check that terminfo exists before changing TERM var to xterm-256color
+# Prevents prompt flashing in Mac OS X 10.6 Terminal.app
+if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+    export TERM='xterm-256color'
+fi
+
+tput sgr 0 0
+
+# Solarized colors
+# https://github.com/altercation/solarized/tree/master/iterm2-colors-solarized
+SOLAR_YELLOW=$(tput setaf 136)
+SOLAR_ORANGE=$(tput setaf 166)
+SOLAR_RED=$(tput setaf 124)
+SOLAR_MAGENTA=$(tput setaf 125)
+SOLAR_VIOLET=$(tput setaf 61)
+SOLAR_BLUE=$(tput setaf 33)
+SOLAR_CYAN=$(tput setaf 37)
+SOLAR_GREEN=$(tput setaf 64)
+SOLAR_WHITE=$(tput setaf 254)
+
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
+
+function parse_git_dirty() {
+    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+}
+
+function parse_git_branch() {
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+}
+
+# More tips: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
+PS1="\n\[${BOLD}${SOLAR_ORANGE}\]\u\[$SOLAR_WHITE\]@\[$SOLAR_YELLOW\]\h\[$SOLAR_WHITE\]: \[$SOLAR_GREEN\]\w\[$SOLAR_WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$SOLAR_CYAN\]\$(parse_git_branch)\[$SOLAR_WHITE\]\n\$ \[$RESET\]"
