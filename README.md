@@ -21,7 +21,7 @@ cd ~/.dotfiles
 bash bootstrap.sh
 ```
 
-N.B. This will overwrite any existing dotfiles in your HOME and .vim 
+N.B. This will overwrite any existing dotfiles in your HOME and `.vim` 
 directories that have the same names as those found in this repository.
 
 ### Updating
@@ -74,7 +74,7 @@ git config --global user.email "$GIT_AUTHOR_EMAIL"
 
 ## Custom bash prompt
 
-I use a custom bash prompt based on the Solarized color palette and influenced by @gf3's and @cowboy's custom prompts. Details are in the bash_prompt file.
+I use a custom bash prompt based on the Solarized color palette and influenced by @gf3's and @cowboy's custom prompts. Details are in the `bash_prompt` file.
 
 Screenshot:
 
