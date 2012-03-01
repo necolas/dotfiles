@@ -29,8 +29,8 @@ function mirrorfiles() {
     ln -fs ".dotfiles/osx"           "${HOME}/.osx"
     ln -fs ".dotfiles/gitattributes" "${HOME}/.gitattributes"
     ln -fs ".dotfiles/gitignore"     "${HOME}/.gitignore"
-    ln -fs ".dotfiles/gvimrc"        "${HOME}/.gvimrc"
-    ln -fs ".dotfiles/vimrc"         "${HOME}/.vimrc"
+    ln -fs ".dotfiles/vim/gvimrc"    "${HOME}/.gvimrc"
+    ln -fs ".dotfiles/vim/vimrc"     "${HOME}/.vimrc"
 
     echo "Dotfiles update complete"
 }
