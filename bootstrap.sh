@@ -3,7 +3,8 @@
 cd "${HOME}/.dotfiles"
 
 # Pull down the latest changes
-#git pull
+# git pull origin master
+
 # Check out submodules
 git submodule --quiet update --init
 
@@ -38,4 +39,5 @@ read -p "This will overwrite some existing files in your home directory. Are you
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     mirrorfiles
+    bash ~/.extra
 fi
