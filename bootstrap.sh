@@ -39,5 +39,5 @@ read -p "This will overwrite some existing files in your home directory. Are you
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     mirrorfiles
-    bash ~/.extra
+    source ~/.bash_profile
 fi
