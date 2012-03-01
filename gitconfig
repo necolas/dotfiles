@@ -1,15 +1,26 @@
 [alias]
     # https://git.wiki.kernel.org/articles/a/l/i/Aliases.html
+
+    # `git remote prune origin`: remove remote-tracking branches that were deleted from the remote repo
+    # `git gc`: cleanup unnecessary files and optimize the local repository
+    # `git clean -df`: remove untracked files and directories from the working tree
+    # `git stash clear`: remove all stashed states
+    trim = !git remote prune origin && git gc
+    cleanup = !git clean -df && git stash clear
+
     # Diff what is staged for the next commit
     diffc = diff --cached
     # Diff overview
     diffst = diff --stat
+
     # tut: http://gitimmersion.com/lab_10.html
     # ref: http://linux.die.net/man/1/git-log
+    # Result: abc1234 5 hours ago | Commit message (HEAD, origin/master, master) [Nicolas Gallagher]
     # Custom graph log
-    graph = log --pretty=format:'%C(yellow)%h%C(reset) %ar | %s%C(green)%d%C(reset) [%an]' --all --graph --date-order
+    graph = log --pretty=format:'%C(yellow)%h%C(reset) %ar | %s%C(green)%d%C(reset) [%an]' --all --date-order --graph
     # Custom pretty log
     logp = log --pretty=format:'%C(yellow)%h%C(reset) %ar | %s%C(green)%d%C(reset) [%an]' --all --date-order
+
     # Diffstat log
     logst = log --stat
     # Short format diffstat log
