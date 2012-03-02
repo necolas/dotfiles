@@ -14,7 +14,7 @@ function mirrorfiles() {
     # Copy .gitconfig
     # Any global git commands in ~/.extra will be written to .gitconfig
     # This prevents them being committed to the repository
-    rsync -avz --quiet ${HOME}/.dotfiles/gitconfig  ${HOME}/.gitconfig
+    rsync -avz --quiet ${HOME}/.dotfiles/git/gitconfig  ${HOME}/.gitconfig
 
     # Symlink everything else
     # bash_profile sources other files from the repository
@@ -22,15 +22,15 @@ function mirrorfiles() {
     if [ -e "${HOME}/.vim" ]; then
         rm -rf "${HOME}/.vim"
     fi
-    ln -fs ".dotfiles/vim"           "${HOME}/.vim"
-    ln -fs ".dotfiles/bashrc"        "${HOME}/.bashrc"
-    ln -fs ".dotfiles/bash_profile"  "${HOME}/.bash_profile"
-    ln -fs ".dotfiles/inputrc"       "${HOME}/.inputrc"
-    ln -fs ".dotfiles/osx"           "${HOME}/.osx"
-    ln -fs ".dotfiles/gitattributes" "${HOME}/.gitattributes"
-    ln -fs ".dotfiles/gitignore"     "${HOME}/.gitignore"
-    ln -fs ".dotfiles/vim/gvimrc"    "${HOME}/.gvimrc"
-    ln -fs ".dotfiles/vim/vimrc"     "${HOME}/.vimrc"
+    ln -fs ".dotfiles/osx"                "${HOME}/.osx"
+    ln -fs ".dotfiles/bash/bashrc"        "${HOME}/.bashrc"
+    ln -fs ".dotfiles/bash/bash_profile"  "${HOME}/.bash_profile"
+    ln -fs ".dotfiles/bash/inputrc"       "${HOME}/.inputrc"
+    ln -fs ".dotfiles/git/gitattributes"  "${HOME}/.gitattributes"
+    ln -fs ".dotfiles/git/gitignore"      "${HOME}/.gitignore"
+    ln -fs ".dotfiles/vim"                "${HOME}/.vim"
+    ln -fs ".dotfiles/vim/gvimrc"         "${HOME}/.gvimrc"
+    ln -fs ".dotfiles/vim/vimrc"          "${HOME}/.vimrc"
 
     echo "Dotfiles update complete"
 }

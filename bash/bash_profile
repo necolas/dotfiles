@@ -1,0 +1,13 @@
+# .bash_profile
+
+# Custom and private settings (e.g. git credentials)
+[ -r "$HOME/.extra" ] && source "$HOME/.extra"
+# Exports
+[ -r "$HOME/.dotfiles/bash/exports" ] && source "$HOME/.dotfiles/bash/exports"
+# Aliases
+[ -r "$HOME/.dotfiles/bash/aliases" ] && source "$HOME/.dotfiles/bash/aliases"
+# Custom bash prompt
+[ -r "$HOME/.dotfiles/bash/bash_prompt" ] && source "$HOME/.dotfiles/bash/bash_prompt"
+
+# Append to the bash history file, rather than overwriting it
+shopt -s histappend
