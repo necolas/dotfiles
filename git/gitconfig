@@ -16,13 +16,10 @@
     # Diff overview
     diffst = diff --stat
 
-    # tut: http://gitimmersion.com/lab_10.html
-    # ref: http://linux.die.net/man/1/git-log
-    # Result: abc1234 5 hours ago | Commit message (HEAD, origin/master, master) [Nicolas Gallagher]
-    # Custom graph log
-    graph = log --pretty=format:'%C(yellow)%h%C(reset) %ar | %s%C(green)%d%C(reset) [%an]' --all --date-order --graph
+    # Custom graph log (note, uses `logp` alias)
+    graph = !git logp --graph
     # Custom pretty log
-    logp = log --pretty=format:'%C(yellow)%h%C(reset) %ar | %s%C(green)%d%C(reset) [%an]' --all --date-order
+    logp = log --pretty=nice --all --date-order
 
     # Diffstat log
     logst = log --stat
@@ -44,3 +41,9 @@
 
 [difftool]
     prompt = false
+
+[pretty]
+    # tut: http://gitimmersion.com/lab_10.html
+    # ref: http://linux.die.net/man/1/git-log
+    # Result: abc1234 Commit message (HEAD, origin/master, master) -- Nicolas Gallagher; 5 hours ago
+    nice = "%C(yellow)%h%C(reset) %C(white)%s%C(cyan)%d%C(reset) -- %an; %ar"
