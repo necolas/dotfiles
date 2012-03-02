@@ -8,6 +8,9 @@
     trim = !git remote prune origin && git gc
     cleanup = !git clean -df && git stash clear
 
+    # Add untracked, remove deleted, and show status
+    addu = !git add . && git add -u && git status
+
     # Diff what is staged for the next commit
     diffc = diff --cached
     # Diff overview
