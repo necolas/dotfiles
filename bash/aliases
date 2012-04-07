@@ -24,6 +24,9 @@ alias catn="cat -n"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en1"
 
+# Copy my public key to my clipboard
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+
 # Flush DNS cache
 alias flushdns="dscacheutil -flushcache"
 
