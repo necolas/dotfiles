@@ -12,11 +12,9 @@ silent! runtime bundle/vim-pathogen/autoload/pathogen.vim
 silent! call pathogen#infect()
 
 " Load files for specific filetypes
-if has("autocmd")
-    filetype on
-    filetype indent on
-    filetype plugin on
-endif
+filetype on
+filetype indent on
+filetype plugin on
 
 if has("syntax")
     " Enable syntax highlighting
