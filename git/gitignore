@@ -13,6 +13,7 @@ Thumbs.db
 *.orig
 *.log
 *.rej
+*.swn
 *.swo
 *.swp
 *.vi
