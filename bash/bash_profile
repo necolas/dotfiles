@@ -6,6 +6,8 @@
 [ -r "$HOME/.dotfiles/bash/exports" ] && source "$HOME/.dotfiles/bash/exports"
 # Aliases
 [ -r "$HOME/.dotfiles/bash/aliases" ] && source "$HOME/.dotfiles/bash/aliases"
+# Functions
+[ -r "$HOME/.dotfiles/bash/functions" ] && source "$HOME/.dotfiles/bash/functions"
 # Custom bash prompt
 [ -r "$HOME/.dotfiles/bash/bash_prompt" ] && source "$HOME/.dotfiles/bash/bash_prompt"
 
