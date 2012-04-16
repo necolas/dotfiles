@@ -1,0 +1,15 @@
+.Spotlight-*/
+.Trashes
+/afs/*
+/automount/*
+/cores/*
+/dev/*
+/Network/*
+/private/tmp/*
+/private/var/run/*
+/private/var/spool/postfix/*
+/private/var/vm/*
+/Previous Systems.localized
+/tmp/*
+/Volumes/*
+*/.Trash
