@@ -17,3 +17,6 @@
 [submodule "vim/bundle/mustache"]
 	path = vim/bundle/mustache
 	url = git://github.com/juvenn/mustache.vim.git
+[submodule "vim/bundle/html5"]
+	path = vim/bundle/html5
+	url = git://github.com/othree/html5.vim.git
