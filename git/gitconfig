@@ -17,7 +17,7 @@
     diffst = diff --stat
 
     # Custom graph log (note, uses `logp` alias)
-    graph = !git logp --graph
+    graph = log --pretty=nice --all --date-order --graph
     # Custom pretty log
     logp = log --pretty=nice --all --date-order
 
