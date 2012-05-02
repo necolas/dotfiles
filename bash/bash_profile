@@ -1,7 +1,7 @@
 # .bash_profile
 
 # Custom and private settings (e.g. git credentials)
-[ -r "$HOME/.extra" ] && source "$HOME/.extra"
+[ -r "$HOME/.private" ] && source "$HOME/.private"
 # Exports
 [ -r "$HOME/.dotfiles/bash/exports" ] && source "$HOME/.dotfiles/bash/exports"
 # Aliases
