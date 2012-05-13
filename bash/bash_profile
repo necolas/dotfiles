@@ -1,7 +1,7 @@
 # .bash_profile
 
 # Custom and private settings (e.g. git credentials)
-[ -r "$HOME/.extra" ] && source "$HOME/.extra"
+[ -r "$HOME/.private" ] && source "$HOME/.private"
 # Exports
 [ -r "$HOME/.dotfiles/bash/exports" ] && source "$HOME/.dotfiles/bash/exports"
 # Aliases
@@ -11,5 +11,9 @@
 # Custom bash prompt
 [ -r "$HOME/.dotfiles/bash/bash_prompt" ] && source "$HOME/.dotfiles/bash/bash_prompt"
 
+# Load RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
 # Append to the bash history file, rather than overwriting it
 shopt -s histappend
+

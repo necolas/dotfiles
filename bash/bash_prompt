@@ -33,18 +33,18 @@ SOLAR_CYAN=$(tput setaf 37)
 SOLAR_GREEN=$(tput setaf 64)
 SOLAR_WHITE=$(tput setaf 254)
 
-style_user="\[$RESET\]\[$SOLAR_ORANGE\]"
-style_host="\[$RESET\]\[$SOLAR_YELLOW\]"
-style_path="\[$RESET\]\[$SOLAR_GREEN\]"
-style_chars="\[$RESET\]\[$SOLAR_WHITE\]"
-style_branch="$SOLAR_CYAN"
+style_user="\[${RESET}${SOLAR_ORANGE}\]"
+style_host="\[${RESET}${SOLAR_YELLOW}\]"
+style_path="\[${RESET}${SOLAR_GREEN}\]"
+style_chars="\[${RESET}${SOLAR_WHITE}\]"
+style_branch="${SOLAR_CYAN}"
 
 if [[ "$SSH_TTY" ]]; then
     # connected via ssh
-    style_host="\[$BOLD\]\[$SOLAR_RED\]"
+    style_host="\[${BOLD}${SOLAR_RED}\]"
 elif [[ "$USER" == "root" ]]; then
     # logged in as root
-    style_user="\[$BOLD\]\[$SOLAR_RED\]"
+    style_user="\[${BOLD}${SOLAR_RED}\]"
 fi
 
 
@@ -67,17 +67,17 @@ function prompt_git() {
     if [[ "$flags" ]]; then
         output="$output[$flags]"
     fi
-    echo -ne "$SOLAR_WHITE on $style_branch$output"
+    echo -ne "${SOLAR_WHITE} on ${style_branch}${output}"
 }
 
 
 # Build the prompt
 PS1="\n" # Newline
-PS1+="$style_user\u" # Username
-PS1+="$style_chars@" # @
-PS1+="$style_host\h" # Host
-PS1+="$style_chars: " # :
-PS1+="$style_path\w" # Working directory
+PS1+="${style_user}\u" # Username
+PS1+="${style_chars}@" # @
+PS1+="${style_host}\h" # Host
+PS1+="${style_chars}: " # :
+PS1+="${style_path}\w" # Working directory
 PS1+="\$(prompt_git)" # Git details
 PS1+="\n" # Newline
-PS1+="$style_chars\$ \[$RESET\]" # $ (and reset color)
+PS1+="${style_chars}\$ \[${RESET}\]" # $ (and reset color)
