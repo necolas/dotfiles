@@ -11,10 +11,12 @@ silent! runtime bundle/vim-pathogen/autoload/pathogen.vim
 " Call pathogen plugin management
 silent! call pathogen#infect()
 
-" Load files for specific filetypes
-filetype on
-filetype indent on
-filetype plugin on
+if has("autocmd")
+    " Load files for specific filetypes
+    filetype on
+    filetype indent on
+    filetype plugin on
+endif
 
 if has("syntax")
     " Enable syntax highlighting
@@ -114,3 +116,4 @@ set directory=~/.vim/swaps
 if exists("&undodir")
     set undodir=~/.vim/undo
 endif
+
