@@ -45,14 +45,15 @@ bash .osx
 ```
 
 
-## Adding private configurations
+## Adding local and private configurations
 
-You can create a `~/.private` file to add private and custom commands without
-the need to fork this repository, or to add commands that you don’t want to
-commit to a public repository. If `~/.private` exists, it will be sourced for
-inclusion in `bash_profile`.
+You can create a `~/.bash_profile.local` file to add private and custom
+commands without the need to fork this repository. Any commands included in
+this file will not be under version control or committed to a public
+repository. If `~/.bash_profile.local` exists, it will be sourced for inclusion
+in `bash_profile`.
 
-Here is an example `~/.private`:
+Here is an example `~/.bash_profile.local`:
 
 ```bash
 # PATH exports
@@ -70,6 +71,10 @@ GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 git config --global user.name "$GIT_AUTHOR_NAME"
 git config --global user.email "$GIT_AUTHOR_EMAIL"
 ```
+
+Any special-case vim directives local to a machine should be stored in a
+`.vimrc.local` file on that machine. The directives will then be automatically
+imported into your master `.vimrc`.
 
 
 ## Custom bash prompt
