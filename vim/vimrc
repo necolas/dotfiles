@@ -117,3 +117,8 @@ if exists("&undodir")
     set undodir=~/.vim/undo
 endif
 
+" Load local machine directives only if they exist
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
+
