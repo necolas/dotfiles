@@ -30,7 +30,7 @@ fi
 
 /usr/bin/logger -t $PROG "Start rsync"
 
-sudo $RSYNC -vaxE -S --delete --exclude-from=$EXCLUDE "$SRC" "$DST"
+sudo $RSYNC -vaxE -S --delete --delete-excluded --exclude-from=$EXCLUDE "$SRC" "$DST"
 
 /usr/bin/logger -t $PROG "End rsync"
 
