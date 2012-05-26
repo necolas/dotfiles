@@ -45,5 +45,6 @@
 [pretty]
     # tut: http://gitimmersion.com/lab_10.html
     # ref: http://linux.die.net/man/1/git-log
-    # Result: abc1234 Commit message (HEAD, origin/master, master) -- Nicolas Gallagher; 5 hours ago
+    # Result: <short-sha> <commit-message> (<pointer-names>) -- <commit-author-name>; <relative-time>
     nice = "%C(yellow)%h%C(reset) %C(white)%s%C(cyan)%d%C(reset) -- %an; %ar"
+
