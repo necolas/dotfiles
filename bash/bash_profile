@@ -16,4 +16,3 @@
 
 # Append to the bash history file, rather than overwriting it
 shopt -s histappend
-
