@@ -9,7 +9,7 @@
     cleanup = !git clean -df && git stash clear
 
     # Add untracked, remove deleted, and show status
-    addu = !git add . && git add -u && git status
+    adda = !git add -A && git status
 
     # Diff what is staged for the next commit
     diffc = diff --cached
