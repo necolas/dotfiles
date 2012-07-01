@@ -19,7 +19,7 @@
     # Custom graph log (note, uses `logp` alias)
     graph = log --pretty=nice --all --date-order --graph
     # Custom pretty log
-    logp = log --pretty=nice --all --date-order
+    logp = log --pretty=nice --date-order
 
     # Diffstat log
     logst = log --stat
