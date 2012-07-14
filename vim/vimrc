@@ -121,3 +121,9 @@ endif
 if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
+
+" Explicitly strip trailing whitespace (,$)
+noremap <leader>$ :call StripTrailingWhitespace()<CR>
+
+" Automatically strip trailing whitespace on file save
+autocmd BufWritePre *.css,*.html,*.js,*.py,*.scss :call StripTrailingWhitespace()
