@@ -114,15 +114,16 @@ set listchars+=nbsp:_
 "set listchars+=eol:¬
 
 " Centralize backups, swapfiles and undo history
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
+set backupdir=$HOME/.vim/backups
+set directory=$HOME/.vim/swaps
 if exists("&undodir")
-    set undodir=~/.vim/undo
+    set undodir=$HOME/.vim/undo
 endif
+set viminfo+=n$HOME/.vim/.viminfo
 
 " Load local machine settings if they exist
-if filereadable("~/.vimrc-local")
-    source ~/.vimrc.local
+if filereadable("$HOME/.vimrc-local")
+    source $HOME/.vimrc.local
 endif
 
 " Explicitly strip trailing whitespace (,$)
