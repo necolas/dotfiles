@@ -16,7 +16,7 @@
     # Diff overview
     diffst = diff --stat
 
-    # Custom graph log (note, uses `logp` alias)
+    # Custom graph log
     graph = log --pretty=nice --all --date-order --graph
     # Custom pretty log
     logp = log --pretty=nice --date-order
