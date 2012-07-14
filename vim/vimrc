@@ -76,6 +76,9 @@ if has("extra_search")
     set smartcase
 endif
 
+" Change mapleader
+let mapleader=","
+
 " Backspace through everything in INSERT mode
 set backspace=indent,eol,start
 " Optimize for fast terminal connections
