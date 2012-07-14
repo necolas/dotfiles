@@ -120,13 +120,19 @@ if exists("&undodir")
     set undodir=~/.vim/undo
 endif
 
-" Load local machine directives only if they exist
-if filereadable(glob("~/.vimrc.local"))
+" Load local machine settings if they exist
+if filereadable("~/.vimrc-local")
     source ~/.vimrc.local
 endif
 
 " Explicitly strip trailing whitespace (,$)
 noremap <leader>$ :call StripTrailingWhitespace()<CR>
+
+" Faster viewport scrolling (3 lines at a time)
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+vnoremap <C-e> 3<C-e>
+vnoremap <C-y> 3<C-y>
 
 " Automatically strip trailing whitespace on file save
 autocmd BufWritePre *.css,*.html,*.js,*.py,*.scss :call StripTrailingWhitespace()
