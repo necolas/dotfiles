@@ -1,6 +1,6 @@
 # OS or Editor files
-.DS_Store
 ._*
+.DS_Store
 Thumbs.db
 
 # Files that might appear on external disks
@@ -8,15 +8,16 @@ Thumbs.db
 .Trashes
 
 # Always-ignore extensions
+*~
 *.diff
 *.err
-*.orig
 *.log
+*.orig
+*.pyc
 *.rej
+*.sass-cache
 *.swn
 *.swm
 *.swo
 *.swp
 *.vi
-*~
-*.sass-cache
