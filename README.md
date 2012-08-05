@@ -38,10 +38,11 @@ bash bootstrap.sh
 ## Custom OS X defaults
 
 When setting up a new Mac, you may want to customise your OS X defaults after
-installing the dotfiles.
+installing the dotfiles. The script to do so can be found in `bin/osxdefaults`,
+is added to the PATH, and can be executed by running:
 
 ```bash
-bash .osx
+osxdefault
 ```
 
 
