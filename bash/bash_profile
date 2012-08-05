@@ -10,6 +10,8 @@ FILES="$FILES $HOME/.dotfiles/bash/aliases"
 FILES="$FILES $HOME/.dotfiles/bash/functions"
 # Custom Bash prompt
 FILES="$FILES $HOME/.dotfiles/bash/bash_prompt"
+# Git Bash completion (comes with Homebrew git installation)
+FILES="$FILES `brew --prefix`/etc/bash_completion.d/git-completion.bash"
 
 # Source all readable files in FILES
 for file in $FILES
