@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Check for Homebrew
+if test ! $(which brew)
+then
+  echo "  x Homebrew not found. Please install it:"
+  echo "    https://github.com/mxcl/homebrew/wiki/installation"
+  exit
+else
+  echo "  + Homebrew found."
+fi
+
+# Make sure we’re using the latest Homebrew
+brew update
+
+# Upgrade any already-installed formulae
+brew upgrade
+
+# Install GNU core utilities (those that come with OS X are outdated)
+brew install coreutils
+
+# Install everything else
+brew install git
+brew install libjpeg
+brew install macvim --override-system-vim
+brew install optipng
+brew install phantomjs
+brew install tree
+brew install wget
+
+# Remove outdated versions from the Cellar
+# brew cleanup

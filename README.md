@@ -7,18 +7,20 @@ My OS X dotfiles.
 ### Prerequisites
 
 * Git (1.7+)
-* Vim (7.3+) - I use MacVim installed with Homebrew
 
 ### Installation
 
-This will create symlinks for most of the files and the `vim` directory.  The
+This will create symlinks for most of the files and the `vim` directory. The
 `.gitconfig` file is copied to the HOME directory so that any private git
-configuration taking place in `~/.extra` is not accidentally committed.
+configuration taking place is not accidentally committed.
+
+It will also install various Homebrew formulae if Homebrew is already
+installed.
 
 ```bash
 git clone git://github.com/necolas/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-bash bootstrap.sh
+bash script/bootstrap
 ```
 
 N.B. This will overwrite any existing dotfiles in your HOME and `.vim`
@@ -31,7 +33,7 @@ remote repo.
 
 ```bash
 cd ~/.dotfiles
-bash bootstrap.sh
+bash script/bootstrap
 ```
 
 
@@ -42,7 +44,19 @@ installing the dotfiles. The script to do so can be found in `bin/osxdefaults`,
 is added to the PATH, and can be executed by running:
 
 ```bash
-osxdefault
+osxdefaults
+```
+
+
+## Homebrew
+
+The Homebrew update, formulae upgrade, and formulae installation is done
+automatically during installation (if Homebrew is already installed). It can
+also be carried out independently at any time by doing the following:
+
+```bash
+cd ~/.dotfiles
+bash script/homebrew
 ```
 
 
@@ -51,8 +65,8 @@ osxdefault
 You can create a `~/.bash_profile.local` file to add private and custom
 commands without the need to fork this repository. Any commands included in
 this file will not be under version control or committed to a public
-repository. If `~/.bash_profile.local` exists, it will be sourced for inclusion
-in `bash_profile`.
+repository. If `~/.bash_profile.local` exists, it will be sourced for
+inclusion in `bash_profile`.
 
 Here is an example `~/.bash_profile.local`:
 

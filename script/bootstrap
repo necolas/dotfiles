@@ -8,6 +8,9 @@ cd "${HOME}/.dotfiles"
 # Check out submodules.
 git submodule --quiet update --init
 
+# Install Homebrew formulae.
+bash script/homebrew
+
 cd "${OLDPWD}"
 
 function link() {
