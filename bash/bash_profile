@@ -10,8 +10,6 @@ FILES="$FILES $HOME/.dotfiles/bash/aliases"
 FILES="$FILES $HOME/.dotfiles/bash/functions"
 # Custom Bash prompt
 FILES="$FILES $HOME/.dotfiles/bash/bash_prompt"
-# Git Bash completion (comes with Homebrew git installation)
-FILES="$FILES `brew --prefix`/etc/bash_completion.d/git-completion.bash"
 
 # Source all readable files in FILES
 for file in $FILES
@@ -21,6 +19,9 @@ done
 
 # Load RVM into a shell session *as a function*
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# Git Bash completion (comes with Homebrew git installation; source after `brew` is added to PATH)
+[ -r "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ] && source "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob

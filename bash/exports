@@ -11,6 +11,9 @@ export HISTCONTROL=ignoredups
 # Make some commands not show up in history
 export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
 
+# Move to the beginning of PATH so that it always take precedence over /usr/bin
+[ -d "/usr/local/bin" ] && PATH="/usr/local/bin:$PATH";
+
 # If these bins exist, then add them to the PATH
 [ -d "/usr/bin" ] && PATH="$PATH:/usr/bin";
 [ -d "$HOME/bin" ] && PATH="$PATH:$HOME/bin";
@@ -18,10 +21,5 @@ export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
 [ -d "$HOME/.rvm/bin" ] && PATH="$PATH:$HOME/.rvm/bin";
 # Add brew-installed GNU core utilities bin
 [ -d "$(brew --prefix coreutils)/libexec/gnubin" ] && PATH="$PATH:$(brew --prefix coreutils)/libexec/gnubin";
-
-# Add to beginning of PATH so that it always take precedence over /usr/bin
-[ -d "/usr/local/bin" ] && PATH="/usr/local/bin:$PATH";
-# If Homebrew is installed in a custom directory, this will add another bin to the PATH
-[ -d "$(brew --prefix)/bin" ] && PATH="$(brew --prefix)/bin:$PATH";
 
 export PATH

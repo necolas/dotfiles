@@ -59,6 +59,14 @@ cd ~/.dotfiles
 bash script/homebrew
 ```
 
+If your Homebrew installation is not in `usr/local` then you must add your
+custom location's `bin` to your PATH in your `.bash_profile.local`:
+
+```bash
+# Add `brew` command's custom location to PATH
+PATH="/opt/acme/bin:$PATH"
+```
+
 
 ## Adding local and private configurations
 
