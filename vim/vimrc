@@ -127,7 +127,7 @@ endif
 set viminfo+=n$HOME/.vim/.viminfo
 
 " Load local machine settings if they exist
-if filereadable("$HOME/.vimrc-local")
+if filereadable("$HOME/.vimrc.local")
     source $HOME/.vimrc.local
 endif
 
