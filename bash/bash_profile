@@ -20,8 +20,8 @@ done
 # Load RVM into a shell session *as a function*
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-# Git Bash completion (comes with Homebrew git installation; source after `brew` is added to PATH)
-[ -r "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ] && source "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"
+# Bash completion (installed via Homebrew; source after `brew` is added to PATH)
+[ -r "$(brew --prefix)/etc/bash_completion" ] && source "$(brew --prefix)/etc/bash_completion"
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob

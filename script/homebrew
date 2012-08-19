@@ -21,6 +21,7 @@ brew install coreutils
 
 # Install everything else
 brew install git
+brew install bash-completion
 brew install libjpeg
 brew install macvim --override-system-vim
 brew install optipng
