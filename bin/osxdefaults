@@ -14,6 +14,8 @@
 defaults write com.apple.dock no-glass -bool true
 # Dock: position on the left
 defaults write com.apple.dock orientation left
+# Dock: set the icon size of Dock items to 36 pixels
+defaults write com.apple.dock tilesize -int 36
 # Dock: use the scale effect for window minimizing
 defaults write com.apple.dock mineffect scale
 # Dock: make icons of hidden applications translucent
