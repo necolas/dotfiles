@@ -19,8 +19,7 @@ installed.
 
 ```bash
 git clone git://github.com/necolas/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-bash script/bootstrap
+bash ~/.dotfiles/script/sync
 ```
 
 N.B. This will overwrite any existing dotfiles in your HOME and `.vim`
@@ -32,8 +31,7 @@ This must be done whenever you make a change to `.gitconfig` or pull from the
 remote repo.
 
 ```bash
-cd ~/.dotfiles
-bash script/bootstrap
+bash ~/.dotfiles/script/sync
 ```
 
 
