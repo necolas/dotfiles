@@ -1,8 +1,7 @@
-# .osx
+#!/bin/bash
 
-# Menu bar: show remaining battery time; hide percentage
-defaults write com.apple.menuextra.battery ShowPercent -string "NO"
-defaults write com.apple.menuextra.battery ShowTime -string "YES"
+# Set custom OS X defaults
+
 # Menu bar: disable transparency
 # defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false
 
