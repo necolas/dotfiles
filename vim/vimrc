@@ -63,10 +63,10 @@ if has("wildmenu")
     " Tab autocomplete longest possible part of a string, then list
     set wildmode=longest,list
     if has ("wildignore")
-        set wildignore+=*.a,*.o
-        set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+        set wildignore+=*.a,*.pyc,*.o,*.orig
+        set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png
         set wildignore+=.DS_Store,.git,.hg,.svn
-        set wildignore+=*~,*.swp,*.tmp
+        set wildignore+=*~,*.sw?,*.tmp
     endif
 endif
 
