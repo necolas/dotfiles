@@ -16,8 +16,5 @@ Thumbs.db
 *.pyc
 *.rej
 *.sass-cache
-*.swn
-*.swm
-*.swo
-*.swp
+*.sw?
 *.vi
