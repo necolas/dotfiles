@@ -1,5 +1,8 @@
 # aliases
 
+# Allow aliases to be with sudo
+alias sudo="sudo "
+
 # Easier navigation: .., ..., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
