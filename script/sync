@@ -11,6 +11,9 @@ git submodule --quiet update --init
 # Install Homebrew formulae.
 bash script/homebrew
 
+# Install Node packages.
+bash script/npm
+
 cd "${OLDPWD}"
 
 function link() {
