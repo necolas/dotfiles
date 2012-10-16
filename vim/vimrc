@@ -81,6 +81,9 @@ if has("extra_search")
     set smartcase
 endif
 
+" Show hidden files when using ctrlp
+let g:ctrlp_show_hidden = 1
+
 " Change mapleader
 let mapleader=","
 
