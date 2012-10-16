@@ -21,5 +21,7 @@ export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
 [ -d "$HOME/.rvm/bin" ] && PATH="$PATH:$HOME/.rvm/bin";
 # Add brew-installed GNU core utilities bin
 [ -d "$(brew --prefix coreutils)/libexec/gnubin" ] && PATH="$PATH:$(brew --prefix coreutils)/libexec/gnubin";
+# Add npm-installed package bin:
+[ -d "$(brew --prefix)/share/npm/bin" ] && PATH="$(brew --prefix)/share/npm/bin:$PATH";
 
 export PATH
