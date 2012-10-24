@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # .bash_profile
 
 # Local and private settings not under version control (e.g. git credentials)

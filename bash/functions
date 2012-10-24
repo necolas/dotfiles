@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Start an HTTP server from a directory, optionally specifying the port
 function pyserver() {
     # Get port (if specified)
