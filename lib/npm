@@ -1,0 +1,27 @@
+#!/bin/bash
+
+run_npm() {
+
+    # Check for npm
+    if type_exists 'npm'; then
+        e_header "Installing Node.js packages..."
+
+        # List of npm packages
+        local -a packages=(
+            'bower'
+            'grunt'
+        )
+
+        for index in ${!packages[*]}
+        do
+            # Install packages globally and quietly
+            npm install ${packages[$index]} --global --quiet
+        done
+    else
+        echo
+        e_error "Error: npm not found."
+        echo "Aborting..."
+        exit
+    fi
+
+}

@@ -1,0 +1,122 @@
+#!/bin/bash
+
+DOTFILES_DIRECTORY="${HOME}/.dotfiles"
+
+cd ${DOTFILES_DIRECTORY}
+
+source ./lib/help
+source ./lib/utils
+source ./lib/brew
+source ./lib/npm
+
+# Help text
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    run_help
+    exit
+fi
+
+# Test for known flags
+for opt in $@
+do
+    case $opt in
+        --no-packages) skip_packages=true ;;
+        --no-update) skip_update=true ;;
+        -*|--*) e_warning "Warning: invalid option $opt" ;;
+    esac
+done
+
+# Before relying on Homebrew, check that packages can be compiled
+if ! type_exists 'gcc'; then
+    e_error "The XCode Command Line Tools must be installed first."
+    echo "  https://developer.apple.com/downloads"
+    exit 1
+fi
+
+# Check for Homebrew
+if ! type_exists 'brew'; then
+    e_header "Installing Homebrew..."
+    ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+fi
+
+# Check for git
+if ! type_exists 'git'; then
+    e_header "Updating Homebrew..."
+    brew update
+    e_header "Installing Git..."
+    brew install git
+fi
+
+# Clone the dotfiles if the directory is missing
+if [[ ! -d ${DOTFILES_DIRECTORY} ]] ; then
+    e_header "Downloading dotfiles..."
+    # Clone the GitHub repo
+    git clone --recursive git://github.com/necolas/dotfiles.git ${DOTFILES_DIRECTORY}
+# Otherwise conditionally update repo and/or package installations
+else
+    if [[ $skip_update ]] ; then
+        echo "Skipped dotfiles update."
+    else
+        e_header "Updating dotfiles..."
+        # Pull down the latest changes
+        git pull --rebase origin master
+        # Update submodules
+        git submodule update --recursive --init --quiet
+        # Return to previous working directory
+    fi
+
+    # Install and update packages
+    if [[ $skip_packages ]] ; then
+        echo "Skipped package installations."
+    else
+        echo "Updating packages..."
+        # Install Homebrew formulae
+        run_brew
+        # Install Node packages
+        run_npm
+    fi
+fi
+
+link() {
+    # Force create/replace the symlink.
+    ln -fs "${DOTFILES_DIRECTORY}/${1}" "${HOME}/${2}"
+}
+
+mirrorfiles() {
+    # Copy `.gitconfig`.
+    # Any global git commands in `~/.bash_profile.local` will be written to
+    # `.gitconfig`. This prevents them being committed to the repository.
+    rsync -avz --quiet ${DOTFILES_DIRECTORY}/git/gitconfig  ${HOME}/.gitconfig
+
+    # Force remove the vim directory if it's already there.
+    if [ -e "${HOME}/.vim" ] ; then
+        rm -rf "${HOME}/.vim"
+    fi
+
+    # Create the necessary symbolic links between the `.dotfiles` and `HOME`
+    # directory. The `bash_profile` sources other files directly from the
+    # `.dotfiles` repository.
+    link "bash/bashrc"        ".bashrc"
+    link "bash/bash_profile"  ".bash_profile"
+    link "bash/inputrc"       ".inputrc"
+    link "git/gitattributes"  ".gitattributes"
+    link "git/gitignore"      ".gitignore"
+    link "vim"                ".vim"
+    link "vim/gvimrc"         ".gvimrc"
+    link "vim/vimrc"          ".vimrc"
+
+    e_success "Dotfiles update complete!"
+}
+
+# Verify that the user wants to proceed before potentially overwriting files
+echo
+e_warning "Warning: This may overwrite your existing dotfiles."
+read -p "Continue? (y/n) " -n 1
+echo
+
+if [[ $REPLY =~ ^[Yy]$ ]] ; then
+    mirrorfiles
+    source ${HOME}/.bash_profile
+else
+    echo "Aborting..."
+    exit 1
+fi

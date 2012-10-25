@@ -1,0 +1,57 @@
+#!/bin/bash
+
+run_brew() {
+
+    # Check for Homebrew
+    if type_exists 'brew'; then
+        e_header "Updating Homebrew..."
+        # Use the latest version of Homebrew
+        brew update
+
+        e_header "Updating Homebrew formulae..."
+        # Upgrade any already-installed formulae
+        brew upgrade
+
+        e_header "Installing Homebrew formulae..."
+        local list_formulae
+        local -a missing_formulae
+        local -a desired_formulae=(
+            'coreutils' # GNU core utilities (those that come with OS X are outdated)
+            'git'
+            'ack'
+            'bash-completion'
+            'jpeg'
+            'macvim --override-system-vim'
+            'node'
+            'optipng'
+            'phantomjs'
+            'tree'
+            'wget'
+        )
+
+        for index in ${!desired_formulae[*]}
+        do
+            if ! formula_exists ${desired_formulae[$index]}; then
+                # Store the name (and options) of every missing formula
+                missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
+            fi
+        done
+
+        # Convert the array of missing formula into a list of space-separate strings
+        list_formulae=$( printf "%s " "${missing_formulae[@]}" )
+
+        if [[ "$list_formulae" ]]; then
+            # Install all missing formulae
+            brew install $list_formulae
+        fi
+
+        # Remove outdated versions from the Cellar
+        # brew cleanup
+    else
+        echo
+        e_error "Error: Homebrew not found."
+        echo "Aborting..."
+        exit
+    fi
+
+}

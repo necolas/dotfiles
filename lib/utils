@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Header logging
+e_header() {
+    echo -e "\n$(tput setaf 7)$@$(tput sgr0)";
+}
+
+# Success logging
+e_success() {
+    echo -e "$(tput setaf 64)✓ $@$(tput sgr0)";
+}
+
+# Error logging
+e_error() {
+    echo -e "$(tput setaf 1)x $@$(tput sgr0)";
+}
+
+# Warning logging
+e_warning() {
+    echo -e "$(tput setaf 136)! $@$(tput sgr0)";
+}
+
+# Test whether a command exists
+# $1 - cmd to test
+type_exists() {
+    if [ `type -P $1` ]; then
+      return 0
+    fi
+    return 1
+}
+
+# Test whether a Homebrew formula is already installed
+# $1 - formula name (may include options)
+formula_exists() {
+    if [ `brew list $1 | grep -c 'Error: No such keg'` -ne 0 ]; then
+        return 1
+    fi
+    echo $1 "already installed."
+    return 0
+}
