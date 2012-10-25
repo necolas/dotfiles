@@ -2,28 +2,32 @@
 
 # .bash_profile
 
-# Local and private settings not under version control (e.g. git credentials)
-FILES="$HOME/.bash_profile.local"
-# Exports
-FILES="$FILES $HOME/.dotfiles/bash/exports"
-# Aliases
-FILES="$FILES $HOME/.dotfiles/bash/aliases"
-# Functions
-FILES="$FILES $HOME/.dotfiles/bash/functions"
-# Custom Bash prompt
-FILES="$FILES $HOME/.dotfiles/bash/bash_prompt"
+declare -a files=(
+    "$HOME/.bash_profile.local" # Local and private settings not under version control (e.g. git credentials)
+    "$HOME/.dotfiles/bash/exports" # Exports
+    "$HOME/.dotfiles/bash/aliases" # Aliases
+    "$HOME/.dotfiles/bash/functions" # Functions
+    "$HOME/.dotfiles/bash/bash_prompt" # Custom bash prompt
+    "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+)
 
-# Source all readable files in FILES
-for file in $FILES
+# If these files are readable, source them
+for index in ${!files[*]}
 do
-    [ -r "$file" ] && source "$file"
+    if [ -r ${files[$index]} ]; then
+        source ${files[$index]}
+    fi
 done
 
-# Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+unset files
 
-# Bash completion (installed via Homebrew; source after `brew` is added to PATH)
-[ -r "$(brew --prefix)/etc/bash_completion" ] && source "$(brew --prefix)/etc/bash_completion"
+# Only use `brew` after it has been added to the PATH
+bash_completion_path="$(brew --prefix)/etc/bash_completion"
+
+# Source Bash completion (installed via Homebrew)
+if [[ -r $bash_completion_path ]]; then
+    source $bash_completion_path
+fi
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
