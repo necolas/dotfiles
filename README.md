@@ -1,37 +1,67 @@
-# Dotfiles
+# Dotfiles (Nicolas Gallagher)
 
 My OS X dotfiles.
 
-## Getting started
 
-### Prerequisites
+## Installation
 
-* Git (1.7+)
+You need to install the [XCode Command Line
+Tools](https://developer.apple.com/downloads) prior to installing these
+dotfiles.
 
-### Installation
-
-This will create symlinks for most of the files and the `vim` directory. The
-`.gitconfig` file is copied to the HOME directory so that any private git
-configuration taking place is not accidentally committed.
-
-It will also install various Homebrew formulae if Homebrew is already
-installed.
+The installation step may overwrite existing dotfiles in your HOME and `.vim`
+directories.
 
 ```bash
-git clone git://github.com/necolas/dotfiles.git ~/.dotfiles
-bash ~/.dotfiles/script/sync
+bash -c "$(curl -fsSL https://raw.github.com/necolas/dotfiles/master/bin/dotfiles)"
 ```
 
-N.B. This will overwrite any existing dotfiles in your HOME and `.vim`
-directories that have the same names as those found in this repository.
+The `.gitconfig` file is copied to the HOME directory so that any private git
+configuration taking place is not accidentally committed. Everything else is
+symlinked.
 
-### Updating
 
-This must be done whenever you make a change to `.gitconfig` or pull from the
-remote repo.
+## What else does it install?
+
+via Homebrew
+
+* GNU core utilities
+* [git](http://git-scm.com/)
+* [ack](http://betterthangrep.com/)
+* [bash-completion](http://bash-completion.alioth.debian.org/)
+* libjpeg
+* [macvim](http://code.google.com/p/macvim/)
+* [node](http://nodejs.org/)
+* [optipng](http://optipng.sourceforge.net/)
+* [phantomjs](http://phantomjs.org/)
+* [tree](http://mama.indstate.edu/users/ice/tree/)
+* [wget](http://www.gnu.org/software/wget/)
+
+via npm
+
+* [bower](http://twitter.github.com/bower/)
+* [grunt](http://gruntjs.com/)
+* [jshint](http://www.jshint.com/)
+
+
+## Updating
+
+This must be done when:
+
+* You make a change to `~/.dotfiles/git/gitconfig` (the only file that isn't
+  symlinked).
+* You want to pull and apply changes from the remote repository.
+* You want to update packages.
 
 ```bash
-bash ~/.dotfiles/script/sync
+dotfiles
+```
+
+There are options available to suppress package updates and/or pulling from the
+remote repository.
+
+```bash
+dotfiles --no-packages --no-updates
 ```
 
 
@@ -47,15 +77,6 @@ osxdefaults
 
 
 ## Homebrew
-
-The Homebrew update, formulae upgrade, and formulae installation is done
-automatically during installation (if Homebrew is already installed). It can
-also be carried out independently at any time by doing the following:
-
-```bash
-cd ~/.dotfiles
-bash script/homebrew
-```
 
 If your Homebrew installation is not in `usr/local` then you must add your
 custom location's `bin` to your PATH in your `.bash_profile.local`:
