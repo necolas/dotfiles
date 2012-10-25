@@ -10,6 +10,7 @@ run_npm() {
         local -a packages=(
             'bower'
             'grunt'
+            'jshint'
         )
 
         for index in ${!packages[*]}
