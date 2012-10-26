@@ -37,10 +37,10 @@ run_brew() {
             fi
         done
 
-        # Convert the array of missing formula into a list of space-separate strings
-        list_formulae=$( printf "%s " "${missing_formulae[@]}" )
+        if [[ "$missing_formulae" ]]; then
+            # Convert the array of missing formula into a list of space-separate strings
+            list_formulae=$( printf "%s " "${missing_formulae[@]}" )
 
-        if [[ "$list_formulae" ]]; then
             # Install all missing formulae
             brew install $list_formulae
         fi
