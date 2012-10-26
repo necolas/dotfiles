@@ -32,9 +32,11 @@ type_exists() {
 # Test whether a Homebrew formula is already installed
 # $1 - formula name (may include options)
 formula_exists() {
-    if [ `brew list $1 | grep -c 'Error: No such keg'` -ne 0 ]; then
+    if ! `brew list $1 >/dev/null`; then
+        e_warning "Missing formula: $1"
         return 1
     fi
+
     echo $1 "already installed."
     return 0
 }
