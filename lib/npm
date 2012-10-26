@@ -7,17 +7,12 @@ run_npm() {
         e_header "Installing Node.js packages..."
 
         # List of npm packages
-        local -a packages=(
-            'bower'
-            'grunt'
-            'jshint'
-        )
+        local packages="bower grunt jshint"
 
-        for index in ${!packages[*]}
-        do
-            # Install packages globally and quietly
-            npm install ${packages[$index]} --global --quiet
-        done
+        # Install packages globally and quietly
+        npm install $packages --global --quiet
+
+        [[ $? ]] && e_success "Done"
     else
         echo
         e_error "Error: npm not found."
