@@ -42,6 +42,9 @@
     excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
 
+[credential]
+    helper = osxkeychain
+
 [diff]
     tool = mvimdiff
 
