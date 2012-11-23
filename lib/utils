@@ -2,22 +2,30 @@
 
 # Header logging
 e_header() {
-    echo -e "\n$(tput setaf 7)$@$(tput sgr0)";
+    echo -e "\n$(tput setaf 7)$@$(tput sgr0)"
 }
 
 # Success logging
 e_success() {
-    echo -e "$(tput setaf 64)✓ $@$(tput sgr0)";
+    echo -e "$(tput setaf 64)✓ $@$(tput sgr0)"
 }
 
 # Error logging
 e_error() {
-    echo -e "$(tput setaf 1)x $@$(tput sgr0)";
+    echo -e "$(tput setaf 1)x $@$(tput sgr0)"
 }
 
 # Warning logging
 e_warning() {
-    echo -e "$(tput setaf 136)! $@$(tput sgr0)";
+    echo -e "$(tput setaf 136)! $@$(tput sgr0)"
+}
+
+# Test whether we're in a git repo
+is_git_repo() {
+    if [ `git rev-parse --is-inside-work-tree 2>/dev/null` ]; then
+        return 0
+    fi
+    return 1
 }
 
 # Test whether a command exists
@@ -32,11 +40,11 @@ type_exists() {
 # Test whether a Homebrew formula is already installed
 # $1 - formula name (may include options)
 formula_exists() {
-    if ! `brew list $1 >/dev/null`; then
-        e_warning "Missing formula: $1"
-        return 1
+    if `brew list $1 >/dev/null`; then
+        echo $1 "already installed."
+        return 0
     fi
 
-    echo $1 "already installed."
-    return 0
+    e_warning "Missing formula: $1"
+    return 1
 }
