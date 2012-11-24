@@ -50,7 +50,7 @@ elif [[ "$USER" == "root" ]]; then
 fi
 
 is_git_repo() {
-    git rev-parse --is-inside-work-tree &> /dev/null
+    $(git rev-parse --is-inside-work-tree &> /dev/null)
 }
 
 get_git_branch() {
@@ -77,12 +77,12 @@ function prompt_git() {
     git_info=$(get_git_branch)
 
     # Check for uncommitted changes in the index
-    if ! `git diff --quiet --ignore-submodules --cached`; then
+    if ! $(git diff --quiet --ignore-submodules --cached); then
         uc="+"
     fi
 
     # Check for unstaged changes
-    if ! `git diff-files --quiet --ignore-submodules --`; then
+    if ! $(git diff-files --quiet --ignore-submodules --); then
         us="!"
     fi
 
@@ -92,7 +92,7 @@ function prompt_git() {
     fi
 
     # Check for stashed files
-    if `git rev-parse --verify refs/stash &>/dev/null`; then
+    if $(git rev-parse --verify refs/stash &>/dev/null); then
         st="$"
     fi
 
