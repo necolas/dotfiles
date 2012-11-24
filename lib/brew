@@ -53,9 +53,9 @@ run_brew() {
         # Remove outdated versions from the Cellar
         # brew cleanup
     else
-        echo
+        printf "\n"
         e_error "Error: Homebrew not found."
-        echo "Aborting..."
+        printf "Aborting...\n"
         exit
     fi
 

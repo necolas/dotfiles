@@ -14,9 +14,9 @@ run_npm() {
 
         [[ $? ]] && e_success "Done"
     else
-        echo
+        printf "\n"
         e_error "Error: npm not found."
-        echo "Aborting..."
+        printf "Aborting...\n"
         exit
     fi
 

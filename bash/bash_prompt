@@ -63,7 +63,7 @@ get_git_branch() {
     # Otherwise, just give up
     branch_name="(unknown)"
 
-    echo $branch_name
+    printf $branch_name
 }
 
 # Git status information
@@ -103,7 +103,7 @@ function prompt_git() {
         git_info="$git_info[$git_state]"
     fi
 
-    echo -ne "${SOLAR_WHITE} on ${style_branch}${git_info}"
+    printf "${SOLAR_WHITE} on ${style_branch}${git_info}"
 }
 
 # Build the prompt

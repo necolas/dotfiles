@@ -2,22 +2,22 @@
 
 # Header logging
 e_header() {
-    echo -e "\n$(tput setaf 7)$@$(tput sgr0)"
+    printf "\n$(tput setaf 7)%s$(tput sgr0)\n" "$@"
 }
 
 # Success logging
 e_success() {
-    echo -e "$(tput setaf 64)✓ $@$(tput sgr0)"
+    printf "$(tput setaf 64)✓ %s$(tput sgr0)\n" "$@"
 }
 
 # Error logging
 e_error() {
-    echo -e "$(tput setaf 1)x $@$(tput sgr0)"
+    printf "$(tput setaf 1)x %s$(tput sgr0)\n" "$@"
 }
 
 # Warning logging
 e_warning() {
-    echo -e "$(tput setaf 136)! $@$(tput sgr0)"
+    printf "$(tput setaf 136)! %s$(tput sgr0)\n" "$@"
 }
 
 # Test whether we're in a git repo
@@ -41,7 +41,7 @@ type_exists() {
 # $1 - formula name (may include options)
 formula_exists() {
     if `brew list $1 >/dev/null`; then
-        echo $1 "already installed."
+        printf "%s already installed.\n" "$1"
         return 0
     fi
 
