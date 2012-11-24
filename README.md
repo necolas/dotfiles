@@ -57,12 +57,22 @@ This must be done when:
 dotfiles
 ```
 
-There are options available to suppress package updates and/or pulling from the
-remote repository.
+Options:
 
-```bash
-dotfiles --no-packages --no-updates
-```
+<table>
+    <tr>
+        <td><code>-h</code>, <code>--help</code></td>
+        <td>Help</td>
+    </tr>
+    <tr>
+        <td><code>--no-update</code></td>
+        <td>Suppress pulling from the remote repository</td>
+    </tr>
+    <tr>
+        <td><code>--no-packages</code></td>
+        <td>Suppress package updates</td>
+    </tr>
+</table>
 
 
 ## Custom OS X defaults
