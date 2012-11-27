@@ -34,7 +34,7 @@ for opt in $@
 do
     case $opt in
         --no-packages) skip_packages=true ;;
-        --no-update) skip_update=true ;;
+        --no-sync) skip_sync=true ;;
         -*|--*) e_warning "Warning: invalid option $opt" ;;
     esac
 done
@@ -74,11 +74,11 @@ if ! is_git_repo; then
     git clean -fd
 fi
 
-# Conditionally update repo
-if [[ $skip_update ]]; then
-    printf "Skipped dotfiles update.\n"
+# Conditionally sync with the remote repository
+if [[ $skip_sync ]]; then
+    printf "Skipped dotfiles sync.\n"
 else
-    e_header "Updating dotfiles..."
+    e_header "Syncing dotfiles..."
     # Pull down the latest changes
     git pull --rebase origin master
     # Update submodules

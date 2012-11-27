@@ -37,7 +37,7 @@ Options:
         <td>Help</td>
     </tr>
     <tr>
-        <td><code>--no-update</code></td>
+        <td><code>--no-sync</code></td>
         <td>Suppress pulling from the remote repository</td>
     </tr>
     <tr>
