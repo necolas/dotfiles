@@ -3,58 +3,30 @@
 My OS X dotfiles.
 
 
-## Installation
+## How to install
 
-You need to install the [XCode Command Line
-Tools](https://developer.apple.com/downloads) prior to installing these
-dotfiles.
-
-The installation step may overwrite existing dotfiles in your HOME and `.vim`
-directories.
+The installation step requires the [XCode Command Line
+Tools](https://developer.apple.com/downloads) and may overwrite existing
+dotfiles in your HOME and `.vim` directories.
 
 ```bash
-bash -c "$(curl -fsSL https://raw.github.com/necolas/dotfiles/master/bin/dotfiles)"
+$ bash -c "$(curl -fsSL https://raw.github.com/necolas/dotfiles/master/bin/dotfiles)"
 ```
 
-The `.gitconfig` file is copied to the HOME directory so that any private git
-configuration taking place is not accidentally committed. Everything else is
-symlinked.
 
+## How to update
 
-## What else does it install?
+You should run the update when:
 
-via Homebrew
+* You make a change to `~/.dotfiles/git/gitconfig` (the only file that is
+  copied rather than symlinked).
+* You want to pull changes from the remote repository.
+* You want to update Homebrew formulae and Node packages.
 
-* GNU core utilities
-* [git](http://git-scm.com/)
-* [ack](http://betterthangrep.com/)
-* [bash-completion](http://bash-completion.alioth.debian.org/)
-* libjpeg
-* [macvim](http://code.google.com/p/macvim/)
-* [node](http://nodejs.org/)
-* [optipng](http://optipng.sourceforge.net/)
-* [phantomjs](http://phantomjs.org/)
-* [tree](http://mama.indstate.edu/users/ice/tree/)
-* [wget](http://www.gnu.org/software/wget/)
-
-via npm
-
-* [bower](http://twitter.github.com/bower/)
-* [grunt](http://gruntjs.com/)
-* [jshint](http://www.jshint.com/)
-
-
-## Updating
-
-This must be done when:
-
-* You make a change to `~/.dotfiles/git/gitconfig` (the only file that isn't
-  symlinked).
-* You want to pull and apply changes from the remote repository.
-* You want to update packages.
+Run the dotfiles command:
 
 ```bash
-dotfiles
+$ dotfiles
 ```
 
 Options:
@@ -75,35 +47,93 @@ Options:
 </table>
 
 
-## Custom OS X defaults
+## Features
 
-When setting up a new Mac, you may want to customise your OS X defaults after
-installing the dotfiles. The script to do so can be found in `bin/osxdefaults`,
-is added to the PATH, and can be executed by running:
+### Automatic software installation
 
-```bash
-osxdefaults
-```
+Homebrew formulae:
 
+* GNU core utilities
+* [git](http://git-scm.com/)
+* [ack](http://betterthangrep.com/)
+* [bash-completion](http://bash-completion.alioth.debian.org/)
+* jpeg
+* [macvim](http://code.google.com/p/macvim/)
+* [node](http://nodejs.org/)
+* [optipng](http://optipng.sourceforge.net/)
+* [phantomjs](http://phantomjs.org/)
+* [tree](http://mama.indstate.edu/users/ice/tree/)
+* [wget](http://www.gnu.org/software/wget/)
 
-## Homebrew
+Node packages:
 
-If your Homebrew installation is not in `usr/local` then you must add your
-custom location's `bin` to your PATH in your `.bash_profile.local`:
+* [bower](http://twitter.github.com/bower/)
+* [grunt](http://gruntjs.com/)
+* [jshint](http://www.jshint.com/)
+
+Vim plugins:
+
+* [ctrlp.vim](https://github.com/kien/ctrlp.vim)
+* [html5.vim](https://github.com/othree/html5.vim)
+* [mustache.vim](https://github.com/juvenn/mustache.vim)
+* [syntastic](https://github.com/scrooloose/syntastic)
+* [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+* [vim-git](https://github.com/tpope/vim-git)
+* [vim-haml](https://github.com/tpope/vim-haml)
+* [vim-less](https://github.com/groenewege/vim-less)
+* [vim-markdown](https://github.com/tpope/vim-markdown)
+* [vim-pathogen](https://github.com/tpope/vim-pathogen)
+
+N.B. If your pre-existing Homebrew installation is not in `usr/local` then you
+must add your custom location's `bin` to the PATH in `.bash_profile.local`:
 
 ```bash
 # Add `brew` command's custom location to PATH
 PATH="/opt/acme/bin:$PATH"
 ```
 
+### Custom OS X defaults
 
-## Adding local and private configurations
+Custom OS X settings can be applied by running the following command:
 
-You can create a `~/.bash_profile.local` file to add private and custom
-commands without the need to fork this repository. Any commands included in
-this file will not be under version control or committed to a public
-repository. If `~/.bash_profile.local` exists, it will be sourced for
-inclusion in `bash_profile`.
+```bash
+$ osxdefaults
+```
+
+### Bootable backup-drive script
+
+These dotfiles include a script that will incrementally back up your data to an
+external, bootable clone of your computer's internal drive. First, make sure
+that the value of `DST` in the `bin/backup` script matches the name of your
+backup-drive. Then run the following command:
+
+```bash
+$ backup
+```
+
+For more information on how to prepare your backup-drive, please read the
+preparatory steps in this post on creating a [Mac OS X bootable backup
+drive](http://nicolasgallagher.com/mac-osx-bootable-backup-drive-with-rsync/).
+
+### Custom bash prompt
+
+I use a custom bash prompt based on the Solarized color palette and influenced
+by @gf3's and @cowboy's custom prompts. Details are in the `bash_prompt` file.
+
+Screenshot:
+
+![](http://i.imgur.com/DSJ1G.png)
+
+### Local and private configurations
+
+Any special-case Vim directives local to a machine should be stored in a
+`.vimrc.local` file on that machine. The directives will then be automatically
+imported into your master `.vimrc`.
+
+Any private and custom commands should be stored in a `~/.bash_profile.local`
+file. Any commands included in this file will not be under version control or
+committed to a public repository. If `~/.bash_profile.local` exists, it will be
+sourced for inclusion in `bash_profile`.
 
 Here is an example `~/.bash_profile.local`:
 
@@ -124,33 +154,21 @@ git config --global user.name "$GIT_AUTHOR_NAME"
 git config --global user.email "$GIT_AUTHOR_EMAIL"
 ```
 
-Any special-case vim directives local to a machine should be stored in a
-`.vimrc.local` file on that machine. The directives will then be automatically
-imported into your master `.vimrc`.
-
-
-## Custom bash prompt
-
-I use a custom bash prompt based on the Solarized color palette and influenced
-by @gf3's and @cowboy's custom prompts. Details are in the `bash_prompt` file.
-
-Screenshot:
-
-![](http://i.imgur.com/DSJ1G.png)
+The `git/gitconfig` file is copied to `~/.gitconfig`, so any private git
+configuration specified in `~/.bash_profile.local` will not be committed to
+your dotfiles repository.
 
 
 ## Adding new git submodules
 
-If you want to add more git submodules, e.g. vim plugins to be managed by
+If you want to add more git submodules, e.g. Vim plugins to be managed by
 pathogen, then follow these steps while in the root of the superproject.
 
 ```bash
 # Add the new submodule
 git submodule add git://example.com/remote/path/to/repo.git vim/bundle/one-submodule
-# Initialize the submodule
-git submodule init
-# Clone the submodule
-git submodule update
+# Initialize and clone the submodule
+git submodule update --init
 # Stage the changes
 git add vim/bundle/one-submodule
 # Commit the changes
