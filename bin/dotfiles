@@ -33,8 +33,8 @@ fi
 for opt in $@
 do
     case $opt in
-        --no-packages) skip_packages=true ;;
-        --no-sync) skip_sync=true ;;
+        --no-packages) no_packages=true ;;
+        --no-sync) no_sync=true ;;
         -*|--*) e_warning "Warning: invalid option $opt" ;;
     esac
 done
@@ -68,14 +68,14 @@ if ! is_git_repo; then
     git remote add origin ${DOTFILES_GIT_REMOTE}
     git fetch origin master
     # Reset the index and working tree to the fetched HEAD
-    # (submodules are cloned in the preceding update state)
+    # (submodules are cloned in the subsequent sync step)
     git reset --hard FETCH_HEAD
     # Remove any untracked files
     git clean -fd
 fi
 
 # Conditionally sync with the remote repository
-if [[ $skip_sync ]]; then
+if [[ $no_sync ]]; then
     printf "Skipped dotfiles sync.\n"
 else
     e_header "Syncing dotfiles..."
@@ -86,7 +86,7 @@ else
 fi
 
 # Install and update packages
-if [[ $skip_packages ]]; then
+if [[ $no_packages ]]; then
     printf "Skipped package installations.\n"
 else
     printf "Updating packages...\n"
