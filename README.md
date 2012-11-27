@@ -37,12 +37,12 @@ Options:
         <td>Help</td>
     </tr>
     <tr>
-        <td><code>--no-sync</code></td>
-        <td>Suppress pulling from the remote repository</td>
-    </tr>
-    <tr>
         <td><code>--no-packages</code></td>
         <td>Suppress package updates</td>
+    </tr>
+    <tr>
+        <td><code>--no-sync</code></td>
+        <td>Suppress pulling from the remote repository</td>
     </tr>
 </table>
 
