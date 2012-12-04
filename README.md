@@ -10,7 +10,7 @@ Tools](https://developer.apple.com/downloads) and may overwrite existing
 dotfiles in your HOME and `.vim` directories.
 
 ```bash
-$ bash -c "$(curl -fsSL https://raw.github.com/necolas/dotfiles/master/bin/dotfiles)"
+$ bash -c "$(curl -fsSL raw.github.com/necolas/dotfiles/master/bin/dotfiles)"
 ```
 
 
@@ -94,7 +94,8 @@ PATH="/opt/acme/bin:$PATH"
 
 ### Custom OS X defaults
 
-Custom OS X settings can be applied by running the following command:
+Custom OS X settings can be applied during the `dotfiles` process. They can
+also be applied independently by running the following command:
 
 ```bash
 $ osxdefaults
@@ -111,7 +112,7 @@ backup-drive. Then run the following command:
 $ backup
 ```
 
-For more information on how to prepare your backup-drive, please read the
+For more information on how to setup your backup-drive, please read the
 preparatory steps in this post on creating a [Mac OS X bootable backup
 drive](http://nicolasgallagher.com/mac-osx-bootable-backup-drive-with-rsync/).
 

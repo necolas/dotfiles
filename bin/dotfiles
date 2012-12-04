@@ -127,9 +127,9 @@ mirrorfiles() {
     e_success "Dotfiles update complete!"
 }
 
-# Verify that the user wants to proceed before potentially overwriting files
+# Verify that you want to proceed before potentially overwriting files
 printf "\n"
-e_warning "Warning: This may overwrite your existing dotfiles."
+e_warning "Warning: This step may overwrite your existing dotfiles."
 read -p "Continue? (y/n) " -n 1
 printf "\n"
 
@@ -139,4 +139,15 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 else
     printf "Aborting...\n"
     exit 1
+fi
+
+# Verify that you want to update your OS X defaults
+printf "\n"
+e_warning "Warning: This step may modify your OS X system defaults."
+read -p "Continue? (y/n) " -n 1
+printf "\n"
+
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    bash ./bin/osxdefaults
+    e_success "OS X settings updated! You may need to restart."
 fi
