@@ -2,8 +2,8 @@
 
 " Hide the MacVim toolbar
 set go-=T
-" Always display the tab bar
-set showtabline
+" Display the tab bar if there is more than one tab
+set showtabline=1
 " Turn off the blinking cursor in normal mode
 set gcr=n:blinkon0
 " Set 5px space between lines
