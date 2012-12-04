@@ -119,7 +119,33 @@ drive](http://nicolasgallagher.com/mac-osx-bootable-backup-drive-with-rsync/).
 ### Custom bash prompt
 
 I use a custom bash prompt based on the Solarized color palette and influenced
-by @gf3's and @cowboy's custom prompts. Details are in the `bash_prompt` file.
+by @gf3's and @cowboy's custom prompts.
+
+When your current working directory is a Git repository, the prompt will
+display the checked-out branch's name (and failing that, the commit SHA that
+HEAD is pointing to). The state of the working tree is reflected in the
+following way:
+
+<table>
+    <tr>
+        <td><code>+</code></td>
+        <td>Uncommitted changes in the index</td>
+    </tr>
+    <tr>
+        <td><code>!</code></td>
+        <td>Unstaged changes</td>
+    </tr>
+    <tr>
+        <td><code>?</code></td>
+        <td>Untracked files</td>
+    </tr>
+    <tr>
+        <td><code>$</code></td>
+        <td>Stashed files</td>
+    </tr>
+</table>
+
+Further details are in the `bash_prompt` file.
 
 Screenshot:
 
