@@ -19,6 +19,7 @@ fi
 cd ${DOTFILES_DIRECTORY}
 
 source ./lib/help
+source ./lib/list
 source ./lib/utils
 source ./lib/brew
 source ./lib/npm
@@ -28,6 +29,13 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then
     run_help
     exit
 fi
+
+# List additional software to install
+if [[ "$1" == "-l" || "$1" == "--list" ]]; then
+    run_list
+    exit
+fi
+
 
 # Test for known flags
 for opt in $@
