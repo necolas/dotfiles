@@ -37,6 +37,10 @@ Options:
         <td>Help</td>
     </tr>
     <tr>
+        <td><code>-l</code>, <code>--list</code></td>
+        <td>List additional Application to install</td>
+    </tr>
+    <tr>
         <td><code>--no-packages</code></td>
         <td>Suppress package updates</td>
     </tr>
