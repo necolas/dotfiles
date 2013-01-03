@@ -20,6 +20,22 @@ e_warning() {
     printf "$(tput setaf 136)! %s$(tput sgr0)\n" "$@"
 }
 
+# Ask for confirmation before proceeding
+e_ask() {
+    printf "\n"
+    e_warning "$@"
+    read -p "Continue? (y/n) " -n 1
+    printf "\n"
+}
+
+# Test whether the result of an 'ask' is a confirmation
+is_confirmed() {
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+      return 0
+    fi
+    return 1
+}
+
 # Test whether we're in a git repo
 is_git_repo() {
     $(git rev-parse --is-inside-work-tree &> /dev/null)
