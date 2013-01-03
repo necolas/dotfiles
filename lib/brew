@@ -51,7 +51,7 @@ run_brew() {
         fi
 
         # Remove outdated versions from the Cellar
-        # brew cleanup
+        brew cleanup
     else
         printf "\n"
         e_error "Error: Homebrew not found."
