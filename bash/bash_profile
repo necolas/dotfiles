@@ -4,9 +4,9 @@
 
 declare -a files=(
     "$HOME/.bash_profile.local" # Local and private settings not under version control (e.g. git credentials)
-    "$HOME/.dotfiles/bash/exports" # Exports
-    "$HOME/.dotfiles/bash/aliases" # Aliases
-    "$HOME/.dotfiles/bash/functions" # Functions
+    "$HOME/.dotfiles/bash/bash_exports" # Exports
+    "$HOME/.dotfiles/bash/bash_aliases" # Aliases
+    "$HOME/.dotfiles/bash/bash_functions" # Functions
     "$HOME/.dotfiles/bash/bash_prompt" # Custom bash prompt
     "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 )
