@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Set custom OS X defaults
+# See: github.com/mathiasbynens/dotfiles
 
 # General UI/UX
 # ----------------------------------------------------------------------
