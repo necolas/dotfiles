@@ -53,6 +53,10 @@ is_git_repo() {
     $(git rev-parse --is-inside-work-tree &> /dev/null)
 }
 
+is_git_dir() {
+    $(git rev-parse --is-inside-git-dir 2> /dev/null)
+}
+
 get_git_branch() {
     local branch_name
 
@@ -70,7 +74,7 @@ get_git_branch() {
 function prompt_git() {
     local git_info git_state uc us ut st
 
-    if ! is_git_repo; then
+    if ! is_git_repo || is_git_dir; then
         return 1
     fi
 
