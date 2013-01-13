@@ -84,6 +84,7 @@ Vim plugins:
 * [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
 * [vim-git](https://github.com/tpope/vim-git)
 * [vim-haml](https://github.com/tpope/vim-haml)
+* [vim-javascript](https://github.com/pangloss/vim-javascript)
 * [vim-less](https://github.com/groenewege/vim-less)
 * [vim-markdown](https://github.com/tpope/vim-markdown)
 * [vim-pathogen](https://github.com/tpope/vim-pathogen)
