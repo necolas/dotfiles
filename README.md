@@ -13,6 +13,9 @@ dotfiles in your HOME and `.vim` directories.
 $ bash -c "$(curl -fsSL raw.github.com/necolas/dotfiles/master/bin/dotfiles)"
 ```
 
+N.B. If you fork this project, you will want to edit the URLs of the Git
+repository and remote found at the top of `bin/dotfiles` to match those of your
+fork.
 
 ## How to update
 
