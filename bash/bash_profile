@@ -3,19 +3,19 @@
 # bash_profile
 
 declare -a files=(
-    "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-    "$HOME/.dotfiles/bash/bash_config" # Configuration
-    "$HOME/.dotfiles/bash/bash_aliases" # Aliases
-    "$HOME/.dotfiles/bash/bash_functions" # Functions
-    "$HOME/.dotfiles/bash/bash_prompt" # Custom bash prompt
-    "$HOME/.bash_profile.local" # Local and private settings not under version control (e.g. git credentials)
-    "$HOME/.dotfiles/bash/bash_paths" # Path modifications (must source after `.bash_profile.local` in case of custom `brew` location)
+    $HOME/.rvm/scripts/rvm # Load RVM into a shell session *as a function*
+    $HOME/.dotfiles/bash/bash_config # Configuration
+    $HOME/.dotfiles/bash/bash_aliases # Aliases
+    $HOME/.dotfiles/bash/functions/* # Functions
+    $HOME/.dotfiles/bash/bash_prompt # Custom bash prompt
+    $HOME/.bash_profile.local # Local and private settings not under version control (e.g. git credentials)
+    $HOME/.dotfiles/bash/bash_paths # Path modifications (must source after `.bash_profile.local` in case of custom `brew` location)
 )
 
 # If these files are readable, source them
 for index in ${!files[*]}
 do
-    if [ -r ${files[$index]} ]; then
+    if [[ -r ${files[$index]} ]]; then
         source ${files[$index]}
     fi
 done
