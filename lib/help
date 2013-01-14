@@ -3,12 +3,13 @@
 run_help() {
 
 cat <<EOT
-
 OS X dotfiles - Nicolas Gallagher - http://nicolasgallagher.com/
 
 Usage: $(basename "$0") [options]
 
 Options:
+    -h, --help      Print this help text
+    -l, --list      Print a list of additional software to install
     --no-packages   Suppress package updates
     --no-sync       Suppress pulling from the remote repository
 
