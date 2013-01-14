@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# inputrc
+
 # Use case-insensitive TAB autocompletion
 set completion-ignore-case on
 

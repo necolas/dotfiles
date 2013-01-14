@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# .bash_profile
+# bash_profile
 
 declare -a files=(
     "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Configuration
+# bash_config
 
 # Make vim the default editor
 export EDITOR="vim"

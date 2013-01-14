@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# aliases
+# bash_aliases
 
 # Allow aliases to be with sudo
 alias sudo="sudo "
