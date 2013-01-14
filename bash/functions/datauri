@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Create a data URI from a file and copy it to the pasteboard
-function datauri() {
+datauri() {
     local mimeType=$(file -b --mime-type "$1")
     if [[ $mimeType == text/* ]]; then
         mimeType="${mimeType};charset=utf-8"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Compare original and gzipped file size
-function gz() {
+gz() {
     local origsize=$(wc -c < "$1")
     local gzipsize=$(gzip -c "$1" | wc -c)
     local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l)

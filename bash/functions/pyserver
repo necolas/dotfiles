@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start an HTTP server from a directory, optionally specifying the port
-function pyserver() {
+pyserver() {
     # Get port (if specified)
     local port="${1:-8000}"
 
