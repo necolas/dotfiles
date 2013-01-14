@@ -136,7 +136,7 @@ mirrorfiles() {
 }
 
 # Ask before potentially overwriting files
-e_ask "Warning: This step may overwrite your existing dotfiles."
+seek_confirmation "Warning: This step may overwrite your existing dotfiles."
 
 if is_confirmed; then
     mirrorfiles
@@ -147,7 +147,7 @@ else
 fi
 
 # Ask before potentially overwriting OS X defaults
-e_ask "Warning: This step may modify your OS X system defaults."
+seek_confirmation "Warning: This step may modify your OS X system defaults."
 
 if is_confirmed; then
     bash ./bin/osxdefaults
