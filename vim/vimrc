@@ -131,11 +131,6 @@ if exists("&undodir")
 endif
 set viminfo+=n$HOME/.vim/.viminfo
 
-" Load local machine settings if they exist
-if filereadable(glob("$HOME/.vimrc.local"))
-    source $HOME/.vimrc.local
-endif
-
 " Strip trailing whitespace (,$)
 noremap <leader>$ :call StripTrailingWhitespace()<CR>
 
@@ -147,3 +142,8 @@ vnoremap <C-y> 3<C-y>
 
 " Make `Y` work from the cursor to the end of line (which is more logical)
 nnoremap Y y$
+
+" Load local machine settings if they exist
+if filereadable(glob("$HOME/.vimrc.local"))
+    source $HOME/.vimrc.local
+endif
