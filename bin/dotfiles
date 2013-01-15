@@ -4,7 +4,7 @@ DOTFILES_DIRECTORY="${HOME}/.dotfiles"
 DOTFILES_TARBALL_PATH="https://github.com/necolas/dotfiles/tarball/master"
 DOTFILES_GIT_REMOTE="https://github.com/necolas/dotfiles"
 
-# Download and extract the repository to the home directory if the directory is missing
+# If missing, download and extract the dotfiles repository
 if [[ ! -d ${DOTFILES_DIRECTORY} ]]; then
     printf "$(tput setaf 7)Downloading dotfiles...\033[m\n"
     mkdir ${DOTFILES_DIRECTORY}
@@ -35,7 +35,6 @@ if [[ "$1" == "-l" || "$1" == "--list" ]]; then
     run_list
     exit
 fi
-
 
 # Test for known flags
 for opt in $@

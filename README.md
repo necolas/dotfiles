@@ -13,9 +13,9 @@ dotfiles in your HOME and `.vim` directories.
 $ bash -c "$(curl -fsSL raw.github.com/necolas/dotfiles/master/bin/dotfiles)"
 ```
 
-N.B. If you fork this project, you will want to edit the URLs of the Git
-repository and remote found at the top of `bin/dotfiles` to match those of your
-fork.
+N.B. If you wish to fork this project and maintain your own dotfiles, you must
+substitute my username for your own in the above command and the 2 variables
+found at the top of the `bin/dotfiles` script.
 
 ## How to update
 
@@ -41,7 +41,7 @@ Options:
     </tr>
     <tr>
         <td><code>-l</code>, <code>--list</code></td>
-        <td>List additional Application to install</td>
+        <td>List of additional applications to install</td>
     </tr>
     <tr>
         <td><code>--no-packages</code></td>
@@ -92,8 +92,9 @@ Vim plugins:
 * [vim-markdown](https://github.com/tpope/vim-markdown)
 * [vim-pathogen](https://github.com/tpope/vim-pathogen)
 
-N.B. If your pre-existing Homebrew installation is not in `usr/local` then you
-must add your custom location's `bin` to the PATH in `.bash_profile.local`:
+N.B. If your pre-existing Homebrew installation is not in `/usr/local` then you
+must prepend your custom installation's `bin` to the PATH in
+`.bash_profile.local`:
 
 ```bash
 # Add `brew` command's custom location to PATH
@@ -198,12 +199,12 @@ your dotfiles repository.
 
 ## Adding new git submodules
 
-If you want to add more git submodules, e.g. Vim plugins to be managed by
+If you want to add more git submodules, e.g., Vim plugins to be managed by
 pathogen, then follow these steps while in the root of the superproject.
 
 ```bash
 # Add the new submodule
-git submodule add git://example.com/remote/path/to/repo.git vim/bundle/one-submodule
+git submodule add https://example.com/remote/path/to/repo.git vim/bundle/one-submodule
 # Initialize and clone the submodule
 git submodule update --init
 # Stage the changes
