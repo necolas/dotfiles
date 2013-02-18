@@ -75,7 +75,7 @@ Homebrew formulae:
 Node packages:
 
 * [bower](http://twitter.github.com/bower/)
-* [grunt](http://gruntjs.com/)
+* [grunt-cli](http://gruntjs.com/)
 * [jshint](http://www.jshint.com/)
 
 Vim plugins:
