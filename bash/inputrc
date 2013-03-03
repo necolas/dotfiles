@@ -6,12 +6,12 @@
 set completion-ignore-case on
 
 # Auto list tab completions (use instead of TAB-cycling)
-# set show-all-if-ambiguous on
+set show-all-if-ambiguous on
 
 # Make TAB cycle through possible completions
-"\t": menu-complete
+# "\t": menu-complete
 # Make SHIFT-TAB reverse cycle through possible completions
-"\e[Z": "\e-1\C-i"
+# "\e[Z": "\e-1\C-i"
 
 # Use the string that has already been typed as the prefix for searching
 # through commands (i.e. more intelligent Up/Down-arrow behavior)
