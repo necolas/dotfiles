@@ -2,15 +2,19 @@
 
 # Disc backup script
 
+# Ask for the administrator password upfront
+sudo -v
+
 # IMPORTANT: Make sure you update the `DST` variable to match the name of the
 # destination backup drive
+
+DST="/Volumes/Macintosh HD/"
+SRC="/"
+EXCLUDE="$HOME/.dotfiles/backup_excludes.txt"
 
 PROG=$0
 RSYNC="/usr/bin/rsync"
 LOGGER="/usr/bin/logger"
-SRC="/"
-DST="/Volumes/Macintosh HD/"
-EXCLUDE="$HOME/.dotfiles/backup_excludes.txt"
 
 # --verbose                increase verbosity
 # --archive                turn on archive mode (recursive copy + retain attributes)
