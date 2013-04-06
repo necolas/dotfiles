@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# bash_exports
+
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell
+
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# bash_config
+# bash_exports
 
 # Make vim the default editor
 export EDITOR="vim"
@@ -15,12 +15,3 @@ export HISTCONTROL=ignoredups
 
 # Make some commands not show up in history
 export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
-
-# Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob
-
-# Append to the Bash history file, rather than overwriting it
-shopt -s histappend
-
-# Autocorrect typos in path names when using `cd`
-shopt -s cdspell
