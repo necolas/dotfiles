@@ -1,17 +1,23 @@
 #!/bin/bash
 
-# bash_exports
+# bash_config
 
 # Make vim the default editor
 export EDITOR="vim"
 
-# Don't clear the screen after quitting a manual page
-export MANPAGER="less -X"
-
-# Larger bash history (allow 32³ entries; default is 500)
-export HISTSIZE=32768
-export HISTFILESIZE=$HISTSIZE
+# Ignore duplicate commands in the history
 export HISTCONTROL=ignoredups
+
+# Increase the maximum number of lines contained in the history file
+# (default is 500)
+export HISTFILESIZE=10000
+
+# Increase the maximum number of commands to remember
+# (default is 500)
+export HISTSIZE=10000
 
 # Make some commands not show up in history
 export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
+
+# Don't clear the screen after quitting a manual page
+export MANPAGER="less -X"
