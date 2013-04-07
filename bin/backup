@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Disc backup script
+# Requires rsync 3
 
 # Ask for the administrator password upfront
 sudo -v
@@ -13,43 +14,43 @@ SRC="/"
 EXCLUDE="$HOME/.dotfiles/backup_excludes.txt"
 
 PROG=$0
-RSYNC="/usr/bin/rsync"
-LOGGER="/usr/bin/logger"
 
-# --verbose                increase verbosity
+# --acls                   update the destination ACLs to be the same as the source ACLs
 # --archive                turn on archive mode (recursive copy + retain attributes)
-# --one-file-system        don't cross device boundaries (ignore mounted volumes)
-# --sparse                 handle spare files efficiently
-# --hard-links             preserve hard-links
-# --extended-attributes    preserve ACLs and Resource Forks
 # --delete                 delete any files that have been deleted locally
 # --delete-excluded        delete any files (on DST) that are part of the list of excluded files
 # --exclude-from           reference a list of files to exclude
+# --hard-links             preserve hard-links
+# --one-file-system        don't cross device boundaries (ignore mounted volumes)
+# --sparse                 handle spare files efficiently
+# --verbose                increase verbosity
+# --xattrs                 update the remote extended attributes to be the same as the local ones
 
 if [ ! -r "$SRC" ]; then
-    $LOGGER -t $PROG "Source $SRC not readable - Cannot start the sync process"
+    logger -t $PROG "Source $SRC not readable - Cannot start the sync process"
     exit;
 fi
 
 if [ ! -w "$DST" ]; then
-    $LOGGER -t $PROG "Destination $DST not writeable - Cannot start the sync process"
+    logger -t $PROG "Destination $DST not writeable - Cannot start the sync process"
     exit;
 fi
 
 $LOGGER -t $PROG "Start rsync"
 
-sudo $RSYNC --verbose \
-            --archive \
-            --one-file-system \
-            --sparse \
-            --hard-links \
-            --extended-attributes \
-            --delete \
-            --delete-excluded \
-            --exclude-from=$EXCLUDE \
-            "$SRC" "$DST"
+sudo rsync --acls \
+           --archive \
+           --delete \
+           --delete-excluded \
+           --exclude-from=$EXCLUDE \
+           --hard-links \
+           --one-file-system \
+           --sparse \
+           --verbose \
+           --xattrs \
+           "$SRC" "$DST"
 
-$LOGGER -t $PROG "End rsync"
+logger -t $PROG "End rsync"
 
 # Make the backup bootable
 sudo bless -folder "$DST"/System/Library/CoreServices
