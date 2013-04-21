@@ -32,8 +32,9 @@
     # Short format diffstat log
     logsf = log --stat --format=oneline --abbrev-commit
 
-    # Display the number of commits per author in numerical order
-    who = shortlog -sn --
+    # Find out who is currently active on the repository
+    # Displays committers in descending order of number of commits
+    who = shortlog --numbered --summary --email --no-merges --since="3 months"
 
 [color]
     # color opts: normal, black, red, green, yellow, blue, magenta, cyan, or white
