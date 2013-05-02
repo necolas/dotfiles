@@ -78,6 +78,9 @@ prompt_git() {
         return 1
     fi
 
+    # ensure index is up to date
+    git update-index --really-refresh  -q &>/dev/null
+    
     git_info=$(get_git_branch)
 
     # Check for uncommitted changes in the index
