@@ -74,9 +74,11 @@ Homebrew formulae:
 
 Node packages:
 
-* [bower](http://twitter.github.com/bower/)
+* [bower](http://bower.io/)
 * [grunt-cli](http://gruntjs.com/)
 * [jshint](http://www.jshint.com/)
+* [karma](http://karma-runner.github.io/)
+* [yo](http://yeoman.io/)
 
 Vim plugins:
 
