@@ -9,4 +9,4 @@ set gcr=n:blinkon0
 " Set 5px space between lines
 set linespace=5
 " Set GUI font
-set guifont=Monaco:h14
+set guifont=Monaco:h13
