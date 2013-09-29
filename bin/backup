@@ -36,7 +36,7 @@ if [ ! -w "$DST" ]; then
     exit;
 fi
 
-$LOGGER -t $PROG "Start rsync"
+logger -t $PROG "Start rsync"
 
 sudo rsync --acls \
            --archive \
