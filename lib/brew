@@ -29,7 +29,6 @@ run_brew() {
             'phantomjs'
             'tree'
             'wget'
-            'https://raw.github.com/Homebrew/homebrew-dupes/master/rsync.rb' # Avoid using any custom OS X version of rsync
         )
 
         for index in ${!desired_formulae[*]}
@@ -50,6 +49,10 @@ run_brew() {
 
             [[ $? ]] && e_success "Done"
         fi
+
+        # use latest rsync rather than out-dated OS X rsync
+        # install separately from the main formulae list to fix gh-19
+        brew install https://raw.github.com/Homebrew/homebrew-dupes/master/rsync.rb
 
         # Remove outdated versions from the Cellar
         brew cleanup
