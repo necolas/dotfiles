@@ -69,6 +69,7 @@ Homebrew formulae:
 * [node](http://nodejs.org/)
 * [optipng](http://optipng.sourceforge.net/)
 * [phantomjs](http://phantomjs.org/)
+* rsync (latest version, rather than the out-dated OS X installation)
 * [tree](http://mama.indstate.edu/users/ice/tree/)
 * [wget](http://www.gnu.org/software/wget/)
 
