@@ -124,6 +124,7 @@ mirrorfiles() {
     # `.dotfiles` repository.
     link "bash/bashrc"        ".bashrc"
     link "bash/bash_profile"  ".bash_profile"
+    link "bash/curlrc"        ".curlrc"
     link "bash/inputrc"       ".inputrc"
     link "git/gitattributes"  ".gitattributes"
     link "git/gitignore"      ".gitignore"
