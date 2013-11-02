@@ -60,3 +60,6 @@
     # ref: http://linux.die.net/man/1/git-log
     # Result: <short-sha> <commit-message> (<pointer-names>) -- <commit-author-name>; <relative-time>
     nice = "%C(yellow)%h%C(reset) %C(white)%s%C(cyan)%d%C(reset) -- %an; %ar"
+
+[push]
+    default = simple
