@@ -5,13 +5,13 @@
 load_dotfiles() {
     declare -a files=(
         $HOME/.rvm/scripts/rvm # Load RVM into a shell session *as a function*
-        $HOME/.dotfiles/bash/bash_options # Options
-        $HOME/.dotfiles/bash/bash_exports # Exports
-        $HOME/.dotfiles/bash/bash_aliases # Aliases
-        $HOME/.dotfiles/bash/functions/* # Functions
-        $HOME/.dotfiles/bash/bash_prompt # Custom bash prompt
+        $HOME/.dotfiles/shell/bash_options # Options
+        $HOME/.dotfiles/shell/bash_exports # Exports
+        $HOME/.dotfiles/shell/bash_aliases # Aliases
+        $HOME/.dotfiles/shell/functions/* # Functions
+        $HOME/.dotfiles/shell/bash_prompt # Custom bash prompt
         $HOME/.bash_profile.local # Local and private settings not under version control (e.g. git credentials)
-        $HOME/.dotfiles/bash/bash_paths # Path modifications (must source after `.bash_profile.local` in case of custom `brew` location)
+        $HOME/.dotfiles/shell/bash_paths # Path modifications (must source after `.bash_profile.local` in case of custom `brew` location)
     )
 
     # if these files are readable, source them

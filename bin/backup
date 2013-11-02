@@ -55,4 +55,7 @@ logger -t $PROG "End rsync"
 # Make the backup bootable
 sudo bless -folder "$DST"/System/Library/CoreServices
 
+# Update the backup's cache
+# sudo update_dyld_shared_cache -force -root "$DST"
+
 exit 0
