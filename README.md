@@ -65,6 +65,8 @@ Homebrew formulae:
 * [ack](http://betterthangrep.com/)
 * bash (latest version)
 * [bash-completion](http://bash-completion.alioth.debian.org/)
+* ffmpeg
+* graphicsmagick
 * jpeg
 * [macvim](http://code.google.com/p/macvim/)
 * [node](http://nodejs.org/)
@@ -77,6 +79,7 @@ Homebrew formulae:
 Node packages:
 
 * [bower](http://bower.io/)
+* [gify](https://github.com/visionmedia/node-gify)
 * [grunt-cli](http://gruntjs.com/)
 * [jshint](http://www.jshint.com/)
 * [karma](http://karma-runner.github.io/)

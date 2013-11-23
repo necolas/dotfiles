@@ -23,6 +23,8 @@ run_brew() {
             'ack'
             'bash'
             'bash-completion'
+            'ffmpeg'
+            'graphicsmagick'
             'jpeg'
             'macvim --override-system-vim'
             'node'
