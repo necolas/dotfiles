@@ -12,7 +12,8 @@
     adda = !git add -A && git status
 
     # Fetch a repository ($1) and checkout its ref ($2) HEAD
-    browse = !bash -c 'git fetch "$1" "$2" && git checkout FETCH_HEAD' -
+    # Use: `git browse https://github.com/necolas/dotfiles <commit-ish>`
+    browse = !bash -c 'git fetch $1 ${2:-HEAD} && git checkout FETCH_HEAD' -
 
     # Diff what is staged for the next commit
     diffc = diff --cached
@@ -31,6 +32,10 @@
     logst = log --stat
     # Short format diffstat log
     logsf = log --stat --format=oneline --abbrev-commit
+
+    # Fetch and checkout a GitHub Pull Request from a remote (defaults to `origin`)
+    # Use: `git gh-pr 123` or `git gh-pr 123 upstream`
+    gh-pr = !bash -c 'git fetch -fu ${2:-origin} refs/pull/$1/head:gh-pr/$1 && git checkout gh-pr/$1' -
 
     # Find out who is currently active on the repository
     # Displays committers in descending order of number of commits
