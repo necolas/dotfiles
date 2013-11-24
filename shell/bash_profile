@@ -4,14 +4,16 @@
 
 load_dotfiles() {
     declare -a files=(
+        $HOME/.dotfilesrc # Up-front dotfiles configuration
         $HOME/.rvm/scripts/rvm # Load RVM into a shell session *as a function*
         $HOME/.dotfiles/shell/bash_options # Options
         $HOME/.dotfiles/shell/bash_exports # Exports
         $HOME/.dotfiles/shell/bash_aliases # Aliases
         $HOME/.dotfiles/shell/functions/* # Functions
         $HOME/.dotfiles/shell/bash_prompt # Custom bash prompt
+        $HOME/.dotfiles/shell/bash_paths # Path modifications
+        $(brew --prefix)/etc/bash_completion # Bash completion (installed via Homebrew)
         $HOME/.bash_profile.local # Local and private settings not under version control (e.g. git credentials)
-        $HOME/.dotfiles/shell/bash_paths # Path modifications (must source after `.bash_profile.local` in case of custom `brew` location)
     )
 
     # if these files are readable, source them
@@ -22,12 +24,6 @@ load_dotfiles() {
         fi
     done
 }
-
-# source Bash completion (installed via Homebrew)
-# only use `brew` after it has been added to the PATH
-if [[ -r $(brew --prefix)/etc/bash_completion ]]; then
-    source $(brew --prefix)/etc/bash_completion
-fi
 
 # set 256 color profile where possible
 if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
