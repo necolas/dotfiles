@@ -63,6 +63,7 @@ Homebrew formulae:
 * GNU core utilities
 * [git](http://git-scm.com/)
 * [ack](http://betterthangrep.com/)
+* bash (latest version)
 * [bash-completion](http://bash-completion.alioth.debian.org/)
 * jpeg
 * [macvim](http://code.google.com/p/macvim/)

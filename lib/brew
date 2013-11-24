@@ -21,6 +21,7 @@ run_brew() {
             'coreutils' # GNU core utilities (those that come with OS X are outdated)
             'git'
             'ack'
+            'bash'
             'bash-completion'
             'jpeg'
             'macvim --override-system-vim'
