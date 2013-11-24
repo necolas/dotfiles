@@ -95,15 +95,6 @@ Vim plugins:
 * [vim-markdown](https://github.com/tpope/vim-markdown)
 * [vim-pathogen](https://github.com/tpope/vim-pathogen)
 
-N.B. If your pre-existing Homebrew installation is not in `/usr/local` then you
-must prepend your custom installation's `bin` to the PATH in
-`.bash_profile.local`:
-
-```bash
-# Add `brew` command's custom location to PATH
-PATH="/opt/acme/bin:$PATH"
-```
-
 ### Custom OS X defaults
 
 Custom OS X settings can be applied during the `dotfiles` process. They can
@@ -115,10 +106,10 @@ $ osxdefaults
 
 ### Bootable backup-drive script
 
-These dotfiles include a script that will incrementally back up your data to an
-external, bootable clone of your computer's internal drive. First, make sure
-that the value of `DST` in the `bin/backup` script matches the name of your
-backup-drive. Then run the following command:
+These dotfiles include a script that uses `rync` to incrementally back up your
+data to an external, bootable clone of your computer's internal drive. First,
+make sure that the value of `DST` in the `bin/backup` script matches the name
+of your backup-drive. Then run the following command:
 
 ```bash
 $ backup
@@ -165,14 +156,14 @@ Screenshot:
 
 ![](http://i.imgur.com/DSJ1G.png)
 
-### Local and private configurations
+### Local/private Bash and Vim configuration
 
 Any special-case Vim directives local to a machine should be stored in a
-`.vimrc.local` file on that machine. The directives will then be automatically
+`~/.vimrc.local` file on that machine. The directives will then be automatically
 imported into your master `.vimrc`.
 
-Any private and custom commands should be stored in a `~/.bash_profile.local`
-file. Any commands included in this file will not be under version control or
+Any private and custom Bash commands and configuration should be placed in a
+`~/.bash_profile.local` file. This file will not be under version control or
 committed to a public repository. If `~/.bash_profile.local` exists, it will be
 sourced for inclusion in `bash_profile`.
 
@@ -194,13 +185,23 @@ GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 git config --global user.name "$GIT_AUTHOR_NAME"
 git config --global user.email "$GIT_AUTHOR_EMAIL"
 
-# Export PhantomJS bin location for custom Homebrew directory
-export PHANTOMJS_BIN="$(brew --prefix)/bin/phantomjs"
+# Aliases
+alias code="cd ~/Code"
 ```
 
-The `git/gitconfig` file is copied to `~/.gitconfig`, so any private git
-configuration specified in `~/.bash_profile.local` will not be committed to
+N.B. Because the `git/gitconfig` file is copied to `~/.gitconfig`, any private
+git configuration specified in `~/.bash_profile.local` will not be committed to
 your dotfiles repository.
+
+### Custom location for Homebrew installation
+
+If your Homebrew installation is not in `/usr/local` then you must prepend your
+custom installation's `bin` to the PATH in a file called `~/.dotfilesrc`:
+
+```bash
+# Add `brew` command's custom location to PATH
+PATH="/opt/acme/bin:$PATH"
+```
 
 
 ## Adding new git submodules
