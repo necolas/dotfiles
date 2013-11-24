@@ -11,7 +11,7 @@ sudo -v
 
 DST="/Volumes/Macintosh HD/"
 SRC="/"
-EXCLUDE="$HOME/.dotfiles/backup_excludes.txt"
+EXCLUDE="$HOME/.dotfiles/bin/.backupignore"
 
 PROG=$0
 
