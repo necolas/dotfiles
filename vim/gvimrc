@@ -10,3 +10,5 @@ set gcr=n:blinkon0
 set linespace=5
 " Set GUI font
 set guifont=Monaco:h13
+" Increase the default number of lines and columns
+set lines=999 columns=999

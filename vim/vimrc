@@ -108,8 +108,6 @@ set expandtab
 set number
 " Highlight current line
 set cursorline
-" Increase default number of lines
-set lines=40
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 " Don’t reset cursor to start of line when moving around.
