@@ -2,9 +2,13 @@
 
 # bash_profile
 
+# Up-front dotfiles configuration
+# Not part of `load_dotfiles` because it `brew` must be available before
+# `$(brew --prefix)` is used anywhere.
+[ -r $HOME/.dotfilesrc ] && source $HOME/.dotfilesrc;
+
 load_dotfiles() {
     declare -a files=(
-        $HOME/.dotfilesrc # Up-front dotfiles configuration
         $HOME/.rvm/scripts/rvm # Load RVM into a shell session *as a function*
         $HOME/.dotfiles/shell/bash_options # Options
         $HOME/.dotfiles/shell/bash_exports # Exports
