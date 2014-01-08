@@ -94,8 +94,8 @@ set ttyfast
 " Use UTF-8 without BOM
 set encoding=utf-8 nobomb
 
-" Use line wrapping
-set wrap
+" No line wrapping
+set nowrap
 " Use 2 spaces for indentation
 set shiftwidth=2
 " Use 2 spaces for soft tab
