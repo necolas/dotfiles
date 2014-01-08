@@ -65,14 +65,14 @@ Homebrew formulae:
 * [ack](http://betterthangrep.com/)
 * bash (latest version)
 * [bash-completion](http://bash-completion.alioth.debian.org/)
-* ffmpeg
-* graphicsmagick
-* jpeg
+* [ffmpeg](http://ffmpeg.org/)
+* [graphicsmagick](http://www.graphicsmagick.org/)
+* [jpeg](https://en.wikipedia.org/wiki/Libjpeg)
 * [macvim](http://code.google.com/p/macvim/)
 * [node](http://nodejs.org/)
 * [optipng](http://optipng.sourceforge.net/)
 * [phantomjs](http://phantomjs.org/)
-* rsync (latest version, rather than the out-dated OS X installation)
+* [rsync](https://rsync.samba.org/) (latest version, rather than the out-dated OS X installation)
 * [tree](http://mama.indstate.edu/users/ice/tree/)
 * [wget](http://www.gnu.org/software/wget/)
 
