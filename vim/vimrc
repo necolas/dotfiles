@@ -96,12 +96,12 @@ set encoding=utf-8 nobomb
 
 " Use line wrapping
 set wrap
-" Use 4 spaces for indentation
-set shiftwidth=4
-" Use 4 spaces for soft tab
-set softtabstop=4
-" Use 4 spaces for tab
-set tabstop=4
+" Use 2 spaces for indentation
+set shiftwidth=2
+" Use 2 spaces for soft tab
+set softtabstop=2
+" Use 2 spaces for tab
+set tabstop=2
 " Expand tab to spaces
 set expandtab
 " Enable line numbers
