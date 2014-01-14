@@ -25,6 +25,10 @@ alias lat="ls -AGFoth"
 # Concatenate and print content of files (add line numbers)
 alias catn="cat -n"
 
+# Open file in existing MacVim window
+alias gvim="open -a MacVim"
+alias mvim="open -a MacVim"
+
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en1"
