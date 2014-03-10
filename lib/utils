@@ -61,3 +61,36 @@ formula_exists() {
     e_warning "Missing formula: $1"
     return 1
 }
+
+# Check if xCode is present
+check_xcode() {
+    if type_exists 'gcc'; then
+        e_success "xCode is installed"
+    else
+        e_warning "The XCode Command Line Tools must be installed first."
+        install_xcode
+    fi
+}
+
+# Install xCode Command Line Tools
+install_xcode() {
+    # figure out what version of OS X is running
+    darwin_version=$(uname -r)
+
+    # are you on Mavericks, Darwin kernal 13.0.0 or above
+    if (( ${darwin_version%%.*} > 12 )); then
+        e_header "Installing xCode Command Line Tools. Follow the prompt"
+        xcode-select --install
+        seek_confirmation "Is xCode done installing"
+
+        if is_confirmed; then
+            check_xcode
+        else
+            check_xcode
+        fi
+    else
+        printf "  Download them from: https://developer.apple.com/downloads\n"
+        printf "  Then run: bash ~/.dotfiles/bin/dotfiles\n"
+        exit 1
+    fi
+}
