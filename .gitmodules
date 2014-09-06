@@ -16,7 +16,7 @@
 	url = git://github.com/tpope/vim-haml.git
 [submodule "vim/bundle/mustache"]
 	path = vim/bundle/mustache
-	url = git://github.com/juvenn/mustache.vim.git
+	url = git://github.com/mustache/vim-mustache-handlebars.git
 [submodule "vim/bundle/html5"]
 	path = vim/bundle/html5
 	url = git://github.com/othree/html5.vim.git
@@ -25,10 +25,10 @@
 	url = git://github.com/tpope/vim-git.git
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
-	url = https://github.com/scrooloose/syntastic.git
+	url = git://github.com/scrooloose/syntastic.git
 [submodule "vim/bundle/ctrlp.vim"]
 	path = vim/bundle/ctrlp.vim
 	url = git://github.com/kien/ctrlp.vim.git
 [submodule "vim/bundle/vim-javascript"]
 	path = vim/bundle/vim-javascript
-	url = https://github.com/pangloss/vim-javascript.git
+	url = git://github.com/pangloss/vim-javascript.git

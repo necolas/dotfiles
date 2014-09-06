@@ -89,7 +89,6 @@ Vim plugins:
 
 * [ctrlp.vim](https://github.com/kien/ctrlp.vim)
 * [html5.vim](https://github.com/othree/html5.vim)
-* [mustache.vim](https://github.com/juvenn/mustache.vim)
 * [syntastic](https://github.com/scrooloose/syntastic)
 * [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
 * [vim-git](https://github.com/tpope/vim-git)
@@ -97,6 +96,7 @@ Vim plugins:
 * [vim-javascript](https://github.com/pangloss/vim-javascript)
 * [vim-less](https://github.com/groenewege/vim-less)
 * [vim-markdown](https://github.com/tpope/vim-markdown)
+* [vim-mustache-handlebars](https://github.com/mustache/vim-mustache-handlebars)
 * [vim-pathogen](https://github.com/tpope/vim-pathogen)
 
 ### Custom OS X defaults
