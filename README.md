@@ -108,7 +108,7 @@ $ osxdefaults
 
 ### Bootable backup-drive script
 
-These dotfiles include a script that uses `rync` to incrementally back up your
+These dotfiles include a script that uses `rsync` to incrementally back up your
 data to an external, bootable clone of your computer's internal drive. First,
 make sure that the value of `DST` in the `bin/backup` script matches the name
 of your backup-drive. Then run the following command:

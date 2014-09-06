@@ -22,7 +22,7 @@ PROG=$0
 # --exclude-from           reference a list of files to exclude
 # --hard-links             preserve hard-links
 # --one-file-system        don't cross device boundaries (ignore mounted volumes)
-# --sparse                 handle spare files efficiently
+# --sparse                 handle sparse files efficiently
 # --verbose                increase verbosity
 # --xattrs                 update the remote extended attributes to be the same as the local ones
 
