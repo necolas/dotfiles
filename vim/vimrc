@@ -21,6 +21,8 @@ if has("autocmd")
     autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
     " Automatically strip trailing whitespace on file save
     autocmd BufWritePre *.css,*.html,*.js,*.json,*.md,*.php,*.py,*.rb,*.scss,*.sh,*.txt :call StripTrailingWhitespace()
+    " Don't treat json as javascript
+    autocmd BufRead,BufNewFile *.json set filetype=json
 endif
 
 if has("syntax")
