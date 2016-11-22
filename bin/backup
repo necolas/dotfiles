@@ -38,7 +38,7 @@ fi
 
 logger -t $PROG "Start rsync"
 
-sudo rsync --acls \
+sudo rsync --extended-attributes \
            --archive \
            --delete \
            --delete-excluded \
@@ -47,7 +47,6 @@ sudo rsync --acls \
            --one-file-system \
            --sparse \
            --verbose \
-           --xattrs \
            "$SRC" "$DST"
 
 logger -t $PROG "End rsync"
