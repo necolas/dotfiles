@@ -37,6 +37,9 @@
     # Use: `git gh-pr 123` or `git gh-pr 123 upstream`
     gh-pr = !bash -c 'git fetch -fu ${2:-origin} refs/pull/$1/head:gh-pr/$1 && git checkout gh-pr/$1' -
 
+    # Amend commit without editing
+    recommit = commit --amend --no-edit
+
     # Find out who is currently active on the repository
     # Displays committers in descending order of number of commits
     who = shortlog --numbered --summary --email --no-merges --since="3 months"
