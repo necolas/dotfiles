@@ -20,7 +20,7 @@ run_brew() {
         local -a desired_formulae=(
             'coreutils' # GNU core utilities (those that come with OS X are outdated)
             'git'
-            'ack'
+            'the_silver_searcher'
             'bash'
             'bash-completion'
             'ffmpeg'
@@ -29,7 +29,6 @@ run_brew() {
             'macvim --override-system-vim'
             'node'
             'optipng'
-            'phantomjs'
             'tree'
             'wget'
         )
