@@ -62,7 +62,7 @@ Homebrew formulae:
 
 * GNU core utilities
 * [git](http://git-scm.com/)
-* [ack](http://betterthangrep.com/)
+* [ag](https://github.com/ggreer/the_silver_searcher)
 * bash (latest version)
 * [bash-completion](http://bash-completion.alioth.debian.org/)
 * [ffmpeg](http://ffmpeg.org/)
@@ -71,7 +71,6 @@ Homebrew formulae:
 * [macvim](http://code.google.com/p/macvim/)
 * [node](http://nodejs.org/)
 * [optipng](http://optipng.sourceforge.net/)
-* [phantomjs](http://phantomjs.org/)
 * [rsync](https://rsync.samba.org/) (latest version, rather than the out-dated OS X installation)
 * [tree](http://mama.indstate.edu/users/ice/tree/)
 * [wget](http://www.gnu.org/software/wget/)
@@ -79,8 +78,6 @@ Homebrew formulae:
 Node packages:
 
 * [gify](https://github.com/visionmedia/node-gify)
-* [jshint](http://www.jshint.com/)
-* [yo](http://yeoman.io/)
 
 Vim plugins:
 
