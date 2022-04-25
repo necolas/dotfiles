@@ -39,3 +39,5 @@ load_dotfiles() {
 
 load_dotfiles
 unset load_dotfiles
+
+. ~/.fbchef/environment

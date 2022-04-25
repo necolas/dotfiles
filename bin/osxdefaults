@@ -52,7 +52,7 @@ defaults write com.apple.dock no-glass -bool true
 defaults write com.apple.dock orientation left
 
 # Dock: set the icon size of Dock items to 36 pixels
-defaults write com.apple.dock tilesize -int 36
+defaults write com.apple.dock tilesize -int 64
 
 # Dock: show indicator lights for open applications
 defaults write com.apple.dock show-process-indicators -bool true
@@ -146,9 +146,6 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
 # Disks: disable Time Machine prompts
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
-
-# Disks: disable local Time Machine backups
-hash tmutil &> /dev/null && sudo tmutil disablelocal
 
 # Disks: disable disk image verification
 # defaults write com.apple.frameworks.diskimages skip-verify -bool true

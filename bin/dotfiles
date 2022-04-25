@@ -57,7 +57,7 @@ fi
 # Check for Homebrew
 if ! type_exists 'brew'; then
     e_header "Installing Homebrew..."
-    ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 # Check for git
@@ -88,8 +88,6 @@ else
     e_header "Syncing dotfiles..."
     # Pull down the latest changes
     git pull --rebase origin master
-    # Update submodules
-    git submodule update --recursive --init --quiet
 fi
 
 # Install and update packages

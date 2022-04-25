@@ -7,12 +7,13 @@ run_npm() {
         e_header "Installing Node.js packages..."
 
         # List of npm packages
-        local packages="gify"
+        # local packages="gify"
 
         # Install packages globally and quietly
-        npm install $packages --global --quiet
+        # npm install $packages --global --quiet
 
-        [[ $? ]] && e_success "Done"
+        # [[ $? ]] && e_success "Done"
+        e_success "Done"
     else
         printf "\n"
         e_error "Error: npm not found."

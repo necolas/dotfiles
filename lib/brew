@@ -20,17 +20,9 @@ run_brew() {
         local -a desired_formulae=(
             'coreutils' # GNU core utilities (those that come with OS X are outdated)
             'git'
-            'the_silver_searcher'
             'bash'
             'bash-completion'
-            'ffmpeg'
-            'graphicsmagick'
-            'jpeg'
-            'macvim --override-system-vim'
             'node'
-            'optipng'
-            'tree'
-            'wget'
         )
 
         for index in ${!desired_formulae[*]}
@@ -54,7 +46,7 @@ run_brew() {
 
         # use latest rsync rather than out-dated OS X rsync
         # install separately from the main formulae list to fix gh-19
-        brew install https://raw.github.com/Homebrew/homebrew-dupes/master/rsync.rb
+        # brew install https://raw.github.com/Homebrew/homebrew-dupes/master/rsync.rb
 
         # Remove outdated versions from the Cellar
         brew cleanup
