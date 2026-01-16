@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# bash_exports
+# bash_options
 
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell
