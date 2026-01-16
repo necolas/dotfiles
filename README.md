@@ -10,12 +10,30 @@ Tools](https://developer.apple.com/downloads) and may overwrite existing
 dotfiles in your HOME and `.vim` directories.
 
 ```bash
-$ bash -c "$(curl -fsSL raw.github.com/necolas/dotfiles/master/bin/dotfiles)"
+$ bash -c "$(curl -fsSL https://raw.githubusercontent.com/necolas/dotfiles/master/bin/dotfiles)"
 ```
 
 N.B. If you wish to fork this project and maintain your own dotfiles, you must
 substitute my username for your own in the above command and the 2 variables
 found at the top of the `bin/dotfiles` script.
+
+### What the installation does
+
+The installation script performs the following steps in order:
+
+1. **Downloads the repository** to `~/.dotfiles` (if not already present)
+2. **Installs Homebrew** (if not already installed)
+3. **Installs Git** via Homebrew (if not already installed)
+4. **Initializes a Git repository** in `~/.dotfiles` and connects it to the remote
+5. **Syncs** with the remote repository to get the latest changes
+6. **Installs packages** via Homebrew and npm
+7. **Creates symlinks** from your home directory to the dotfiles:
+   - `~/.bash_profile` → `~/.dotfiles/shell/bash_profile`
+   - `~/.inputrc` → `~/.dotfiles/shell/inputrc`
+   - `~/.gitignore` → `~/.dotfiles/git/gitignore`
+   - `~/.vim` → `~/.dotfiles/vim`
+8. **Copies** `~/.dotfiles/git/gitconfig` to `~/.gitconfig` (not symlinked to allow local git credentials)
+9. **Applies macOS defaults** (optional, with confirmation prompt)
 
 ## How to update
 
@@ -95,11 +113,6 @@ drive](http://nicolasgallagher.com/mac-osx-bootable-backup-drive-with-rsync/).
 
 ### Custom bash prompt
 
-I use a custom bash prompt based on the Solarized color palette and influenced
-by @gf3's and @cowboy's custom prompts. For best results, you should install
-iTerm2 and import [Solarized
-Dark.itermcolors](https://github.com/altercation/solarized/tree/master/iterm2-colors-solarized).
-
 When your current working directory is a Git repository, the prompt will
 display the checked-out branch's name (and failing that, the commit SHA that
 HEAD is pointing to). The state of the working tree is reflected in the
@@ -156,7 +169,7 @@ git config --global user.name "$GIT_AUTHOR_NAME"
 git config --global user.email "$GIT_AUTHOR_EMAIL"
 
 # Aliases
-alias code="cd ~/Code"
+alias cc="claude"
 ```
 
 N.B. Because the `git/gitconfig` file is copied to `~/.gitconfig`, any private
