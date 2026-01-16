@@ -118,7 +118,7 @@ mirrorfiles() {
 }
 
 run_macos_settings() {
-    bash ./bin/macos
+    bash ./lib/macos
     e_success "macOS settings updated!"
     printf "\n"
     e_warning "Note: Some settings require logout or restart to take effect."

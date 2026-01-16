@@ -125,10 +125,10 @@ Homebrew formulae:
 ### Custom macOS settings
 
 Custom macOS settings can be applied during the `dotfiles` process. They can
-also be applied independently by running the following command:
+also be applied independently by running:
 
 ```bash
-$ macos
+$ dotfiles --macos
 ```
 
 ### Bootable backup-drive script
