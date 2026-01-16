@@ -2,7 +2,6 @@
 
 My OS X dotfiles.
 
-
 ## How to install
 
 The installation step requires the [XCode Command Line
@@ -67,6 +66,44 @@ Options:
     </tr>
 </table>
 
+## How to use
+
+### Local/private Bash and Vim configuration
+
+Any special-case Vim directives local to a machine should be stored in a
+`~/.vimrc.local` file on that machine. The directives will then be automatically
+imported into your master `.vimrc`.
+
+Any private and custom Bash commands and configuration should be placed in a
+`~/.bash_profile.local` file. This file will not be under version control or
+committed to a public repository. If `~/.bash_profile.local` exists, it will be
+sourced for inclusion in `bash_profile`.
+
+Here is an example `~/.bash_profile.local`:
+
+```bash
+# PATH exports
+PATH=$PATH:~/.gem/ruby/1.8/bin
+export PATH
+
+# Git credentials
+# Not under version control to prevent people from
+# accidentally committing with your details
+GIT_AUTHOR_NAME="Nicolas Gallagher"
+GIT_AUTHOR_EMAIL="nicolas@example.com"
+GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+# Set the credentials (modifies ~/.gitconfig)
+git config --global user.name "$GIT_AUTHOR_NAME"
+git config --global user.email "$GIT_AUTHOR_EMAIL"
+
+# Aliases
+alias cc="claude"
+```
+
+N.B. Because the `git/gitconfig` file is copied to `~/.gitconfig`, any private
+git configuration specified in `~/.bash_profile.local` will not be committed to
+your dotfiles repository.
 
 ## Features
 
@@ -131,54 +168,6 @@ following way:
 </table>
 
 Further details are in the `bash_prompt` file.
-
-### Local/private Bash and Vim configuration
-
-Any special-case Vim directives local to a machine should be stored in a
-`~/.vimrc.local` file on that machine. The directives will then be automatically
-imported into your master `.vimrc`.
-
-Any private and custom Bash commands and configuration should be placed in a
-`~/.bash_profile.local` file. This file will not be under version control or
-committed to a public repository. If `~/.bash_profile.local` exists, it will be
-sourced for inclusion in `bash_profile`.
-
-Here is an example `~/.bash_profile.local`:
-
-```bash
-# PATH exports
-PATH=$PATH:~/.gem/ruby/1.8/bin
-export PATH
-
-# Git credentials
-# Not under version control to prevent people from
-# accidentally committing with your details
-GIT_AUTHOR_NAME="Nicolas Gallagher"
-GIT_AUTHOR_EMAIL="nicolas@example.com"
-GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
-GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
-# Set the credentials (modifies ~/.gitconfig)
-git config --global user.name "$GIT_AUTHOR_NAME"
-git config --global user.email "$GIT_AUTHOR_EMAIL"
-
-# Aliases
-alias cc="claude"
-```
-
-N.B. Because the `git/gitconfig` file is copied to `~/.gitconfig`, any private
-git configuration specified in `~/.bash_profile.local` will not be committed to
-your dotfiles repository.
-
-### Custom location for Homebrew installation
-
-If your Homebrew installation is not in `/usr/local` then you must prepend your
-custom installation's `bin` to the PATH in a file called `~/.dotfilesrc`:
-
-```bash
-# Add `brew` command's custom location to PATH
-PATH="/opt/acme/bin:$PATH"
-```
-
 
 ## Acknowledgements
 

@@ -51,6 +51,10 @@ fi
 if ! type_exists 'brew'; then
     e_header "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # Add Homebrew to PATH for this session (persistent PATH is set in bash_paths)
+    if [[ -f /opt/homebrew/bin/brew ]]; then
+        export PATH="/opt/homebrew/bin:$PATH"
+    fi
 fi
 
 # Check for git

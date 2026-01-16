@@ -4,7 +4,8 @@
 
 # Directories to be prepended to PATH
 declare -a dirs_to_prepend=(
-    "/usr/local/bin" # Ensure that this bin always takes precedence over `/usr/bin`
+    "/opt/homebrew/bin" # Homebrew on Apple Silicon
+    "/usr/local/bin" # Homebrew on Intel (also ensures precedence over /usr/bin)
 )
 
 # Directories to be appended to PATH
