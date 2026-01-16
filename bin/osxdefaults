@@ -6,9 +6,6 @@
 # General UI/UX
 # ----------------------------------------------------------------------
 
-# Disable Menu bar transparency
-defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false
-
 # Enable snap-to-grid for desktop icons
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
@@ -45,9 +42,6 @@ defaults write com.apple.dock mru-spaces -bool false
 # Dock
 # ----------------------------------------------------------------------
 
-# Dock: enable the 2D Dock
-defaults write com.apple.dock no-glass -bool true
-
 # Dock: position the Dock on the left
 defaults write com.apple.dock orientation left
 
@@ -78,9 +72,6 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
 # Finder: disable the warning when changing a file extension
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-
-# Finder: empty Trash securely by default
-defaults write com.apple.finder EmptyTrashSecurely -bool true
 
 # Finder: disable window and Get Info animations
 defaults write com.apple.finder DisableAllAnimations -bool true
@@ -153,19 +144,6 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 # defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 
 
-# iTunes
-# ----------------------------------------------------------------------
-
-# iTunes: make ⌘ + F focus the search input
-defaults write com.apple.iTunes NSUserKeyEquivalents -dict-add "Target Search Field" "@F"
-
-# iTunes: disable the Ping sidebar in iTunes
-defaults write com.apple.iTunes disablePingSidebar -bool true
-
-# iTunes: disable all the other Ping stuff
-defaults write com.apple.iTunes disablePing -bool true
-
-
 # Misc
 # ----------------------------------------------------------------------
 
@@ -178,6 +156,6 @@ defaults write com.apple.spotlight DictionaryLookupEnabled -bool false
 # Misc: disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
-for app in "Dashboard" "Dock" "Finder" "SystemUIServer" "Terminal" "iTunes"; do
+for app in "Dock" "Finder" "SystemUIServer" "Terminal"; do
     killall "$app" > /dev/null 2>&1
 done
