@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Set custom OS X defaults
+# Set custom macOS defaults
 # See: github.com/mathiasbynens/dotfiles
 
 # General UI/UX
@@ -28,7 +28,10 @@ defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 0
+# KeyRepeat: lower = faster (minimum 1, default 6)
+# InitialKeyRepeat: lower = shorter delay before repeat starts (minimum 10, default 25)
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
 # Trackpad: swipe between pages with three fingers
 defaults write NSGlobalDomain AppleEnableSwipeNavigateWithScrolls -bool true
@@ -79,7 +82,7 @@ defaults write com.apple.finder DisableAllAnimations -bool true
 # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
 defaults write com.apple.finder QuitMenuItem -bool true
 
-# Finder: show the ~/Library folder (in OS X Lion)
+# Finder: show the ~/Library folder
 chflags nohidden ~/Library
 
 # Finder: show hidden files by default

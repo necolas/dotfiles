@@ -111,13 +111,13 @@ Homebrew formulae:
 * [bash-completion](http://bash-completion.alioth.debian.org/)
 * [node](http://nodejs.org/)
 
-### Custom OS X defaults
+### Custom macOS settings
 
-Custom OS X settings can be applied during the `dotfiles` process. They can
+Custom macOS settings can be applied during the `dotfiles` process. They can
 also be applied independently by running the following command:
 
 ```bash
-$ osxdefaults
+$ macos
 ```
 
 ### Bootable backup-drive script
@@ -132,7 +132,7 @@ $ backup
 ```
 
 For more information on how to setup your backup-drive, please read the
-preparatory steps in this post on creating a [Mac OS X bootable backup
+preparatory steps in this post on creating a [bootable macOS backup
 drive](http://nicolasgallagher.com/mac-osx-bootable-backup-drive-with-rsync/).
 
 ### Custom bash prompt
