@@ -57,7 +57,7 @@ You should run the update when:
 * You make a change to `~/.dotfiles/git/gitconfig` (the only file that is
   copied rather than symlinked).
 * You want to pull changes from the remote repository.
-* You want to update Homebrew formulae and Node packages.
+* You want to update Homebrew formulae.
 
 Run the dotfiles command:
 
@@ -73,14 +73,25 @@ Options:
         <td>Help</td>
     </tr>
     <tr>
-        <td><code>--no-packages</code></td>
-        <td>Suppress package updates</td>
+        <td><code>-l</code>, <code>--link</code></td>
+        <td>Quick update: symlinks only (skips sync, packages, macOS)</td>
     </tr>
     <tr>
-        <td><code>--no-sync</code></td>
-        <td>Suppress pulling from the remote repository</td>
+        <td><code>--macos</code></td>
+        <td>Apply macOS system settings only</td>
     </tr>
 </table>
+
+### Quick updates during local development
+
+When making local changes to your dotfiles, use the quick update mode to apply
+changes without syncing or updating packages:
+
+```bash
+$ dotfiles --link
+```
+
+This will update symlinks, copy gitconfig, and automatically reload your shell.
 
 ## How to use
 

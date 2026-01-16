@@ -64,15 +64,88 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then
     exit
 fi
 
-# Test for known flags
+# Parse flags
+link_only=false
+macos_only=false
+
 for opt in $@
 do
     case $opt in
-        --no-packages) no_packages=true ;;
-        --no-sync) no_sync=true ;;
+        -l|--link) link_only=true ;;
+        --macos) macos_only=true ;;
         -*|--*) e_warning "Warning: invalid option $opt" ;;
     esac
 done
+
+# Helper functions
+link() {
+    # Force create/replace the symlink.
+    ln -fs "${DOTFILES_DIRECTORY}/${1}" "${HOME}/${2}"
+}
+
+mirrorfiles() {
+    # Copy `.gitconfig`.
+    # Any global git commands in `~/.bash_profile.local` will be written to
+    # `.gitconfig`. This prevents them being committed to the repository.
+    rsync -avz --quiet ${DOTFILES_DIRECTORY}/git/gitconfig  ${HOME}/.gitconfig
+
+    # Create `.bash_profile.local` from template if it doesn't exist.
+    # This file is for local/private settings not tracked in version control.
+    if [[ ! -f "${HOME}/.bash_profile.local" ]]; then
+        cp ${DOTFILES_DIRECTORY}/shell/bash_profile.local ${HOME}/.bash_profile.local
+        e_success "Created ~/.bash_profile.local - please edit with your credentials"
+    fi
+
+    # Force remove the vim directory if it's already there.
+    if [ -e "${HOME}/.vim" ]; then
+        rm -rf "${HOME}/.vim"
+    fi
+
+    # Create the necessary symbolic links between the `.dotfiles` and `HOME`
+    # directory. The `bash_profile` sources other files directly from the
+    # `.dotfiles` repository.
+    link "shell/bashrc"       ".bashrc"
+    link "shell/bash_profile" ".bash_profile"
+    link "shell/curlrc"       ".curlrc"
+    link "shell/inputrc"      ".inputrc"
+    link "git/gitattributes"  ".gitattributes"
+    link "git/gitignore"      ".gitignore"
+    link "vim"                ".vim"
+    link "vim/gvimrc"         ".gvimrc"
+    link "vim/vimrc"          ".vimrc"
+
+    e_success "Dotfiles update complete!"
+}
+
+run_macos_settings() {
+    bash ./bin/macos
+    e_success "macOS settings updated!"
+    printf "\n"
+    e_warning "Note: Some settings require logout or restart to take effect."
+}
+
+reload_shell() {
+    e_header "Reloading shell..."
+    source ${HOME}/.bash_profile
+    e_success "Shell reloaded!"
+}
+
+# --macos: Apply macOS settings only
+if [[ "$macos_only" == true ]]; then
+    run_macos_settings
+    exit
+fi
+
+# --link: Quick update mode (symlinks only)
+if [[ "$link_only" == true ]]; then
+    e_header "Quick update: applying local changes..."
+    mirrorfiles
+    reload_shell
+    exit
+fi
+
+# Full sync mode (default)
+# -------------------------
 
 # Before relying on Homebrew, check that packages can be compiled
 if ! type_exists 'gcc'; then
@@ -113,69 +186,19 @@ if ! is_git_repo; then
     git clean -fd
 fi
 
-# Conditionally sync with the remote repository
-if [[ $no_sync ]]; then
-    printf "Skipped dotfiles sync.\n"
-else
-    e_header "Syncing dotfiles..."
-    # Pull down the latest changes
-    git pull --rebase origin master
-fi
+# Sync with the remote repository
+e_header "Syncing dotfiles..."
+git pull --rebase origin master
 
 # Install and update packages
-if [[ $no_packages ]]; then
-    printf "Skipped package installations.\n"
-else
-    printf "Updating packages...\n"
-    # Install Homebrew formulae
-    run_brew
-fi
-
-link() {
-    # Force create/replace the symlink.
-    ln -fs "${DOTFILES_DIRECTORY}/${1}" "${HOME}/${2}"
-}
-
-mirrorfiles() {
-    # Copy `.gitconfig`.
-    # Any global git commands in `~/.bash_profile.local` will be written to
-    # `.gitconfig`. This prevents them being committed to the repository.
-    rsync -avz --quiet ${DOTFILES_DIRECTORY}/git/gitconfig  ${HOME}/.gitconfig
-
-    # Create `.bash_profile.local` from template if it doesn't exist.
-    # This file is for local/private settings not tracked in version control.
-    if [[ ! -f "${HOME}/.bash_profile.local" ]]; then
-        cp ${DOTFILES_DIRECTORY}/shell/bash_profile.local ${HOME}/.bash_profile.local
-        e_success "Created ~/.bash_profile.local - please edit with your credentials"
-    fi
-
-    # Force remove the vim directory if it's already there.
-    if [ -e "${HOME}/.vim" ]; then
-        rm -rf "${HOME}/.vim"
-    fi
-
-    # Create the necessary symbolic links between the `.dotfiles` and `HOME`
-    # directory. The `bash_profile` sources other files directly from the
-    # `.dotfiles` repository.
-    link "shell/bashrc"       ".bashrc"
-    link "shell/bash_profile" ".bash_profile"
-    link "shell/curlrc"       ".curlrc"
-    link "shell/inputrc"      ".inputrc"
-    link "git/gitattributes"  ".gitattributes"
-    link "git/gitignore"      ".gitignore"
-    link "vim"                ".vim"
-    link "vim/gvimrc"         ".gvimrc"
-    link "vim/vimrc"          ".vimrc"
-
-    e_success "Dotfiles update complete!"
-}
+printf "Updating packages...\n"
+run_brew
 
 # Ask before potentially overwriting files
 seek_confirmation "Warning: This step may overwrite your existing dotfiles."
 
 if is_confirmed; then
     mirrorfiles
-    source ${HOME}/.bash_profile
 else
     printf "Aborting...\n"
     exit 1
@@ -185,8 +208,10 @@ fi
 seek_confirmation "Warning: This step may modify your macOS system defaults."
 
 if is_confirmed; then
-    bash ./bin/macos
-    e_success "macOS settings updated! You may need to restart."
+    run_macos_settings
 else
     printf "Skipped macOS settings update.\n"
 fi
+
+# Reload shell at the end
+reload_shell

@@ -9,9 +9,8 @@ Usage: $(basename "$0") [options]
 
 Options:
     -h, --help      Print this help text
-    -l, --list      Print a list of additional software to install
-    --no-packages   Suppress package updates
-    --no-sync       Suppress pulling from the remote repository
+    -l, --link      Quick update: symlinks only (skips sync, packages, macOS)
+    --macos         Apply macOS system settings only
 
 Documentation can be found at https://github.com/necolas/dotfiles/
 
