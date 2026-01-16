@@ -21,7 +21,6 @@ cd ${DOTFILES_DIRECTORY}
 source ./lib/help
 source ./lib/utils
 source ./lib/brew
-source ./lib/npm
 
 # Help text
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
@@ -94,8 +93,6 @@ else
     printf "Updating packages...\n"
     # Install Homebrew formulae
     run_brew
-    # Install Node packages
-    run_npm
 fi
 
 link() {
