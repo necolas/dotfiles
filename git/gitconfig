@@ -53,15 +53,33 @@
     # Use custom `.gitignore` and `.gitattributes`
     excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
+    # Use delta for syntax-highlighted diffs (requires: brew install git-delta)
+    pager = delta
 
 [credential]
     helper = osxkeychain
 
 [diff]
     tool = mvimdiff
+    # Better diff algorithm for moved code blocks
+    algorithm = histogram
+    # Highlight moved lines differently
+    colorMoved = default
 
 [difftool]
     prompt = false
+
+[fetch]
+    # Automatically prune deleted remote branches
+    prune = true
+
+[init]
+    # Use 'main' as the default branch name
+    defaultBranch = main
+
+[merge]
+    # Show original code alongside both sides in conflicts
+    conflictstyle = diff3
 
 [pretty]
     # tut: http://gitimmersion.com/lab_10.html
@@ -69,5 +87,17 @@
     # Result: <short-sha> <commit-message> (<pointer-names>) -- <commit-author-name>; <relative-time>
     nice = "%C(yellow)%h%C(reset) %C(white)%s%C(cyan)%d%C(reset) -- %an; %ar"
 
+[pull]
+    # Rebase instead of merge when pulling
+    rebase = true
+
 [push]
     default = simple
+
+[rebase]
+    # Auto-stash dirty working directory before rebase
+    autoStash = true
+
+[rerere]
+    # Reuse recorded resolution of conflicted merges
+    enabled = true
