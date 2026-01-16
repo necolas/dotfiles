@@ -31,17 +31,17 @@ alias mvim="open -a MacVim"
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en1"
+alias localip="ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null || echo 'No active interface'"
 
-# Copy my public key to the pasteboard
-alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | printf '=> Public key copied to pasteboard.\n'"
+# Copy my public key to the pasteboard (prefer ed25519, fallback to rsa)
+alias pubkey="cat ~/.ssh/id_ed25519.pub 2>/dev/null || cat ~/.ssh/id_rsa.pub 2>/dev/null | pbcopy | printf '=> Public key copied to pasteboard.\n'"
 
-# Flush DNS cache
-alias flushdns="dscacheutil -flushcache"
+# Flush DNS cache (modern macOS)
+alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 
 # Empty the Trash on all mounted volumes and the main HDD
-# Also, clear Apple’s System Logs to improve shell startup speed
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
+# Also, clear Apple's System Logs and Quick Look cache to improve shell startup speed
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; qlmanage -r cache >/dev/null 2>&1"
 
 # Show/hide hidden files in Finder
 alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
@@ -50,3 +50,6 @@ alias hidedotfiles="defaults write com.apple.finder AppleShowAllFiles -bool fals
 # Hide/show all desktop icons (useful when presenting)
 alias showdeskicons="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 alias hidedeskicons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="source ~/.bash_profile"
