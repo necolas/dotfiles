@@ -59,6 +59,33 @@
 [credential]
     helper = osxkeychain
 
+[delta]
+    # Minimal, clean diff output
+    syntax-theme = none
+    side-by-side = false
+    # Enable line numbers
+    line-numbers = true
+    line-numbers-left-format = "{nm:>4} "
+    line-numbers-right-format = "{np:>4} "
+    # Keep +/- symbols and remove file symbol
+    keep-plus-minus-markers = true
+    file-added-label = added:
+    file-modified-label = ""
+    file-removed-label = removed:
+    file-renamed-label = renamed:
+    # Clean file header
+    file-style = bold yellow ul
+    file-decoration-style = none
+    hunk-header-style = omit
+    # Simple text colors only - no backgrounds
+    minus-style = red normal
+    minus-emph-style = bold red normal
+    plus-style = green normal
+    plus-emph-style = bold green normal
+    zero-style = normal
+    # Navigate between diff sections with n/N
+    navigate = true
+
 [diff]
     tool = mvimdiff
     # Better diff algorithm for moved code blocks
