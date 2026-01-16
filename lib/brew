@@ -18,8 +18,9 @@ run_brew() {
         local list_formulae
         local -a missing_formulae
         local -a desired_formulae=(
-            'coreutils' # GNU core utilities (those that come with OS X are outdated)
+            'coreutils' # GNU core utilities (those that come with macOS are outdated)
             'git'
+            'git-delta' # Syntax-highlighting pager for git
             'bash'
             'bash-completion'
             'node'
