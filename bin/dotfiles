@@ -3,16 +3,32 @@
 # Configuration
 CONFIG_DIR="${HOME}/.config/dotfiles"
 CONFIG_FILE="${CONFIG_DIR}/config"
-DEFAULT_DOTFILES_DIRECTORY="${HOME}/.dotfiles"
 DOTFILES_TARBALL_PATH="https://github.com/necolas/dotfiles/tarball/master"
 DOTFILES_GIT_REMOTE="git@github.com:necolas/dotfiles.git"
+
+# Detect if running from within a dotfiles repo (e.g., user cloned it)
+# This allows the script to default to the cloned location instead of ~/.dotfiles
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)"
+if [[ -d "${SCRIPT_DIR}/lib" && -d "${SCRIPT_DIR}/shell" && -d "${SCRIPT_DIR}/bin" ]]; then
+    RUNNING_FROM_REPO=true
+    DEFAULT_DOTFILES_DIRECTORY="${SCRIPT_DIR}"
+else
+    RUNNING_FROM_REPO=false
+    DEFAULT_DOTFILES_DIRECTORY="${HOME}/.dotfiles"
+fi
 
 # Determine the dotfiles directory
 if [[ -f "$CONFIG_FILE" ]]; then
     # Use existing config
     source "$CONFIG_FILE"
+elif [[ "$RUNNING_FROM_REPO" == true ]]; then
+    # Running from cloned repo - use that location without prompting
+    DOTFILES_DIRECTORY="${DEFAULT_DOTFILES_DIRECTORY}"
+    mkdir -p "$CONFIG_DIR"
+    printf "# Dotfiles configuration\nexport DOTFILES_DIRECTORY=\"%s\"\n" "$DOTFILES_DIRECTORY" > "$CONFIG_FILE"
+    printf "Using dotfiles from: %s\n" "$DOTFILES_DIRECTORY"
 else
-    # Prompt for install location
+    # Fresh install via curl - prompt for location
     printf "$(tput setaf 7)Where would you like to install dotfiles?$(tput sgr0)\n"
     read -p "Install location [$DEFAULT_DOTFILES_DIRECTORY]: " custom_path
     DOTFILES_DIRECTORY="${custom_path:-$DEFAULT_DOTFILES_DIRECTORY}"
