@@ -109,6 +109,13 @@ mirrorfiles() {
     # `.gitconfig`. This prevents them being committed to the repository.
     rsync -avz --quiet ${DOTFILES_DIRECTORY}/git/gitconfig  ${HOME}/.gitconfig
 
+    # Create `.bash_profile.local` from template if it doesn't exist.
+    # This file is for local/private settings not tracked in version control.
+    if [[ ! -f "${HOME}/.bash_profile.local" ]]; then
+        cp ${DOTFILES_DIRECTORY}/shell/bash_profile.local ${HOME}/.bash_profile.local
+        e_success "Created ~/.bash_profile.local - please edit with your credentials"
+    fi
+
     # Force remove the vim directory if it's already there.
     if [ -e "${HOME}/.vim" ]; then
         rm -rf "${HOME}/.vim"
