@@ -2,8 +2,18 @@
 
 # inputrc
 
+# Briefly highlight the opening paren/bracket when typing the closing one
+set blink-matching-paren on
+
+# Highlight the typed prefix in completion results (e.g., "foo" in "foobar")
+set colored-completion-prefix on
+
 # Use case-insensitive TAB autocompletion
 set completion-ignore-case on
+
+# Allow pasting text without characters being interpreted as editing commands
+# (prevents pasted newlines from executing commands immediately)
+set enable-bracketed-paste on
 
 # Auto list tab completions (use instead of TAB-cycling)
 set show-all-if-ambiguous on
