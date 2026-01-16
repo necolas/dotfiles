@@ -80,12 +80,9 @@ Homebrew formulae:
 
 * GNU core utilities
 * [git](http://git-scm.com/)
+* [git-delta](https://github.com/dandavison/delta) (syntax-highlighting pager for git)
 * [bash-completion](http://bash-completion.alioth.debian.org/)
 * [node](http://nodejs.org/)
-
-Node packages:
-
-* [gify](https://github.com/visionmedia/node-gify)
 
 ### Custom OS X defaults
 
