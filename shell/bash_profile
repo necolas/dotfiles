@@ -9,20 +9,23 @@ elif infocmp xterm-256color >/dev/null 2>&1; then
     export TERM=xterm-256color
 fi
 
-# Up-front dotfiles configuration
-# Not part of `load_dotfiles` because it must be sourced before anything else
-# to be sure that commands like `brew` (when installed in a custom location)
-# are already added to the PATH.
-[ -r $HOME/.dotfilesrc ] && source $HOME/.dotfilesrc;
+# Source dotfiles configuration (defines DOTFILES_DIRECTORY)
+# Must be sourced before anything else that depends on the dotfiles location
+if [[ -r "${HOME}/.config/dotfiles/config" ]]; then
+    source "${HOME}/.config/dotfiles/config"
+else
+    # Fallback for legacy installs or if config doesn't exist yet
+    export DOTFILES_DIRECTORY="${HOME}/.dotfiles"
+fi
 
 load_dotfiles() {
     declare -a files=(
-        $HOME/.dotfiles/shell/bash_options # Options
-        $HOME/.dotfiles/shell/bash_exports # Exports
-        $HOME/.dotfiles/shell/bash_aliases # Aliases
-        $HOME/.dotfiles/shell/functions/* # Functions
-        $HOME/.dotfiles/shell/bash_prompt # Custom bash prompt
-        $HOME/.dotfiles/shell/bash_paths # Path modifications
+        ${DOTFILES_DIRECTORY}/shell/bash_options # Options
+        ${DOTFILES_DIRECTORY}/shell/bash_exports # Exports
+        ${DOTFILES_DIRECTORY}/shell/bash_aliases # Aliases
+        ${DOTFILES_DIRECTORY}/shell/functions/* # Functions
+        ${DOTFILES_DIRECTORY}/shell/bash_prompt # Custom bash prompt
+        ${DOTFILES_DIRECTORY}/shell/bash_paths # Path modifications
         $(brew --prefix)/etc/bash_completion # Bash completion (installed via Homebrew)
         $HOME/.bash_profile.local # Local and private settings not under version control (e.g. git credentials)
     )

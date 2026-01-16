@@ -1,6 +1,6 @@
 # Dotfiles (Nicolas Gallagher)
 
-My OS X dotfiles.
+My macOS dotfiles.
 
 ## How to install
 
@@ -20,19 +20,35 @@ found at the top of the `bin/dotfiles` script.
 
 The installation script performs the following steps in order:
 
-1. **Downloads the repository** to `~/.dotfiles` (if not already present)
-2. **Installs Homebrew** (if not already installed)
-3. **Installs Git** via Homebrew (if not already installed)
-4. **Initializes a Git repository** in `~/.dotfiles` and connects it to the remote
-5. **Syncs** with the remote repository to get the latest changes
-6. **Installs packages** via Homebrew and npm
-7. **Creates symlinks** from your home directory to the dotfiles:
-   - `~/.bash_profile` → `~/.dotfiles/shell/bash_profile`
-   - `~/.inputrc` → `~/.dotfiles/shell/inputrc`
-   - `~/.gitignore` → `~/.dotfiles/git/gitignore`
-   - `~/.vim` → `~/.dotfiles/vim`
-8. **Copies** `~/.dotfiles/git/gitconfig` to `~/.gitconfig` (not symlinked to allow local git credentials)
-9. **Applies macOS defaults** (optional, with confirmation prompt)
+1. **Prompts for install location** (defaults to `~/.dotfiles`, or uses existing config)
+2. **Saves config** to `~/.config/dotfiles/config` for future runs
+3. **Downloads the repository** to your chosen location (if not already present)
+4. **Installs Homebrew** (if not already installed)
+5. **Installs Git** via Homebrew (if not already installed)
+6. **Initializes a Git repository** and connects it to the remote
+7. **Syncs** with the remote repository to get the latest changes
+8. **Installs packages** via Homebrew
+9. **Creates symlinks** from your home directory to the dotfiles:
+   - `~/.bash_profile` → `<dotfiles>/shell/bash_profile`
+   - `~/.inputrc` → `<dotfiles>/shell/inputrc`
+   - `~/.gitignore` → `<dotfiles>/git/gitignore`
+   - `~/.vim` → `<dotfiles>/vim`
+10. **Copies** `<dotfiles>/git/gitconfig` to `~/.gitconfig` (not symlinked to allow local git credentials)
+11. **Creates** `~/.bash_profile.local` from template (if it doesn't exist)
+12. **Applies macOS defaults** (optional, with confirmation prompt)
+
+### Custom install location
+
+On first run, the script will prompt you for an install location:
+
+```
+Where would you like to install dotfiles?
+Install location [~/.dotfiles]: ~/Code/dotfiles
+```
+
+Press Enter to accept the default (`~/.dotfiles`) or enter a custom path.
+The chosen location is saved to `~/.config/dotfiles/config` and used for all
+future runs.
 
 ## How to update
 

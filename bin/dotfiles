@@ -1,13 +1,33 @@
 #!/bin/bash
 
-DOTFILES_DIRECTORY="${HOME}/.dotfiles"
+# Configuration
+CONFIG_DIR="${HOME}/.config/dotfiles"
+CONFIG_FILE="${CONFIG_DIR}/config"
+DEFAULT_DOTFILES_DIRECTORY="${HOME}/.dotfiles"
 DOTFILES_TARBALL_PATH="https://github.com/necolas/dotfiles/tarball/master"
 DOTFILES_GIT_REMOTE="git@github.com:necolas/dotfiles.git"
+
+# Determine the dotfiles directory
+if [[ -f "$CONFIG_FILE" ]]; then
+    # Use existing config
+    source "$CONFIG_FILE"
+else
+    # Prompt for install location
+    printf "$(tput setaf 7)Where would you like to install dotfiles?$(tput sgr0)\n"
+    read -p "Install location [$DEFAULT_DOTFILES_DIRECTORY]: " custom_path
+    DOTFILES_DIRECTORY="${custom_path:-$DEFAULT_DOTFILES_DIRECTORY}"
+    # Expand ~ to $HOME if used
+    DOTFILES_DIRECTORY="${DOTFILES_DIRECTORY/#\~/$HOME}"
+
+    # Save to config
+    mkdir -p "$CONFIG_DIR"
+    printf "# Dotfiles configuration\nexport DOTFILES_DIRECTORY=\"%s\"\n" "$DOTFILES_DIRECTORY" > "$CONFIG_FILE"
+fi
 
 # If missing, download and extract the dotfiles repository
 if [[ ! -d ${DOTFILES_DIRECTORY} ]]; then
     printf "$(tput setaf 7)Downloading dotfiles...\033[m\n"
-    mkdir ${DOTFILES_DIRECTORY}
+    mkdir -p ${DOTFILES_DIRECTORY}
     # Get the tarball
     curl -fsSLo ${HOME}/dotfiles.tar.gz ${DOTFILES_TARBALL_PATH}
     # Extract to the dotfiles directory
