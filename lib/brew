@@ -24,6 +24,7 @@ run_brew() {
             'bash'
             'bash-completion'
             'node'
+            'oven-sh/bun/bun' # Fast JavaScript runtime and package manager
         )
 
         for index in ${!desired_formulae[*]}
