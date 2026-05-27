@@ -3,7 +3,7 @@
 # Configuration
 CONFIG_DIR="${HOME}/.config/dotfiles"
 CONFIG_FILE="${CONFIG_DIR}/config"
-DOTFILES_TARBALL_PATH="https://github.com/necolas/dotfiles/tarball/master"
+DOTFILES_TARBALL_PATH="https://github.com/necolas/dotfiles/tarball/main"
 DOTFILES_GIT_REMOTE="git@github.com:necolas/dotfiles.git"
 
 # Detect if running from within a dotfiles repo (e.g., user cloned it)
@@ -178,7 +178,7 @@ if ! is_git_repo; then
     e_header "Initializing git repository..."
     git init
     git remote add origin ${DOTFILES_GIT_REMOTE}
-    git fetch origin master
+    git fetch origin main
     # Reset the index and working tree to the fetched HEAD
     # (submodules are cloned in the subsequent sync step)
     git reset --hard FETCH_HEAD
@@ -188,7 +188,7 @@ fi
 
 # Sync with the remote repository
 e_header "Syncing dotfiles..."
-git pull --rebase origin master
+git pull --rebase origin main
 
 # Install and update packages
 printf "Updating packages...\n"
