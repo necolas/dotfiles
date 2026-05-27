@@ -20,6 +20,10 @@
     # Diff overview
     diffst = diff --stat
 
+    # Automatically fixup a commit with no editor
+    # Use: `git add .` then `git fixup a0b1c2d3`
+    fixup = "!f() { git commit --fixup=\"$1\" && (GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash \"$1~1\" 2>/dev/null || GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash --root); }; f"
+
     # Custom graph log (append any tree-ish)
     graph = log --pretty=nice --date-order --graph
     # Custom graph log for all branches
@@ -39,6 +43,10 @@
 
     # Amend commit without editing
     recommit = commit --amend --no-edit
+
+    # Squash new changes into a commit and edit the message
+    # Use: `git add .` then `git squash a0b1c2d3`
+    squash = "!f() { git commit --no-edit --squash=\"$1\" && (GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash \"$1~1\" 2>/dev/null || GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash --root); }; f"
 
     # Find out who is currently active on the repository
     # Displays committers in descending order of number of commits
