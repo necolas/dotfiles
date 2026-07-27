@@ -46,7 +46,7 @@ defaults write com.apple.dock mru-spaces -bool false
 # ----------------------------------------------------------------------
 
 # Dock: position the Dock on the left
-defaults write com.apple.dock orientation left
+defaults write com.apple.dock orientation bottom
 
 # Dock: set the icon size of Dock items to 36 pixels
 defaults write com.apple.dock tilesize -int 64
