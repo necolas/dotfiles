@@ -191,7 +191,40 @@ configure_git_identity() {
     fi
 }
 
+# ─── TEMPORARY: migration cleanup ────────────────────────────────────────────
+#
+# Removes what the previous dotfiles left in HOME. Delete this function and the
+# one call to it in mirrorfiles when every machine is migrated. Nothing else
+# depends on it.
+remove_legacy_files() {
+    local file
+    local -a stale_links=(".bash_profile" ".bashrc" ".inputrc")
+
+    # Remove a symlink only when it points into this repo. Leave a file the user
+    # wrote.
+    for file in "${stale_links[@]}"
+    do
+        if [[ -L "${HOME}/${file}" && "$(readlink "${HOME}/${file}")" == "${DOTFILES_DIRECTORY}"/* ]]; then
+            rm -f "${HOME}/${file}"
+            e_success "Removed ~/${file}"
+        fi
+    done
+
+    # `~/.bash_profile.local` sets the git author on every shell start, which
+    # overwrites ~/.gitconfig. Move it aside rather than delete it: the user may
+    # have put other settings there.
+    if [[ -f "${HOME}/.bash_profile.local" ]]; then
+        mv "${HOME}/.bash_profile.local" "${HOME}/.bash_profile.local.bak"
+        e_warning "Moved ~/.bash_profile.local to ~/.bash_profile.local.bak"
+        printf "  Move anything you still want into ~/.zshrc, then delete the copy.\n"
+    fi
+}
+# ─── end of migration cleanup ────────────────────────────────────────────────
+
 mirrorfiles() {
+    # TEMPORARY: delete this call with remove_legacy_files.
+    remove_legacy_files
+
     # Force remove the vim directory if it's already there.
     if [ -e "${HOME}/.vim" ]; then
         rm -rf "${HOME}/.vim"
