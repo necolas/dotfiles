@@ -19,14 +19,19 @@ else
 fi
 
 load_dotfiles() {
+    # Source bash_paths first. It sets HOMEBREW_PREFIX, and bash expands the
+    # whole list below before it sources the first file.
+    if [[ -r "${DOTFILES_DIRECTORY}/shell/bash_paths" ]]; then
+        source "${DOTFILES_DIRECTORY}/shell/bash_paths"
+    fi
+
     declare -a files=(
         ${DOTFILES_DIRECTORY}/shell/bash_options # Options
         ${DOTFILES_DIRECTORY}/shell/bash_exports # Exports
         ${DOTFILES_DIRECTORY}/shell/bash_aliases # Aliases
         ${DOTFILES_DIRECTORY}/shell/functions/* # Functions
         ${DOTFILES_DIRECTORY}/shell/bash_prompt # Custom bash prompt
-        ${DOTFILES_DIRECTORY}/shell/bash_paths # Path modifications
-        $(brew --prefix)/etc/bash_completion # Bash completion (installed via Homebrew)
+        ${HOMEBREW_PREFIX}/etc/bash_completion # Bash completion (installed via Homebrew)
         $HOME/.bash_profile.local # Local and private settings not under version control (e.g. git credentials)
     )
 

@@ -2,39 +2,40 @@
 
 # bash_paths
 
-# Directories to be prepended to PATH
-declare -a dirs_to_prepend=(
-    "/opt/homebrew/bin" # Homebrew on Apple Silicon
-    "/usr/local/bin" # Homebrew on Intel (also ensures precedence over /usr/bin)
-)
+# Put Homebrew on PATH first: the list below needs HOMEBREW_PREFIX, and the
+# files sourced later need `brew`. Skip it when this shell already has it —
+# `brew shellenv` runs path_helper, which rebuilds PATH from /etc/paths and
+# would push the list below behind the Homebrew directories.
+if [[ -z "$HOMEBREW_PREFIX" && -x /opt/homebrew/bin/brew ]]; then
+    # Name the shell, or `brew shellenv` reads $SHELL and can emit the wrong
+    # syntax.
+    eval "$(/opt/homebrew/bin/brew shellenv bash)"
+fi
 
-# Directories to be appended to PATH
-declare -a dirs_to_append=(
-    "/usr/bin"
-    "$HOME/bin"
+# Directories that must come before the system PATH, highest priority first.
+# Use HOMEBREW_PREFIX from the step above instead of `brew --prefix`. Each call
+# to `brew` starts a Ruby process and makes every new shell slower.
+declare -a dirs=(
+    "${HOME}/bin" # Personal scripts take priority over everything
     "${DOTFILES_DIRECTORY}/bin"
-    "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
-    "$(brew --prefix)/share/npm/bin" # Add npm-installed package bin
+    "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin" # GNU core utilities must beat the BSD ones in /usr/bin
+    "${HOMEBREW_PREFIX}/share/npm/bin" # npm-installed package bin
 )
 
-# Prepend directories to PATH
-for index in ${!dirs_to_prepend[*]}
+# Build the new prefix in list order, then put it ahead of the current PATH.
+# Do not prepend in the loop. That puts the last entry of the list first.
+path_prefix=""
+for dir in "${dirs[@]}"
 do
-    if [ -d ${dirs_to_prepend[$index]} ]; then
-        # If these directories exist, then prepend them to existing PATH
-        PATH="${dirs_to_prepend[$index]}:$PATH"
+    # Skip a directory that does not exist, or that PATH already holds. The
+    # second test stops a re-sourced profile from making duplicate entries.
+    if [[ -d "$dir" && ":${path_prefix}${PATH}:" != *":${dir}:"* ]]; then
+        path_prefix="${path_prefix}${dir}:"
     fi
 done
 
-# Append directories to PATH
-for index in ${!dirs_to_append[*]}
-do
-    if [ -d ${dirs_to_append[$index]} ]; then
-        # If these bins exist, then append them to existing PATH
-        PATH="$PATH:${dirs_to_append[$index]}"
-    fi
-done
+PATH="${path_prefix}${PATH}"
 
-unset dirs_to_prepend dirs_to_append
+unset dirs dir path_prefix
 
 export PATH
