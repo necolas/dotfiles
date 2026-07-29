@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+# zshenv
+#
+# Every zsh reads this file: login, interactive, and script. Keep it to shell
+# attributes that must hold everywhere. Do not set PATH here. /etc/zprofile runs
+# path_helper after this file and would reorder it; zprofile sets PATH instead.
+
+# Keep PATH free of duplicates. A nested shell re-runs .zshrc, and an
+# unconditional prepend there would add the same directory again on every level.
+# Name both PATH and path: the array name alone misses a `PATH=...` assignment,
+# which is the form path_helper and most scripts use.
+# The first copy of a directory wins, so this preserves the priority order.
+typeset -U PATH path
+
+# fpath grows the same way. paths adds the Homebrew completion directory on
+# every source, and compinit reads every entry.
+typeset -U fpath

@@ -111,6 +111,7 @@ mirrorfiles() {
     link "shell/curlrc"       ".curlrc"
     link "shell/inputrc"      ".inputrc"
     link "shell/zprofile"     ".zprofile"
+    link "shell/zshenv"       ".zshenv"
     link "vim"                ".vim"
     link "vim/gvimrc"         ".gvimrc"
     link "vim/vimrc"          ".vimrc"
