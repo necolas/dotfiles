@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# bash_paths
+# paths
+#
+# The PATH policy for every shell. bash_profile and zprofile both source this.
+# Use only syntax that bash and zsh both accept.
 
 # Put Homebrew on PATH first: the list below needs HOMEBREW_PREFIX, and the
 # files sourced later need `brew`. Skip it when this shell already has it —
@@ -8,8 +11,12 @@
 # would push the list below behind the Homebrew directories.
 if [[ -z "$HOMEBREW_PREFIX" && -x /opt/homebrew/bin/brew ]]; then
     # Name the shell, or `brew shellenv` reads $SHELL and can emit the wrong
-    # syntax.
-    eval "$(/opt/homebrew/bin/brew shellenv bash)"
+    # syntax. The zsh form also adds the Homebrew completions to fpath.
+    if [[ -n "$ZSH_VERSION" ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+    else
+        eval "$(/opt/homebrew/bin/brew shellenv bash)"
+    fi
 fi
 
 # Directories that must come before the system PATH, highest priority first.

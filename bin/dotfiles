@@ -102,14 +102,15 @@ mirrorfiles() {
     fi
 
     # Create the necessary symbolic links between the `.dotfiles` and `HOME`
-    # directory. The `bash_profile` sources other files directly from the
-    # `.dotfiles` repository.
-    link "shell/bashrc"       ".bashrc"
-    link "shell/bash_profile" ".bash_profile"
-    link "shell/curlrc"       ".curlrc"
-    link "shell/inputrc"      ".inputrc"
+    # directory. The profiles source other files directly from the `.dotfiles`
+    # repository.
     link "git/gitattributes"  ".gitattributes"
     link "git/gitignore"      ".gitignore"
+    link "shell/bash_profile" ".bash_profile"
+    link "shell/bashrc"       ".bashrc"
+    link "shell/curlrc"       ".curlrc"
+    link "shell/inputrc"      ".inputrc"
+    link "shell/zprofile"     ".zprofile"
     link "vim"                ".vim"
     link "vim/gvimrc"         ".gvimrc"
     link "vim/vimrc"          ".vimrc"
@@ -124,10 +125,12 @@ run_macos_settings() {
     e_warning "Note: Some settings require logout or restart to take effect."
 }
 
-reload_shell() {
-    e_header "Reloading shell..."
-    source ${HOME}/.bash_profile
-    e_success "Shell reloaded!"
+advise_reload() {
+    if [[ "$(basename "$SHELL")" == "zsh" ]]; then
+        e_warning "Open a new terminal, or run: source ~/.zprofile"
+    else
+        e_warning "Open a new terminal, or run: source ~/.bash_profile"
+    fi
 }
 
 # --macos: Apply macOS settings only
@@ -140,7 +143,7 @@ fi
 if [[ "$link_only" == true ]]; then
     e_header "Quick update: applying local changes..."
     mirrorfiles
-    reload_shell
+    advise_reload
     exit
 fi
 
@@ -160,7 +163,7 @@ if ! type_exists 'brew'; then
     e_header "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     # Add Homebrew to PATH for this session
-    source ./shell/bash_paths
+    source ./shell/paths
 fi
 
 # Check for git
@@ -211,5 +214,5 @@ else
     printf "Skipped macOS settings update.\n"
 fi
 
-# Reload shell at the end
-reload_shell
+# Tell the user how to reload the shell
+advise_reload

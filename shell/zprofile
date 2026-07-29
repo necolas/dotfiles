@@ -1,0 +1,22 @@
+#!/bin/zsh
+
+# zprofile
+#
+# A zsh login shell reads this after /etc/zprofile, which runs path_helper.
+# path_helper rebuilds PATH from /etc/paths and /etc/paths.d, and it always puts
+# /usr/bin before /etc/paths.d. So set PATH here, not in .zshenv. A .zshenv PATH
+# runs first and path_helper then moves it behind /usr/bin.
+
+# Source dotfiles configuration (defines DOTFILES_DIRECTORY)
+# Must be sourced before anything else that depends on the dotfiles location
+if [[ -r "${HOME}/.config/dotfiles/config" ]]; then
+    source "${HOME}/.config/dotfiles/config"
+else
+    # Fallback for legacy installs or if config doesn't exist yet
+    export DOTFILES_DIRECTORY="${HOME}/.dotfiles"
+fi
+
+# Apply the PATH policy that bash_profile also uses
+if [[ -r "${DOTFILES_DIRECTORY}/shell/paths" ]]; then
+    source "${DOTFILES_DIRECTORY}/shell/paths"
+fi

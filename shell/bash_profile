@@ -19,10 +19,10 @@ else
 fi
 
 load_dotfiles() {
-    # Source bash_paths first. It sets HOMEBREW_PREFIX, and bash expands the
-    # whole list below before it sources the first file.
-    if [[ -r "${DOTFILES_DIRECTORY}/shell/bash_paths" ]]; then
-        source "${DOTFILES_DIRECTORY}/shell/bash_paths"
+    # Source paths first. It sets HOMEBREW_PREFIX, and bash expands the whole
+    # list below before it sources the first file.
+    if [[ -r "${DOTFILES_DIRECTORY}/shell/paths" ]]; then
+        source "${DOTFILES_DIRECTORY}/shell/paths"
     fi
 
     declare -a files=(
