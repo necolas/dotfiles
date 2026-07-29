@@ -1,0 +1,27 @@
+#!/bin/zsh
+
+# zshrc
+#
+# Every interactive zsh reads this, through the hook at the top of ~/.zshrc.
+# A nested shell is not a login shell and never read zprofile, so read the
+# config file here too.
+
+if [[ -r "${HOME}/.config/dotfiles/config" ]]; then
+    source "${HOME}/.config/dotfiles/config"
+else
+    export DOTFILES_DIRECTORY="${HOME}/.dotfiles"
+fi
+
+# Source each readable file, in order. options must come first: it sets the
+# history behaviour that the rest of the session uses.
+for file in \
+    "${DOTFILES_DIRECTORY}"/shell/options \
+    "${DOTFILES_DIRECTORY}"/shell/exports \
+    "${DOTFILES_DIRECTORY}"/shell/completion \
+    "${DOTFILES_DIRECTORY}"/shell/prompt \
+    "${DOTFILES_DIRECTORY}"/shell/aliases \
+    "${DOTFILES_DIRECTORY}"/shell/functions/*(N)
+do
+    [[ -r "$file" ]] && source "$file"
+done
+unset file

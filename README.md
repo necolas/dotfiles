@@ -1,6 +1,6 @@
 # Dotfiles (Nicolas Gallagher)
 
-My macOS dotfiles.
+My macOS zsh-based dotfiles.
 
 ## How to install
 
@@ -9,7 +9,7 @@ Tools](https://developer.apple.com/downloads) and may overwrite existing
 dotfiles in your HOME and `.vim` directories.
 
 ```bash
-$ bash -c "$(curl -fsSL https://raw.githubusercontent.com/necolas/dotfiles/main/bin/dotfiles)"
+$ zsh -c "$(curl -fsSL https://raw.githubusercontent.com/necolas/dotfiles/main/bin/dotfiles)"
 ```
 
 N.B. If you wish to fork this project and maintain your own dotfiles, you must
@@ -29,12 +29,18 @@ The installation script performs the following steps in order:
 7. **Syncs** with the remote repository to get the latest changes
 8. **Installs packages** via Homebrew
 9. **Creates symlinks** from your home directory to the dotfiles:
-   - `~/.bash_profile` → `<dotfiles>/shell/bash_profile`
-   - `~/.inputrc` → `<dotfiles>/shell/inputrc`
+   - `~/.curlrc` → `<dotfiles>/shell/curlrc`
+   - `~/.gitattributes` → `<dotfiles>/git/gitattributes`
    - `~/.gitignore` → `<dotfiles>/git/gitignore`
+   - `~/.gvimrc` → `<dotfiles>/vim/gvimrc`
    - `~/.vim` → `<dotfiles>/vim`
-10. **Copies** `<dotfiles>/git/gitconfig` to `~/.gitconfig` (not symlinked to allow local git credentials)
-11. **Creates** `~/.bash_profile.local` from template (if it doesn't exist)
+   - `~/.vimrc` → `<dotfiles>/vim/vimrc`
+   - `~/.zprofile` → `<dotfiles>/shell/zprofile`
+   - `~/.zshenv` → `<dotfiles>/shell/zshenv`
+10. **Adds a hook to the top of `~/.zshrc`** (see [Hooked
+    files](#hooked-files))
+11. **Asks for your git author identity** and writes it to `~/.gitconfig`, with an
+    `[include]` of `<dotfiles>/git/gitconfig` (see [Git identity](#git-identity))
 12. **Applies macOS defaults** (optional, with confirmation prompt)
 
 ### Custom install location
@@ -54,10 +60,11 @@ future runs.
 
 You should run the update when:
 
-* You make a change to `~/.dotfiles/git/gitconfig` (the only file that is
-  copied rather than symlinked).
 * You want to pull changes from the remote repository.
 * You want to update Homebrew formulae.
+
+You do **not** need to run it after editing a file in the repository. Every file
+is either symlinked or included, so an edit takes effect in the next shell.
 
 Run the dotfiles command:
 
@@ -91,24 +98,56 @@ changes without syncing or updating packages:
 $ dotfiles --link
 ```
 
-This will update symlinks, copy gitconfig, and automatically reload your shell.
+This refreshes the symlinks and the hooks. It never removes a line that this
+repository did not write.
 
 ## How to use
 
-### Local/private Bash and Vim configuration
+### Hooked files
+
+`~/.zshrc` and `~/.gitconfig` are real files, not symlinks. Each holds a hook at
+the top that reads the dotfiles config:
+
+| File | Hook |
+|------|------|
+| `~/.zshrc` | sources `shell/zshrc` |
+| `~/.gitconfig` | includes `git/gitconfig` |
+
+Other tools write to both files, and an append follows a symlink. A symlink would
+send those writes into this repository.
+
+The hook goes at the top. zsh and git both take the last value they read, so a
+setting below the hook overrides a dotfiles default. Put your machine-local
+settings there.
+
+### Git identity
+
+Your name and email live in `~/.gitconfig`. That file is not tracked, and this
+repository stores no identity. The installer asks once:
+
+```
+Git author identity
+  Every commit you make carries this name and email.
+
+  Name:  
+  Email: 
+```
+
+To change the identity later:
+
+```bash
+$ git config --global user.email "you@example.com"
+```
+
+`git/gitconfig` sets `user.useConfigOnly = true`. git then refuses to commit until
+an identity exists, and never guesses one from the OS. So a forgotten identity
+stops the commit. It cannot mislabel one.
+
+### Local Vim configuration
 
 Any special-case Vim directives local to a machine should be stored in a
 `~/.vimrc.local` file on that machine. The directives will then be automatically
 imported into your master `.vimrc`.
-
-Any private and custom Bash commands and configuration should be placed in the
-`~/.bash_profile.local` file. This file will not be under version control or
-committed to a public repository. If `~/.bash_profile.local` exists, it will be
-sourced for inclusion in `bash_profile`.
-
-N.B. Because the `git/gitconfig` file is copied to `~/.gitconfig`, any private
-git configuration specified in `~/.bash_profile.local` will not be committed to
-your dotfiles repository.
 
 ## Features
 
@@ -119,8 +158,8 @@ Homebrew formulae:
 * GNU core utilities
 * [git](http://git-scm.com/)
 * [git-delta](https://github.com/dandavison/delta) (syntax-highlighting pager for git)
-* [bash-completion](http://bash-completion.alioth.debian.org/)
 * [node](http://nodejs.org/)
+* [bun](https://bun.sh/)
 
 ### Custom macOS settings
 
@@ -146,11 +185,11 @@ For more information on how to setup your backup-drive, please read the
 preparatory steps in this post on creating a [bootable macOS backup
 drive](http://nicolasgallagher.com/mac-osx-bootable-backup-drive-with-rsync/).
 
-### Custom bash prompt
+### Custom zsh prompt
 
-When your current working directory is a Git repository, the prompt will
-display the checked-out branch's name (and failing that, the commit SHA that
-HEAD is pointing to). The state of the working tree is reflected in the
+When your current working directory is a Git repository, the prompt displays the
+checked-out branch's name. During a rebase, a merge, or a bisect it also shows
+the action, as `main|rebase-i`. The state of the working tree is reflected in the
 following way:
 
 <table>
@@ -172,7 +211,8 @@ following way:
     </tr>
 </table>
 
-Further details are in the `bash_prompt` file.
+The prompt is built on zsh's own `vcs_info`, with one `git status` call per
+prompt. Further details are in the `shell/prompt` file.
 
 ## Acknowledgements
 

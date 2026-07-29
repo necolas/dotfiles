@@ -1,0 +1,48 @@
+#!/bin/zsh
+
+# completion
+#
+# Tab completion and line editing.
+
+# Homebrew keeps its completion functions here.
+#
+# Set fpath in this file, not in `paths`. `paths` runs from `zprofile`, which only
+# a login shell reads, and fpath is not an environment variable. A nested shell
+# would rebuild fpath without this entry and lose every Homebrew completion. This
+# file runs for every interactive shell, which is where completion is needed.
+# `zshenv` marks fpath unique, so a repeated source adds no duplicate.
+#
+# `paths` exports HOMEBREW_PREFIX, so a nested shell inherits it. Fall back to the
+# default prefix, so a shell with no login ancestor still finds the completions.
+_dotfiles_brew_completions="${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh/site-functions"
+if [[ -d "$_dotfiles_brew_completions" ]]; then
+    fpath=("$_dotfiles_brew_completions" $fpath)
+fi
+unset _dotfiles_brew_completions
+
+# Load the completion system. The dump file caches the compiled functions.
+# Without a writable one, every shell start recompiles them.
+autoload -Uz compinit
+compinit -d "${HOME}/.zcompdump"
+
+# Case-insensitive completion, in both directions: `{a-zA-Z}={A-Za-z}` lets typed
+# lowercase match an uppercase candidate, and typed uppercase match a lowercase
+# one. The common `m:{a-z}={A-Za-z}` form covers only the first case.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Colour the completion list, and highlight the prefix already typed
+zstyle ':completion:*' list-colors ''
+
+# Describe each group in the completion list
+zstyle ':completion:*' verbose true
+zstyle ':completion:*:descriptions' format '%F{136}%d%f'
+
+# Use the text already typed as the prefix for the history search, so Up and Down
+# beat a plain walk through the history. Both widgets are built in.
+#
+# Bind the application cursor-key forms as well. A terminal in application mode
+# sends `^[OA`, and the binding fails without it.
+bindkey '^[[A' history-beginning-search-backward
+bindkey '^[OA' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
+bindkey '^[OB' history-beginning-search-forward

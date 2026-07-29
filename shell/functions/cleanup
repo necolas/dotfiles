@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Recursively delete files that match a certain pattern
 # (by default delete all `.DS_Store` files)

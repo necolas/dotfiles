@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Set custom macOS defaults
 # See: github.com/mathiasbynens/dotfiles

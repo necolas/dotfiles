@@ -16,7 +16,7 @@ else
     export DOTFILES_DIRECTORY="${HOME}/.dotfiles"
 fi
 
-# Apply the PATH policy that bash_profile also uses
+# Apply the PATH policy
 if [[ -r "${DOTFILES_DIRECTORY}/shell/paths" ]]; then
     source "${DOTFILES_DIRECTORY}/shell/paths"
 fi

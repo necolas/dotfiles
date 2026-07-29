@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Create a data URI from a file and copy it to the pasteboard
 datauri() {

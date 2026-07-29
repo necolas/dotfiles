@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/bin/zsh
 
 # paths
 #
-# The PATH policy for every shell. bash_profile and zprofile both source this.
-# Use only syntax that bash and zsh both accept.
+# The PATH policy. `zprofile` sources this for every login shell.
+#
+# Holds only the entries this repo owns. A tool that manages its own PATH writes
+# to `~/.zshrc`, and a copy here would compete with it and go stale.
 
 # Homebrew. Set the variables here. Do not use `brew shellenv`: it sets PATH
 # through path_helper, which rebuilds PATH from /etc/paths and leaves /usr/bin
@@ -15,19 +17,21 @@ if [[ -x /opt/homebrew/bin/brew ]]; then
     export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}"
 
     # Add the info pages one time. A nested shell sources this file again.
+    #
+    # Test the string by hand. `typeset -U` deduplicates a colon-joined scalar
+    # only when the name is tied to an array, and zsh ties only path, fpath,
+    # cdpath, manpath, mailpath and module_path. There is no infopath.
     if [[ ":${INFOPATH}:" != *":${HOMEBREW_PREFIX}/share/info:"* ]]; then
         export INFOPATH="${HOMEBREW_PREFIX}/share/info${INFOPATH:+:${INFOPATH}}"
     fi
 
-    # zsh reads the Homebrew completion functions from here. zshenv marks fpath
-    # unique, so a second source adds no duplicate.
-    if [[ -n "$ZSH_VERSION" ]]; then
-        fpath=("${HOMEBREW_PREFIX}/share/zsh/site-functions" $fpath)
-    fi
+    # The Homebrew completion directory goes on fpath in `shell/completion`. This
+    # file runs from zprofile, which only a login shell reads, and fpath is not
+    # inherited, so an entry made here is missing in every nested shell.
 fi
 
 # Directories that must come before the system PATH, highest priority first.
-declare -a dirs=(
+typeset -a dirs=(
     "${HOME}/bin" # Personal scripts take priority over everything
     "${DOTFILES_DIRECTORY}/bin"
     "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin" # GNU core utilities must beat the BSD ones in /usr/bin
@@ -36,26 +40,20 @@ declare -a dirs=(
     "${HOMEBREW_PREFIX}/share/npm/bin" # npm-installed package bin
 )
 
-# Move each directory to the front, in list order. Remove an existing copy
-# first. A test that skips a directory already on PATH is not enough: a nested
-# login shell runs path_helper again, which leaves these directories behind
-# /usr/bin, and the skip would keep them there.
-# Collect the result in one string. Do not prepend in the loop, because that
-# reverses the order of the list.
-path_prefix=""
+# Keep the ones that exist, in list order.
+typeset -a wanted=()
 for dir in "${dirs[@]}"
 do
-    if [[ -d "$dir" ]]; then
-        PATH=":${PATH}:"
-        PATH="${PATH//:${dir}:/:}"
-        PATH="${PATH#:}"
-        PATH="${PATH%:}"
-        path_prefix="${path_prefix}${dir}:"
-    fi
+    [[ -d "$dir" ]] && wanted+=("$dir")
 done
 
-PATH="${path_prefix}${PATH}"
-
-unset dirs dir path_prefix
-
+# Prepend the whole list in one assignment.
+#
+# `zshenv` sets `typeset -U PATH path`, and zsh reads zshenv before zprofile, so
+# the attribute is already active. A unique array keeps the first copy of each
+# entry, so an entry that path_helper left further down PATH moves to the front
+# and the later copy disappears.
+path=($wanted $path)
 export PATH
+
+unset dirs dir wanted

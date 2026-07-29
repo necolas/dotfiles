@@ -1,0 +1,37 @@
+#!/bin/zsh
+
+# options
+#
+# Shell behaviour and history.
+
+# Autocorrect a mistyped command name and offer the correction.
+# `CORRECT_ALL` would also correct every argument, which is intrusive.
+setopt CORRECT
+
+# Case-insensitive globbing (used in pathname expansion)
+setopt NO_CASE_GLOB
+
+# Where to keep the history. zsh has no default file, and without one it keeps no
+# history between sessions.
+HISTFILE="${HOME}/.zsh_history"
+
+# Number of commands to remember in the running shell
+HISTSIZE=1000000
+
+# Number of commands to write to the history file
+SAVEHIST=1000000
+
+# Append to the history file rather than overwrite it
+setopt APPEND_HISTORY
+
+# Write each command as it runs, not when the shell exits. A new shell then
+# starts with every command from the shells before it. `SHARE_HISTORY` would also
+# import from other running shells and change what Up shows.
+setopt INC_APPEND_HISTORY
+
+# Ignore a command that repeats the one before it
+setopt HIST_IGNORE_DUPS
+
+# Drop a command that starts with a space, and strip surplus blanks
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS

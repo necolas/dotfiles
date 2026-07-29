@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Start an HTTP server from a directory, optionally specifying the port
 pyserver() {

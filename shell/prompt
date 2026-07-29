@@ -1,0 +1,67 @@
+#!/bin/zsh
+
+# prompt
+#
+# Example:
+#   nicolas@host: ~/.dotfiles on main [+!?$]
+#   $
+#
+# Colours are Solarized numbers: green 64, yellow 136, orange 166, red 124. Do not
+# use the names. `%F{green}` is colour 2, which is a different green.
+# iTerm2 prefs: import the Solarized theme (disable bright colors for bold text)
+
+autoload -Uz vcs_info
+setopt PROMPT_SUBST
+
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats       ' on %F{136}%b%m%f'
+# actionformats adds the state during a rebase, a merge, or a bisect
+zstyle ':vcs_info:git:*' actionformats ' on %F{136}%b|%a%m%f'
+zstyle ':vcs_info:git+set-message:*' hooks git-status
+
+# Four marks: staged, unstaged, untracked, stashed.
+# vcs_info puts hook_com[misc] into %m.
+#
+# Use one `git status`. It reports all three working-tree marks and refreshes the
+# index as it runs. A `git diff-files` call does not refresh, so a stat-only
+# change -- `touch` on an unchanged file -- would leave a false `!`.
++vi-git-status() {
+    local staged="" unstaged="" untracked="" stashed="" line
+
+    while IFS= read -r line; do
+        case "$line" in
+            '??'*) untracked='?' ;;
+            *)
+                [[ "${line[1]}" != ' ' ]] && staged='+'
+                [[ "${line[2]}" != ' ' ]] && unstaged='!'
+                ;;
+        esac
+    done < <(git status --porcelain 2>/dev/null)
+
+    git rev-parse --verify --quiet refs/stash >/dev/null 2>&1 && stashed='$'
+
+    local s="${staged}${unstaged}${untracked}${stashed}"
+    [[ -n $s ]] && hook_com[misc]=" [$s]"
+}
+
+# Add to precmd_functions rather than define precmd, so another file can add
+# its own hook without overwriting this one.
+_dotfiles_precmd() {
+    vcs_info
+    print -Pn '\e]0;%~\a'   # set the terminal title to the working directory
+}
+precmd_functions+=(_dotfiles_precmd)
+
+# Show user@host over SSH only. Keep the local prompt clean.
+if [[ -n $SSH_TTY ]]; then
+    _dotfiles_host='%F{166}%n%f@%B%F{124}%m%b%f: '
+else
+    _dotfiles_host=''
+fi
+
+# A blank line, then [user@host: ]working-directory[ on branch [marks]], then
+# `$ ` on its own line. Keep ${vcs_info_msg_0_} in single quotes: PROMPT_SUBST
+# expands it at each prompt, not now.
+PROMPT=$'\n'${_dotfiles_host}'%F{64}%~%f${vcs_info_msg_0_}'$'\n''%f$ '
+
+unset _dotfiles_host

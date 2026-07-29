@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Compare original and gzipped file size
 gz() {

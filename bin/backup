@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Disc backup script
 # Requires rsync 3

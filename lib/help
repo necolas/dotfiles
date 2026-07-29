@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/bin/zsh
 
 run_help() {
 
+# bin/dotfiles sets DOTFILES_CMD. Inside a function $0 is the function name.
 cat <<EOT
 macOS dotfiles - Nicolas Gallagher - http://nicolasgallagher.com/
 
-Usage: $(basename "$0") [options]
+Usage: ${DOTFILES_CMD:-dotfiles} [options]
 
 Options:
     -h, --help      Print this help text

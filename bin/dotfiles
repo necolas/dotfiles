@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/bin/zsh
+
+# The name this script was invoked as, for the help text. Capture it at the top
+# level: inside a function $0 is the function name.
+DOTFILES_CMD="$(basename "$0")"
 
 # Configuration
 CONFIG_DIR="${HOME}/.config/dotfiles"
@@ -8,7 +12,8 @@ DOTFILES_GIT_REMOTE="git@github.com:necolas/dotfiles.git"
 
 # Detect if running from within a dotfiles repo (e.g., user cloned it)
 # This allows the script to default to the cloned location instead of ~/.dotfiles
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)"
+# ${(%):-%x} is the path of the file being read.
+SCRIPT_DIR="$(cd "$(dirname "${(%):-%x}")/.." 2>/dev/null && pwd)"
 if [[ -d "${SCRIPT_DIR}/lib" && -d "${SCRIPT_DIR}/shell" && -d "${SCRIPT_DIR}/bin" ]]; then
     RUNNING_FROM_REPO=true
     DEFAULT_DOTFILES_DIRECTORY="${SCRIPT_DIR}"
@@ -30,7 +35,7 @@ elif [[ "$RUNNING_FROM_REPO" == true ]]; then
 else
     # Fresh install via curl - prompt for location
     printf "$(tput setaf 7)Where would you like to install dotfiles?$(tput sgr0)\n"
-    read -p "Install location [$DEFAULT_DOTFILES_DIRECTORY]: " custom_path
+    read "custom_path?Install location [$DEFAULT_DOTFILES_DIRECTORY]: "
     DOTFILES_DIRECTORY="${custom_path:-$DEFAULT_DOTFILES_DIRECTORY}"
     # Expand ~ to $HOME if used
     DOTFILES_DIRECTORY="${DOTFILES_DIRECTORY/#\~/$HOME}"
@@ -68,7 +73,7 @@ fi
 link_only=false
 macos_only=false
 
-for opt in $@
+for opt in "$@"
 do
     case $opt in
         -l|--link) link_only=true ;;
@@ -83,19 +88,110 @@ link() {
     ln -fs "${DOTFILES_DIRECTORY}/${1}" "${HOME}/${2}"
 }
 
-mirrorfiles() {
-    # Copy `.gitconfig`.
-    # Any global git commands in `~/.bash_profile.local` will be written to
-    # `.gitconfig`. This prevents them being committed to the repository.
-    rsync -avz --quiet ${DOTFILES_DIRECTORY}/git/gitconfig  ${HOME}/.gitconfig
+# The hook that gives an interactive zsh the dotfiles.
+#
+# `~/.zshrc` stays a real file. Tool installers append their own PATH lines to
+# it, and an append follows a symlink, so a symlink would send those writes into
+# this repository.
+#
+# Keep the hook at the top. A tool appends to the end and prepends to PATH, so a
+# tool entry must stay after ours to keep priority.
+#
+# The hook reads the config file itself. A nested shell is not a login shell, so
+# it never read `~/.zprofile` and has no DOTFILES_DIRECTORY.
+ZSHRC_HOOK='# dotfiles: keep this block at the top of the file
+[[ -r "$HOME/.config/dotfiles/config" ]] && source "$HOME/.config/dotfiles/config"
+[[ -r "$DOTFILES_DIRECTORY/shell/zshrc" ]] && source "$DOTFILES_DIRECTORY/shell/zshrc"'
 
-    # Create `.bash_profile.local` from template if it doesn't exist.
-    # This file is for local/private settings not tracked in version control.
-    if [[ ! -f "${HOME}/.bash_profile.local" ]]; then
-        cp ${DOTFILES_DIRECTORY}/shell/bash_profile.local ${HOME}/.bash_profile.local
-        e_success "Created ~/.bash_profile.local - please edit with your credentials"
+wire_zshrc() {
+    local rc="${HOME}/.zshrc"
+
+    if [[ -L "$rc" ]]; then
+        e_warning "~/.zshrc is a symlink. Replace it with a real file, then re-run."
+        return
     fi
 
+    if [[ ! -f "$rc" ]]; then
+        printf '%s\n' "$ZSHRC_HOOK" > "$rc"
+        e_success "Created ~/.zshrc with the dotfiles hook"
+    elif ! grep -q 'shell/zshrc' "$rc"; then
+        # Put the hook above every existing line. Copy the bytes, so a line
+        # this repository did not write survives exactly.
+        { printf '%s\n\n' "$ZSHRC_HOOK"; cat "$rc"; } > "${rc}.dotfiles-tmp" &&
+            mv "${rc}.dotfiles-tmp" "$rc"
+        e_success "Added the dotfiles hook to the top of ~/.zshrc"
+    fi
+}
+
+# Git identity.
+#
+# `~/.gitconfig` stays a real file that includes the tracked `git/gitconfig` at
+# the top. So an edit to the tracked file needs no re-run, `git config --global`
+# writes stay out of this repository, and a setting below the include overrides a
+# repo default.
+#
+# This repo carries no name and no email. It is public, so a stored identity
+# would let another person commit as its author. `git/gitconfig` sets
+# `user.useConfigOnly`, which makes git refuse to commit until an identity
+# exists. A forgotten identity stops the commit; it never mislabels one.
+configure_git_identity() {
+    local gitconfig="${HOME}/.gitconfig"
+    local include_path="${DOTFILES_DIRECTORY}/git/gitconfig"
+    local name="" email=""
+
+    # A symlink here would send every `git config --global` write into this
+    # repository. Replace it with a real file.
+    if [[ -L "$gitconfig" ]]; then
+        rm -f "$gitconfig"
+    fi
+
+    # Already set up. Do nothing, and do not ask again.
+    if [[ -f "$gitconfig" ]] && grep -q "git/gitconfig" "$gitconfig"; then
+        return
+    fi
+
+    # Keep the identity git already has, so an upgrade asks nothing.
+    name="$(git config --global --get user.name 2>/dev/null)"
+    email="$(git config --global --get user.email 2>/dev/null)"
+
+    # An email needs an @. Reject anything else and ask instead.
+    if [[ -z "$name" || "$email" != *@* ]]; then
+        e_header "Git author identity"
+        printf "  Every commit you make carries this name and email.\n\n"
+        printf "  Name:  "
+        read name
+        printf "  Email: "
+        read email
+    fi
+
+    if [[ -f "$gitconfig" ]]; then
+        cp "$gitconfig" "${gitconfig}.backup"
+        e_warning "Saved the old ~/.gitconfig to ~/.gitconfig.backup"
+        printf "  Move any setting you still want into ~/.gitconfig.\n"
+    fi
+
+    {
+        printf '# Machine-local git config. This file is not tracked.\n'
+        printf '#\n'
+        printf '# Keep the include at the top. git takes the last value it reads, so a\n'
+        printf '# setting below this line overrides the dotfiles default.\n'
+        printf '[include]\n'
+        printf '\tpath = %s\n' "$include_path"
+        if [[ -n "$name" && "$email" == *@* ]]; then
+            printf '\n[user]\n\tname = %s\n\temail = %s\n' "$name" "$email"
+        fi
+    } > "$gitconfig"
+
+    if [[ -n "$name" && "$email" == *@* ]]; then
+        e_success "Git author set to ${name} <${email}>"
+    else
+        e_warning "No git author set. git refuses to commit until you run:"
+        printf '    git config --global user.name "Your Name"\n'
+        printf '    git config --global user.email "you@example.com"\n'
+    fi
+}
+
+mirrorfiles() {
     # Force remove the vim directory if it's already there.
     if [ -e "${HOME}/.vim" ]; then
         rm -rf "${HOME}/.vim"
@@ -106,32 +202,29 @@ mirrorfiles() {
     # repository.
     link "git/gitattributes"  ".gitattributes"
     link "git/gitignore"      ".gitignore"
-    link "shell/bash_profile" ".bash_profile"
-    link "shell/bashrc"       ".bashrc"
     link "shell/curlrc"       ".curlrc"
-    link "shell/inputrc"      ".inputrc"
     link "shell/zprofile"     ".zprofile"
     link "shell/zshenv"       ".zshenv"
     link "vim"                ".vim"
     link "vim/gvimrc"         ".gvimrc"
     link "vim/vimrc"          ".vimrc"
 
+    # `~/.zshrc` and `~/.gitconfig` get a hook to the dotfiles config.
+    wire_zshrc
+    configure_git_identity
+
     e_success "Dotfiles update complete!"
 }
 
 run_macos_settings() {
-    bash ./lib/macos
+    zsh ./lib/macos
     e_success "macOS settings updated!"
     printf "\n"
     e_warning "Note: Some settings require logout or restart to take effect."
 }
 
 advise_reload() {
-    if [[ "$(basename "$SHELL")" == "zsh" ]]; then
-        e_warning "Open a new terminal, or run: source ~/.zprofile"
-    else
-        e_warning "Open a new terminal, or run: source ~/.bash_profile"
-    fi
+    e_warning "Open a new terminal, or run: source ~/.zshrc"
 }
 
 # --macos: Apply macOS settings only
@@ -155,7 +248,7 @@ fi
 if ! type_exists 'gcc'; then
     e_error "The XCode Command Line Tools must be installed first."
     printf "  Download them from: https://developer.apple.com/downloads\n"
-    printf "  Then run: bash ~/.dotfiles/bin/dotfiles\n"
+    printf "  Then run: zsh ~/.dotfiles/bin/dotfiles\n"
     exit 1
 fi
 
