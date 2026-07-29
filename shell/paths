@@ -5,38 +5,51 @@
 # The PATH policy for every shell. bash_profile and zprofile both source this.
 # Use only syntax that bash and zsh both accept.
 
-# Put Homebrew on PATH first: the list below needs HOMEBREW_PREFIX, and the
-# files sourced later need `brew`. Skip it when this shell already has it —
-# `brew shellenv` runs path_helper, which rebuilds PATH from /etc/paths and
-# would push the list below behind the Homebrew directories.
-if [[ -z "$HOMEBREW_PREFIX" && -x /opt/homebrew/bin/brew ]]; then
-    # Name the shell, or `brew shellenv` reads $SHELL and can emit the wrong
-    # syntax. The zsh form also adds the Homebrew completions to fpath.
+# Homebrew. Set the variables here. Do not use `brew shellenv`: it sets PATH
+# through path_helper, which rebuilds PATH from /etc/paths and leaves /usr/bin
+# ahead of /opt/homebrew/bin. Every login shell runs /etc/zprofile, so a nested
+# login shell runs path_helper a second time and loses the Homebrew order.
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    export HOMEBREW_PREFIX="/opt/homebrew"
+    export HOMEBREW_CELLAR="${HOMEBREW_PREFIX}/Cellar"
+    export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}"
+
+    # Add the info pages one time. A nested shell sources this file again.
+    if [[ ":${INFOPATH}:" != *":${HOMEBREW_PREFIX}/share/info:"* ]]; then
+        export INFOPATH="${HOMEBREW_PREFIX}/share/info${INFOPATH:+:${INFOPATH}}"
+    fi
+
+    # zsh reads the Homebrew completion functions from here. zshenv marks fpath
+    # unique, so a second source adds no duplicate.
     if [[ -n "$ZSH_VERSION" ]]; then
-        eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-    else
-        eval "$(/opt/homebrew/bin/brew shellenv bash)"
+        fpath=("${HOMEBREW_PREFIX}/share/zsh/site-functions" $fpath)
     fi
 fi
 
 # Directories that must come before the system PATH, highest priority first.
-# Use HOMEBREW_PREFIX from the step above instead of `brew --prefix`. Each call
-# to `brew` starts a Ruby process and makes every new shell slower.
 declare -a dirs=(
     "${HOME}/bin" # Personal scripts take priority over everything
     "${DOTFILES_DIRECTORY}/bin"
     "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin" # GNU core utilities must beat the BSD ones in /usr/bin
+    "${HOMEBREW_PREFIX}/bin"
+    "${HOMEBREW_PREFIX}/sbin"
     "${HOMEBREW_PREFIX}/share/npm/bin" # npm-installed package bin
 )
 
-# Build the new prefix in list order, then put it ahead of the current PATH.
-# Do not prepend in the loop. That puts the last entry of the list first.
+# Move each directory to the front, in list order. Remove an existing copy
+# first. A test that skips a directory already on PATH is not enough: a nested
+# login shell runs path_helper again, which leaves these directories behind
+# /usr/bin, and the skip would keep them there.
+# Collect the result in one string. Do not prepend in the loop, because that
+# reverses the order of the list.
 path_prefix=""
 for dir in "${dirs[@]}"
 do
-    # Skip a directory that does not exist, or that PATH already holds. The
-    # second test stops a re-sourced profile from making duplicate entries.
-    if [[ -d "$dir" && ":${path_prefix}${PATH}:" != *":${dir}:"* ]]; then
+    if [[ -d "$dir" ]]; then
+        PATH=":${PATH}:"
+        PATH="${PATH//:${dir}:/:}"
+        PATH="${PATH#:}"
+        PATH="${PATH%:}"
         path_prefix="${path_prefix}${dir}:"
     fi
 done
