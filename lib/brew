@@ -15,31 +15,26 @@ run_brew() {
         [[ $? ]] && e_success "Done"
 
         e_header "Checking status of desired Homebrew formulae..."
-        local list_formulae
         local -a missing_formulae
         local -a desired_formulae=(
             'coreutils' # GNU core utilities (those that come with macOS are outdated)
             'git'
-            'git-delta' # Syntax-highlighting pager for git
             'node'
-            'oven-sh/bun/bun' # Fast JavaScript runtime and package manager
+            'bun' # Fast JavaScript runtime and package manager
         )
 
         for formula in "${desired_formulae[@]}"
         do
-            if ! formula_exists $formula; then
+            if ! formula_exists "$formula"; then
                 # Store the name (and options) of every missing formula
                 missing_formulae+=("$formula")
             fi
         done
 
         if (( ${#missing_formulae} )); then
-            # Convert the array of missing formula into a list of space-separate strings
-            list_formulae=$( printf "%s " "${missing_formulae[@]}" )
-
             e_header "Installing missing Homebrew formulae..."
             # Install all missing formulae
-            brew install $list_formulae
+            brew install "${missing_formulae[@]}"
 
             [[ $? ]] && e_success "Done"
         fi

@@ -157,7 +157,6 @@ Homebrew formulae:
 
 * GNU core utilities
 * [git](http://git-scm.com/)
-* [git-delta](https://github.com/dandavison/delta) (syntax-highlighting pager for git)
 * [node](http://nodejs.org/)
 * [bun](https://bun.sh/)
 
