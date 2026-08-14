@@ -3,11 +3,11 @@
 # prompt
 #
 # Example:
-#   nicolas@host: ~/.dotfiles on main [+!?$]
+#   nicolas@host: 14 Aug 09:03 ~/.dotfiles on main [+!?$]
 #   $
 #
-# Colours are Solarized numbers: green 64, yellow 136, orange 166, red 124. Do not
-# use the names. `%F{green}` is colour 2, which is a different green.
+# Colours are Solarized numbers: green 64, yellow 136, orange 166, red 124, grey
+# (base01) 240. Do not use the names. `%F{green}` is colour 2, a different green.
 # iTerm2 prefs: import the Solarized theme (disable bright colors for bold text)
 
 autoload -Uz vcs_info
@@ -59,9 +59,10 @@ else
     _dotfiles_host=''
 fi
 
-# A blank line, then [user@host: ]working-directory[ on branch [marks]], then
-# `$ ` on its own line. Keep ${vcs_info_msg_0_} in single quotes: PROMPT_SUBST
-# expands it at each prompt, not now.
-PROMPT=$'\n'${_dotfiles_host}'%F{64}%~%f${vcs_info_msg_0_}'$'\n''%f$ '
+# A blank line, then [user@host: ]date time working-directory[ on branch [marks]],
+# then `$ ` on its own line. %D{...} is strftime, drawn fresh each prompt: %d is
+# the two-digit day, %b the short month. Keep ${vcs_info_msg_0_} in single quotes:
+# PROMPT_SUBST expands it at each prompt, not now.
+PROMPT=$'\n'${_dotfiles_host}'%F{240}%D{%d %b %H:%M} %f''%F{64}%~%f${vcs_info_msg_0_}'$'\n''%f$ '
 
 unset _dotfiles_host
